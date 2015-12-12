@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HexGrid : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class HexGrid : MonoBehaviour
     //Hexagon tile width and height in game world
     private float hexWidth;
     private float hexHeight;
+
+    public List<GridPopulator> populators = new List<GridPopulator>();
 
     //Method to calculate the position of the first hexagon tile
     //The center of the hex grid is (0,0,0)
@@ -74,6 +77,8 @@ public class HexGrid : MonoBehaviour
     //The grid should be generated on game start
     void Start()
     {
+        this.populators.Add(new RiverPopulator());
+        this.populators.Add(new VillagePopulator());
         setSizes();
         createGrid();
     }
