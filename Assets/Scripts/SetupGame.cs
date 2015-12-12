@@ -5,8 +5,9 @@ using Random = System.Random;
 public class SetupGame : MonoBehaviour {
 
     // Use this for initialization
-    public Transform transform;
-    public Camera camera;
+    public GameObject villagePrefab;
+
+
 
     private static readonly Random random = new Random();
 
@@ -19,13 +20,14 @@ public class SetupGame : MonoBehaviour {
     public float steps = 1.6f;
 
     void Start () {
-        for (float y = -maxHeight / 2; y < maxHeight / 2; y += steps)
+        for (float y = -maxHeight; y < maxHeight; y++)
         {
-            for (float x = -maxWidth / 2; x < maxWidth / 2; x += steps)
+            for (float x = -maxWidth; x < maxWidth; x++)
             {
                 if (random.Next(villageChance100InX) <= 100)
                 {
-                    Instantiate(transform, new Vector3(x, y, 0f), Quaternion.identity);
+                    var village = Instantiate(villagePrefab);
+                    village.transform.position = new Vector3(x, y, 0); // TODO parent instead
                 }
             }
         }
