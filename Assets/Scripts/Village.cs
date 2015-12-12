@@ -28,10 +28,24 @@ public class Village : MonoBehaviour
 
     void Start()
     {
-        radius = (random.Next(175) + 25f) / 100;
+        radius = (random.Next(3)*12 + 30f) / 100;
         collider.radius = radius;
         transform.localScale = new Vector3(radius * 2, radius * 2);
+
+        switch (random.Next(3))
+        {
+            case 0:
+                faction = Faction.FRIENDLY;
+                break;
+            case 1:
+                faction = Faction.NEUTRAL;
+                break;
+            case 2:
+                faction = Faction.ENEMY;
+                break;
+        }
     }
+                
 
 	void Update ()
     {
