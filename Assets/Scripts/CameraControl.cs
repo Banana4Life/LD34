@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Math = System.Math;
 
 public class CameraControl : MonoBehaviour {
 
     public Camera camera;
     public float scrollspeed = 45;
+
+    private float lastMovement = 0;
 
     // Use this for initialization
 	void Start () {
@@ -30,8 +33,7 @@ public class CameraControl : MonoBehaviour {
 
         Vector3 movement = new Vector3(-moveVert, moveHorz, 0);
 
-        movement.Normalize();
-        var scaling = scrollspeed * camera.orthographicSize / camera.pixelHeight / 2;
+        var scaling = scrollspeed * (camera.orthographicSize / camera.pixelHeight / 2) * (float)Math.Pow(movement.magnitude, 1 / 3);
         movement.Scale(new Vector3(scaling, scaling, scaling));
         camera.transform.position = camera.transform.position + movement;
     }
