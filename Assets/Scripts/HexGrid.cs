@@ -7,6 +7,7 @@ public class HexGrid : MonoBehaviour
     //following public variable is used to store the hex model prefab;
     //instantiate it by dragging the prefab on this variable using unity editor
     public GameObject hexPrefab;
+    public GameObject villagePrefab;
     //next two variables can also be instantiated using unity editor
     public int gridWidth = 20;
     public int gridHeight = 10;
@@ -42,7 +43,7 @@ public class HexGrid : MonoBehaviour
     }
 
     //Finally the method which initialises and positions all the tiles
-    void createGrid()
+    GameObject[,] createGrid()
     {
         //Position of the first hex tile
         var initialPos = initialPosition();
@@ -62,6 +63,7 @@ public class HexGrid : MonoBehaviour
             }
         }
 
+        return elements;
 
     }
 
@@ -77,9 +79,12 @@ public class HexGrid : MonoBehaviour
     //The grid should be generated on game start
     void Start()
     {
-        this.populators.Add(new RiverPopulator());
-        this.populators.Add(new VillagePopulator());
         setSizes();
-        createGrid();
+        var grid = createGrid();
+
+        foreach (var populator in populators)
+        {
+            populator.populate(grid);
+        }
     }
 }

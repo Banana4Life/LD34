@@ -456,11 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d878dc755a0b3e74cbaf6a9c01f6fe53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
-  villageChance100InX: 300
-  maxHeight: 10
-  maxWidth: 16
-  steps: 1.6
 --- !u!1 &1811316470
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +551,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1956102854}
   - 114: {fileID: 1956102853}
+  - 114: {fileID: 1956102855}
+  - 114: {fileID: 1956102856}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -575,8 +572,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexPrefab: {fileID: 121562, guid: 6d7e5479e76959d419db0d3d70ac4f1a, type: 2}
+  villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
   gridWidth: 25
   gridHeight: 15
+  populators:
+  - {fileID: 1956102855}
+  - {fileID: 1956102856}
 --- !u!4 &1956102854
 Transform:
   m_ObjectHideFlags: 0
@@ -589,3 +590,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+--- !u!114 &1956102855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1956102852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc619437b3c07049b8039352c5ecb68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
+--- !u!114 &1956102856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1956102852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de673d1bfdfaf243910a61feea6f237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
