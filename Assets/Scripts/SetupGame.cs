@@ -10,20 +10,20 @@ public class SetupGame : MonoBehaviour {
 
     private static readonly Random random = new Random();
 
-    public int oneIn = 3;
+    // 100 in X
+    public int villageChance100InX = 300;
+
+    public float maxHeight = 10;
+    public float maxWidth = 16;
+
+    public float steps = 1.6f;
 
     void Start () {
-
-        float maxHeight = 5;
-        float maxWidth = 8;
-
-        float unit = maxWidth / 5;
-
-        for (float y = -maxHeight; y < maxHeight; y += unit)
+        for (float y = -maxHeight / 2; y < maxHeight / 2; y += steps)
         {
-            for (float x = -maxWidth; x < maxWidth; x += unit)
+            for (float x = -maxWidth / 2; x < maxWidth / 2; x += steps)
             {
-                if (random.Next(oneIn) == 0)
+                if (random.Next(villageChance100InX) <= 100)
                 {
                     Instantiate(transform, new Vector3(x, y, 0f), Quaternion.identity);
                 }
