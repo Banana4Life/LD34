@@ -1,21 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Random = System.Random;
 
 public class SetupGame : MonoBehaviour {
 
     // Use this for initialization
     public Transform transform;
-	void Start () {
+    public Camera camera;
 
-        for (int y = 0; y < 5; y++)
+    private static readonly Random random = new Random();
+
+    // 100 in X
+    public int villageChance100InX = 300;
+
+    public float maxHeight = 10;
+    public float maxWidth = 16;
+
+    public float steps = 1.6f;
+
+    void Start () {
+        for (float y = -maxHeight / 2; y < maxHeight / 2; y += steps)
         {
-            for (int x = 0; x < 5; x++)
+            for (float x = -maxWidth / 2; x < maxWidth / 2; x += steps)
             {
-                Instantiate(transform, new Vector3(x * 2, y * 2, 0f), Quaternion.identity);
+                if (random.Next(villageChance100InX) <= 100)
+                {
+                    Instantiate(transform, new Vector3(x, y, 0f), Quaternion.identity);
+                }
             }
         }
-        
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {

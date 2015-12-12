@@ -60,6 +60,9 @@ MonoBehaviour:
   collider: {fileID: 5837420}
   transform: {fileID: 446932}
   radius: 0
+  minRadius: 0.3
+  radiusSteps: 3
+  radiusStepScale: 0.12
 --- !u!212 &21201770
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -137,6 +140,14 @@ Prefab:
       propertyPath: transform
       value: 
       objectReference: {fileID: 446932}
+    - target: {fileID: 0}
+      propertyPath: minRadius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: radiusStepScale
+      value: 0.12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}

@@ -26,12 +26,30 @@ public class Village : MonoBehaviour
     public float radius;
     private static readonly Random random = new Random();
 
+    public float minRadius = 0.3f;
+    public int radiusSteps = 3;
+    public float radiusStepScale = 0.12f;
+
     void Start()
     {
-        radius = (random.Next(175) + 25f) / 100;
+        radius = (random.Next(radiusSteps) * radiusStepScale + minRadius);
         collider.radius = radius;
         transform.localScale = new Vector3(radius * 2, radius * 2);
+
+        switch (random.Next(3))
+        {
+            case 0:
+                faction = Faction.FRIENDLY;
+                break;
+            case 1:
+                faction = Faction.NEUTRAL;
+                break;
+            case 2:
+                faction = Faction.ENEMY;
+                break;
+        }
     }
+                
 
 	void Update ()
     {
