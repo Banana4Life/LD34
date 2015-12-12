@@ -31,7 +31,7 @@ public class CameraControl : MonoBehaviour {
             camera.orthographicSize = 30;
         }
 
-        Vector3 movement = new Vector3(-moveVert, moveHorz, 0);
+        Vector3 movement = new Vector3(moveHorz, moveVert, 0);
 
         var scaling = scrollspeed * (camera.orthographicSize / camera.pixelHeight / 2) * (float)Math.Pow(movement.magnitude, 1 / 3);
         movement.Scale(new Vector3(scaling, scaling, scaling));
