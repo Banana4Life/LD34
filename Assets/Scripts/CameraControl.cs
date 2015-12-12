@@ -22,13 +22,13 @@ public class CameraControl : MonoBehaviour {
         {
             camera.orthographicSize = 2;
         }
-        else if(camera.orthographicSize > 10)
+        else if(camera.orthographicSize > 30)
         {
-            camera.orthographicSize = 10;
+            camera.orthographicSize = 30;
         }
 
         Vector3 movement = new Vector3(-moveVert, moveHorz, 0);
-        movement.Scale(new Vector3(1/camera.orthographicSize * 1.5f, 1/camera.orthographicSize * 1.5f, 1/camera.orthographicSize * 1.5f));
+        //movement.Scale(new Vector3(1/camera.orthographicSize * 1.5f, 1/camera.orthographicSize * 1.5f, 1/camera.orthographicSize * 1.5f));
         camera.transform.position = camera.transform.position + movement;
     }
 }
