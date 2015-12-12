@@ -44,17 +44,22 @@ public class HexGrid : MonoBehaviour
         //Position of the first hex tile
         var initialPos = initialPosition();
         //Game object which is the parent of all the hex tiles
-        for (float y = 0; y < gridHeight; y++)
+        var elements = new GameObject[gridWidth, gridHeight];
+        
+        for (int y = 0; y < gridHeight; y++)
         {
-            for (float x = 0; x < gridWidth; x++)
+            for (int x = 0; x < gridWidth; x++)
             {
                 //GameObject assigned to hexPrefab public variable is cloned
                 var hex = (GameObject)Instantiate(hexPrefab);
                 //Current position in grid
                 hex.transform.position = toWorldPosition(initialPos, x, y);
                 hex.transform.parent = this.gameObject.transform;
+                elements[x, y] = hex;
             }
         }
+
+
     }
 
     //Method to initialise Hexagon width and height
