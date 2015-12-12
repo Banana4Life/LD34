@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3316428}
   - 23: {fileID: 2378934}
   - 95: {fileID: 9586198}
+  - 114: {fileID: 11431912}
   m_Layer: 0
   m_Name: Hexagon
   m_TagString: Untagged
@@ -80,6 +81,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11431912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209e4df7244b21a4fade9b65f3af397a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

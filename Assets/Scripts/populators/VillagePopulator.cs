@@ -18,8 +18,11 @@ public class VillagePopulator : GridPopulator
                 if (random.Next(900) <= 100)
                 {
                     var village = Instantiate(villagePrefab);
-                    village.transform.parent = gameObjects[x, y].transform;
+                    var hex = gameObjects[x, y];
+                    village.transform.parent = hex.transform;
                     village.transform.localPosition = Vector3.zero;
+                    var hasVillage = hex.AddComponent<HasVillage>();
+                    hasVillage.village = village;
                 }
             }
         }

@@ -4,10 +4,7 @@ using System.Collections.Generic;
 
 public class HexGrid : MonoBehaviour
 {
-    //following public variable is used to store the hex model prefab;
-    //instantiate it by dragging the prefab on this variable using unity editor
     public GameObject hexPrefab;
-    public GameObject villagePrefab;
     //next two variables can also be instantiated using unity editor
     public int gridWidth = 10;
     public int gridHeight = 20;
@@ -49,18 +46,27 @@ public class HexGrid : MonoBehaviour
         var initialPos = initialPosition();
         //Game object which is the parent of all the hex tiles
         var elements = new GameObject[gridWidth, gridHeight];
+        var board = new Dictionary<Point, Tile>();
         
         for (int y = 0; y < gridHeight; y++)
         {
-            for (int x = 0; x < gridWidth; x++)
+            for (float x = 0; x < gridWidth; x++)
             {
                 //GameObject assigned to hexPrefab public variable is cloned
                 var hex = (GameObject)Instantiate(hexPrefab);
                 //Current position in grid
                 hex.transform.position = toWorldPosition(initialPos, x, y);
                 hex.transform.parent = this.gameObject.transform;
-                elements[x, y] = hex;
+                var tile = new Tile((int)(x - (y / 2)), (int)y, hex);
+                hex.GetComponent<TileBehaviour>().tile = tile;
+                elements[(int)x, (int)y] = hex;
+                board.Add(tile.Location, tile);
             }
+        }
+
+        foreach (var value in board.Values)
+        {
+            value.FindNeighbours(board);
         }
 
         return elements;
@@ -85,6 +91,17 @@ public class HexGrid : MonoBehaviour
         foreach (var populator in populators)
         {
             populator.populate(grid);
+        }
+
+        Debug.Log(grid.GetLength(0) + " - " + grid.GetLength(1));
+        var start = grid[0, 0].GetComponent<TileBehaviour>().tile;
+        var end = grid[grid.GetLength(0) - 1, grid.GetLength(1) - 1].GetComponent<TileBehaviour>().tile;
+        var path = PathFinder.FindPath<Tile>(start, end, (a, b) => 1, (a) => 1);
+        Debug.Log(start.X + " - " + start.Y);
+        Debug.Log(end.X + " - " + end.Y);
+        foreach (var tile in path)
+        {
+            Debug.Log(tile.X + " - " + tile.Y);
         }
     }
 }
