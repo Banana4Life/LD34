@@ -33,7 +33,7 @@ public class Village : MonoBehaviour
     void Start()
     {
         radius = (random.Next(radiusSteps) * radiusStepScale + minRadius);
-        collider.radius = radius;
+        //collider.radius = radius;
         //transform.localScale = new Vector3(radius * 2, radius * 2);
 
         switch (random.Next(3))
