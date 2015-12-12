@@ -26,5 +26,9 @@ public class PlayerInput : MonoBehaviour {
                 Debug.Log(hit2d.transform.name);
             }
         }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 	}
 }
