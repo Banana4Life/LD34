@@ -527,7 +527,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1811316470}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -617,9 +617,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexPrefab: {fileID: 121562, guid: 6d7e5479e76959d419db0d3d70ac4f1a, type: 2}
-  villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
-  gridWidth: 16
-  gridHeight: 31
+  gridWidth: 31
+  gridHeight: 16
   populators:
   - {fileID: 1956102855}
   - {fileID: 1956102856}
