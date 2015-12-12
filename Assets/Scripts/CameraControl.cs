@@ -4,8 +4,9 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
 
     public Camera camera;
+    public float scrollspeed = 45;
 
-	// Use this for initialization
+    // Use this for initialization
 	void Start () {
 	
 	}
@@ -18,9 +19,9 @@ public class CameraControl : MonoBehaviour {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         camera.orthographicSize -= scroll * 4;
-        if (camera.orthographicSize < 2)
+        if (camera.orthographicSize < 3)
         {
-            camera.orthographicSize = 2;
+            camera.orthographicSize = 3;
         }
         else if(camera.orthographicSize > 30)
         {
@@ -28,7 +29,10 @@ public class CameraControl : MonoBehaviour {
         }
 
         Vector3 movement = new Vector3(-moveVert, moveHorz, 0);
-        //movement.Scale(new Vector3(1/camera.orthographicSize * 1.5f, 1/camera.orthographicSize * 1.5f, 1/camera.orthographicSize * 1.5f));
+
+        movement.Normalize();
+        var scaling = scrollspeed * camera.orthographicSize / camera.pixelHeight / 2;
+        movement.Scale(new Vector3(scaling, scaling, scaling));
         camera.transform.position = camera.transform.position + movement;
     }
 }

@@ -545,6 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1811316474}
+  scrollspeed: 45
 --- !u!1 &1956102852
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,4 +616,4 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6de673d1bfdfaf243910a61feea6f237, type: 3}
   m_Name: 
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
