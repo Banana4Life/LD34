@@ -9,8 +9,8 @@ public class HexGrid : MonoBehaviour
     public GameObject hexPrefab;
     public GameObject villagePrefab;
     //next two variables can also be instantiated using unity editor
-    public int gridWidth = 20;
-    public int gridHeight = 10;
+    public int gridWidth = 10;
+    public int gridHeight = 20;
 
     //Hexagon tile width and height in game world
     private float hexWidth;
