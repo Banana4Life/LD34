@@ -61,7 +61,7 @@ public class HexGrid : MonoBehaviour
                 hex.GetComponent<TileBehaviour>().tile = tile;
                 elements[(int)x, (int)y] = hex;
                 board.Add(tile.Location, tile);
-                //Debug.Log(tile.X + " - " + tile.Y);
+                // Debug.Log(hex.transform.position + " is tile: " + tile.X + " - " + tile.Y);
             }
         }
 

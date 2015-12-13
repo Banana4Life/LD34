@@ -48,11 +48,9 @@ public class Village : MonoBehaviour
                 faction = Faction.ENEMY;
                 break;
         }
-    }
-                
 
-	void Update ()
-    {
         renderer.color = faction.color;
+        var hexRenderer = transform.parent.gameObject.GetComponent<Renderer>();
+        hexRenderer.material.color = faction.color;
     }
 }
