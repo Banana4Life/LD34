@@ -804,7 +804,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1899473108}
-  - 114: {fileID: 1899473107}
   m_Layer: 0
   m_Name: Input
   m_TagString: Untagged
@@ -812,19 +811,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1899473107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1899473106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50cf6018c733312429c46f5ba92a4ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  trianglePrefab: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
 --- !u!4 &1899473108
 Transform:
   m_ObjectHideFlags: 0
@@ -896,7 +882,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
-  probability: 900
 --- !u!114 &1956102856
 MonoBehaviour:
   m_ObjectHideFlags: 0
