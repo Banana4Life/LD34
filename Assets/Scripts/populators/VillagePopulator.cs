@@ -15,10 +15,11 @@ public class VillagePopulator : GridPopulator
         {
             for (int y = 0; y < gameObjects.GetLength(1); y++)
             {
-                if (random.Next(probability) <= 100)
+                var hex = gameObjects[x, y];
+
+                if (random.Next(probability) <= 100 && hex.GetComponent<River>() == null)
                 {
                     var village = Instantiate(villagePrefab);
-                    var hex = gameObjects[x, y];
                     village.transform.parent = hex.transform;
                     village.transform.localPosition = Vector3.zero;
                 }
