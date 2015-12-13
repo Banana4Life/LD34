@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour {
 
-    //public Camera camera;
+    public Camera camera;
     public GameObject trianglePrefab;
 
     private static Tile startTile;
@@ -54,6 +54,8 @@ public class PlayerInput : MonoBehaviour {
         if (endTile != null)
         {
             Debug.Log("UP " + endTile.GameObject.transform.position);
+            var triangle = Instantiate(trianglePrefab);
+            triangle.transform.position = endTile.GameObject.transform.position;
         }
         startTile = null;
         endTile = null;
