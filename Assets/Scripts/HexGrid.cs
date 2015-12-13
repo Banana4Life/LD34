@@ -112,14 +112,14 @@ public class HexGrid : MonoBehaviour
         var path = PathFinder.FindPath<Tile>(start, end, distance, estimate);
         if (path != null)
         {
-            drawPath(path, Color.red);
+            drawPath(path, Color.red, t => t.GameObject.transform.position);
         }
     }
 
-    void drawPath(Path<Tile> path, Color color)
+    public static void drawPath<T>(IEnumerable<T> path, Color color, Func<T, Vector3> pos)
     {
         GameObject line = new GameObject("Debug_Line");
-        var positions = path.Select(t => t.GameObject.transform.position).ToArray();
+        var positions = path.Select(pos).ToArray();
         line.transform.position = positions.First();
         LineRenderer lr = line.AddComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Unlit/Color")) { color = color };
