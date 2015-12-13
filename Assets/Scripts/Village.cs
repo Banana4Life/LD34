@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using Random = System.Random;
 
@@ -59,7 +60,9 @@ public class Village : MonoBehaviour
     private SpriteRenderer renderer;
     public Faction faction = Faction.NEUTRAL;
     public Size size;
-    public float radius;
+    public bool flipX;
+    public bool flipY;
+    public float angle;
 
     public Vector3 defendingUnits;
     public Vector3 attackingUnits;
@@ -68,9 +71,12 @@ public class Village : MonoBehaviour
         renderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
         size = Size.random();
+        flipX = RANDOM.Next(2) != 0;
+        flipY = RANDOM.Next(2) != 0;
+        angle = RANDOM.Next(4) * 90;
 
-        //collider.radius = radius;
-        //transform.localScale = new Vector3(radius * 2, radius * 2);
+        gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
+        gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
 
         switch (RANDOM.Next(3))
         {
