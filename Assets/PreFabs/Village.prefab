@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 446932}
   - 212: {fileID: 21201770}
-  - 58: {fileID: 5837420}
   - 114: {fileID: 11489540}
   m_Layer: 0
   m_Name: Village
@@ -30,20 +29,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!58 &5837420
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 152360}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2
 --- !u!114 &11489540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,7 +117,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: collider
       value: 
-      objectReference: {fileID: 5837420}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: transform
       value: 
@@ -166,6 +151,10 @@ Prefab:
       propertyPath: villageTakenPrefab
       value: 
       objectReference: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}

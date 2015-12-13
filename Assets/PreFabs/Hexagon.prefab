@@ -12,7 +12,8 @@ GameObject:
   - 23: {fileID: 2378934}
   - 95: {fileID: 9586198}
   - 114: {fileID: 11431912}
-  - 64: {fileID: 6445074}
+  - 114: {fileID: 11492624}
+  - 58: {fileID: 5800754}
   m_Layer: 0
   m_Name: Hexagon
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121562}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.56979e-10, y: -7.56979e-10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -64,19 +65,21 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121562}
-  m_Mesh: {fileID: 4300000, guid: 53049a4f4912aa64e92caf82558dac2c, type: 3}
---- !u!64 &6445074
-MeshCollider:
+  m_Mesh: {fileID: 4300000, guid: 57373122dff420f42a4b1cdc14d9535f, type: 3}
+--- !u!58 &5800754
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121562}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 1
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Convex: 1
-  m_Mesh: {fileID: 4300000, guid: 53049a4f4912aa64e92caf82558dac2c, type: 3}
+  m_Radius: 2
 --- !u!95 &9586198
 Animator:
   serializedVersion: 3
@@ -105,6 +108,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209e4df7244b21a4fade9b65f3af397a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11492624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cf6018c733312429c46f5ba92a4ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trianglePrefab: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -138,7 +153,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.z
@@ -146,7 +161,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.y
@@ -158,6 +173,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 57373122dff420f42a4b1cdc14d9535f, type: 3}
+    - target: {fileID: 0}
+      propertyPath: trianglePrefab
+      value: 
+      objectReference: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_UsedByEffector
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
