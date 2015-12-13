@@ -150,6 +150,22 @@ public class RiverPopulator : GridPopulator
                 Debug.Log("(" + p.X + "," + p.Y + ")" + "->" + "(" + c.X + "," + c.Y + ")" + "->" + "(" + n.X + "," +
                           n.Y + ")" + " ~~> " + bendcase);
             }
+            else
+            {
+                if (i == path.Count - 1 && i > 0)
+                {
+                    riverHex.GetComponent<MeshRenderer>().material = lakeMat;
+                    var diff = (c.X - p.X) + "|" + (c.Y - p.Y);
+                    int rotation = 180;
+                    if (diff == "-1|0") rotation += 0;
+                    if (diff == "0|-1") rotation += 60;
+                    if (diff == "1|-1") rotation += 120;
+                    if (diff == "1|0") rotation += 180;
+                    if (diff == "0|1") rotation += 240;
+                    if (diff == "-1|1") rotation += 300;
+                    riverHex.transform.rotation = Quaternion.AngleAxis(-rotation, Vector3.forward);
+                }
+            }
         }
 
 
