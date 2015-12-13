@@ -53,11 +53,10 @@ public class Village : MonoBehaviour
         villageTaken.transform.parent = gameObject.transform;
         villageTaken.transform.localPosition = new Vector3(0, 0, -1);
         var villageTakenScript = villageTaken.GetComponent(typeof (Village_Taken)) as Village_Taken;
-        if (villageTakenScript != null)
+        if (villageTakenScript)
         {
             villageTakenScript.Adapt();
         }
-    }
                 
 
         renderer.color = faction.color;
