@@ -17,11 +17,9 @@ public class Village : MonoBehaviour
             this.color = color;
         }
     }
-
-    public GameObject gameObject;
-    public SpriteRenderer renderer;
-    public CircleCollider2D collider;
-    public Transform transform;
+    
+    public GameObject villageTakenPrefab;
+    private SpriteRenderer renderer;
     public Faction faction = Faction.NEUTRAL;
     public float radius;
     private static readonly Random random = new Random();
@@ -32,6 +30,8 @@ public class Village : MonoBehaviour
 
     void Start()
     {
+        renderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+
         radius = (random.Next(radiusSteps) * radiusStepScale + minRadius);
         //collider.radius = radius;
         //transform.localScale = new Vector3(radius * 2, radius * 2);
@@ -48,6 +48,17 @@ public class Village : MonoBehaviour
                 faction = Faction.ENEMY;
                 break;
         }
+
+        var villageTaken = Instantiate(villageTakenPrefab);
+        villageTaken.transform.parent = gameObject.transform;
+        villageTaken.transform.localPosition = new Vector3(0, 0, -1);
+        var villageTakenScript = villageTaken.GetComponent(typeof (Village_Taken)) as Village_Taken;
+        if (villageTakenScript != null)
+        {
+            villageTakenScript.Adapt();
+        }
+    }
+                
 
         renderer.color = faction.color;
         var hexRenderer = transform.parent.gameObject.GetComponent<Renderer>();
