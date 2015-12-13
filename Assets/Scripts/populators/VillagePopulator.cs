@@ -1,29 +1,73 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
-using Random = System.Random;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.Assertions.Comparers;
+using Random = UnityEngine.Random;
 
 public class VillagePopulator : GridPopulator
 {
     public GameObject villagePrefab;
-    public int probability = 900;
-
-    private static readonly Random random = new Random();
+    public int xStep = 2;
+    public int yStep = 2;
+    public int xOffset = 1;
+    public int yOffset = 1;
+    public float probability = .5f;
 
     public override void populate(GameObject[,] gameObjects)
     {
-        for (int x = 0; x < gameObjects.GetLength(0); x++)
-        {
-            for (int y = 0; y < gameObjects.GetLength(1); y++)
-            {
-                var hex = gameObjects[x, y];
+        var maxX = gameObjects.GetLength(0);
+        var maxY = gameObjects.GetLength(1);
 
-                if (random.Next(probability) <= 100 && hex.GetComponent<River>() == null)
-                {
-                    var village = Instantiate(villagePrefab);
-                    village.transform.parent = hex.transform;
-                    village.transform.localPosition = Vector3.zero;
-                }
+        var blocked = new HashSet<Tile>();
+
+        for (var i = 0; i < 1000; ++i)
+        {
+            var go = gameObjects[Random.Range(0, maxX), Random.Range(0, maxY)];
+            var t = Tile.of(go);
+            if (isValidSpace(t, blocked))
+            {
+                spawnVillage(go);
+                blocked.Add(t);
             }
         }
+    }
+
+    public bool isValidSpace(Tile t, HashSet<Tile> blocked)
+    {
+        if (blocked.Contains(t))
+        {
+            return false;
+        }
+        var N = 0;
+        foreach (var n in t.Neighbours)
+        {
+            blocked.Add(n);
+            N++;
+        }
+        if (N < 6)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void spawnVillage(GameObject tile)
+    {
+        var village = Instantiate(villagePrefab);
+        village.transform.parent = tile.transform;
+        village.transform.localPosition = Vector3.zero;
+    }
+
+    private bool isBigVillage(Tile t)
+    {
+        var v = t.GameObject.GetComponentInChildren<Village>();
+        if (!v)
+        {
+            Debug.Log(v);
+            return false;
+        }
+        return v.size == Village.Size.CASTLE;
     }
 }
