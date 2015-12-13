@@ -1,10 +1,16 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using Random = System.Random;
 
 public class Village : MonoBehaviour
 {
+    public static readonly float MIN_RADIUS = 0.3f;
+    public static readonly float RADIUS_STEP_SCALE = 0.12f;
+    private static readonly Random RANDOM = new Random();
+
+    // Village sprites
+    public static Sprite[] camp = Resources.LoadAll<Sprite>("villages");
+
     public class Faction
     {
         public static readonly Faction FRIENDLY = new Faction(Color.green);
@@ -17,26 +23,53 @@ public class Village : MonoBehaviour
             this.color = color;
         }
     }
-    
+
+    public class Size
+    {
+        public static int index = 0;
+
+        public static readonly Size CAMP = new Size();
+        public static readonly Size VILLAGE = new Size();
+        public static readonly Size CASTLE = new Size();
+
+        public readonly float radius;
+        public readonly Sprite sprite;
+
+        private static List<Size> SIZES;
+
+        private Size()
+        {
+            sprite = camp[index];
+            radius = MIN_RADIUS + (1 + index++) * RADIUS_STEP_SCALE;
+
+            if (SIZES == null)
+            {
+                SIZES = new List<Size>();
+            }
+            SIZES.Add(this);
+        }
+
+        public static Size random()
+        {
+            return SIZES[RANDOM.Next(index)];
+        }
+    }
+
     public GameObject villageTakenPrefab;
     private SpriteRenderer renderer;
     public Faction faction = Faction.NEUTRAL;
+    public Size size;
     public float radius;
-    private static readonly Random random = new Random();
 
-    public static readonly float MIN_RADIUS = 0.3f;
-    public static readonly int RADIUS_STEPS = 3;
-    public static readonly float RADIUS_STEP_SCALE = 0.12f;
-
-    void Start()
-    {
+    void Start() {
         renderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
-        radius = (random.Next(RADIUS_STEPS) * RADIUS_STEP_SCALE + MIN_RADIUS);
+        size = Size.random();
+
         //collider.radius = radius;
         //transform.localScale = new Vector3(radius * 2, radius * 2);
 
-        switch (random.Next(3))
+        switch (RANDOM.Next(3))
         {
             case 0:
                 faction = Faction.FRIENDLY;
@@ -49,6 +82,8 @@ public class Village : MonoBehaviour
                 break;
         }
 
+        renderer.sprite = size.sprite;
+
         var villageTaken = Instantiate(villageTakenPrefab);
         villageTaken.transform.parent = gameObject.transform;
         villageTaken.transform.localPosition = new Vector3(0, 0, -1);
@@ -57,8 +92,7 @@ public class Village : MonoBehaviour
         {
             villageTakenScript.Adapt();
         }
-
-        renderer.color = faction.color;
+        
         var hexRenderer = transform.parent.gameObject.GetComponent<Renderer>();
         hexRenderer.material.color = faction.color;
     }

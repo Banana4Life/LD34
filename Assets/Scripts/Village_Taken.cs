@@ -11,20 +11,19 @@ public class Village_Taken : MonoBehaviour
     public void Adapt ()
     {
         village = gameObject.GetComponentInParent(typeof (Village)) as Village;
-        float maxRadius = Village.MIN_RADIUS + Village.RADIUS_STEP_SCALE * (Village.RADIUS_STEPS - 1);
 
         if (village.faction != null)
         {
             if (village.faction == Village.Faction.ENEMY)
             {
-                if (Mathf.Abs(village.radius - maxRadius) <= 0.01)
+                if (village.size == Village.Size.CASTLE)
                 {
                     renderer.sprite = castleAlien;
                 }
             }
             else if (village.faction == Village.Faction.FRIENDLY)
             {
-                if (Mathf.Abs(village.radius - maxRadius) <= 0.01)
+                if (village.size == Village.Size.CASTLE)
                 {
                     renderer.sprite = castleLegionnaire;
                 }

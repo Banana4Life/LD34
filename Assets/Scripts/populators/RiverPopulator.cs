@@ -6,7 +6,10 @@ using Random = System.Random;
 public class RiverPopulator : GridPopulator
 {
     private static readonly Random random = new Random();
+    public Material bentMat;
+    public Material lakeMat;
     public GameObject riverPrefab;
+    public Material straightMat;
 
     private int getBendcase(Tile c, Tile p, Tile n)
     {
@@ -103,11 +106,11 @@ public class RiverPopulator : GridPopulator
 
 
             path.Add(nextTile);
-            nextTile.AddComponent<River>();
 
             var hexriver = Instantiate(riverPrefab);
             hexriver.transform.parent = nextTile.transform;
             hexriver.transform.localPosition = Vector3.back;
+            nextTile.AddComponent<River>();
 
             Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
@@ -115,9 +118,17 @@ public class RiverPopulator : GridPopulator
         HexGrid.drawPath(path, Color.blue, gameObject => gameObject.transform.position);
         for (var i = 0; i < path.Count; i++)
         {
-            var c = path[i].GetComponent<Tile>();
-            var p = i > 0 ? path[i - 1].GetComponent<Tile>() : null;
-            var n = i < path.Count - 1 ? path[i + 1].GetComponent<Tile>() : null;
+            var tileHex = path[i];
+            if (tileHex.transform.childCount == 0)
+            {
+                continue;
+            }
+            var riverHex = tileHex.transform.GetChild(0);
+
+            //current, previous, next
+            var c = tileHex.GetComponent<TileBehaviour>().tile;
+            var p = i > 0 ? path[i - 1].GetComponent<TileBehaviour>().tile : null;
+            var n = i < path.Count - 1 ? path[i + 1].GetComponent<TileBehaviour>().tile : null;
 
             var bendcase = getBendcase(c, p, n);
             if (bendcase == 0) bendcase = getBendcase(c, n, p);
@@ -125,38 +136,49 @@ public class RiverPopulator : GridPopulator
             int r;
             switch (bendcase)
             {
-                case 0:
-                    r = 0;
-                    Debug.LogWarning("no bendcase");
-                    break;
                 case 1:
                     r = 0;
+                    riverHex.GetComponent<MeshRenderer>().material = straightMat;
                     break;
                 case 2:
                     r = 60;
+                    riverHex.GetComponent<MeshRenderer>().material = straightMat;
                     break;
                 case 3:
                     r = 120;
+                    riverHex.GetComponent<MeshRenderer>().material = straightMat;
                     break;
                 case 4:
-                    r = 0;
+                    r = 120;
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
                     break;
                 case 5:
                     r = 60;
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
                     break;
                 case 6:
-                    r = 120;
+                    r = 0;
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
                     break;
                 case 7:
-                    r = 0;
+                    r = -60;
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
                     break;
                 case 8:
-                    r = 60;
+                    r = -120;
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
                     break;
                 case 9:
-                    r = 120;
+                    r = -180;
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
+                    break;
+                default:
+                    r = 0;
+                    riverHex.GetComponent<MeshRenderer>().material = lakeMat;
+                    Debug.LogWarning("no bendcase");
                     break;
             }
+            tileHex.transform.localEulerAngles.Set(0, 0, r);
         }
 
 

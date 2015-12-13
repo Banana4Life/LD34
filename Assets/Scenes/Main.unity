@@ -570,9 +570,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1899473106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 539041d4bea7cd4449d9809aa4663336, type: 3}
+  m_Script: {fileID: 11500000, guid: 50cf6018c733312429c46f5ba92a4ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trianglePrefab: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
 --- !u!4 &1899473108
 Transform:
   m_ObjectHideFlags: 0
@@ -657,3 +658,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   riverPrefab: {fileID: 121562, guid: 93a9eccfd7374d04bbdadad3c9568005, type: 2}
+  bentMat: {fileID: 2100000, guid: 5076fb7a47c36b34f94e95a39a4d6316, type: 2}
+  straightMat: {fileID: 2100000, guid: 4b89b8169308cc744867f3255fdf21f8, type: 2}
+  lakeMat: {fileID: 2100000, guid: 46a57d0c4d4e8584d83f36246edae077, type: 2}
