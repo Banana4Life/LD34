@@ -11,19 +11,45 @@ public class PlayerInput : MonoBehaviour {
 
     private static GameObject line;
 
+    private float force = 1;
+
+    public GameObject legUnit1;
+    public GameObject legUnit2;
+    public GameObject legUnit3;
+
     void OnMouseDown()
     {
-        startTile = Tile.of(gameObject);
-
-        var village = gameObject.GetComponentInChildren<Village>();
-        if (!village)
+        if (startTile != null)
         {
+            if (endTile != null)
+            {
+                if (endTile.GameObject.GetComponentInChildren<Village>())
+                {
+                    releaseLegion(new Vector3(force, force, force), startTile, endTile);
+                }
+            }
             startTile = null;
+            endTile = null;
+            if (line != null)
+            {
+                Destroy(line);
+                line = null;
+            }
         }
-
-        if (village.faction != Village.Faction.FRIENDLY)
+        else
         {
-            startTile = null;
+            startTile = Tile.of(gameObject);
+
+            var village = gameObject.GetComponentInChildren<Village>();
+            if (!village)
+            {
+                startTile = null;
+            }
+
+            if (village.faction != Village.Faction.FRIENDLY)
+            {
+                startTile = null;
+            }
         }
     }
 
@@ -49,27 +75,38 @@ public class PlayerInput : MonoBehaviour {
         }
     }
 
-    void OnMouseUp()
+    private void releaseLegion(Vector3 force, Tile start, Tile end)
     {
-        if (endTile != null)
-        {
-            if (endTile.GameObject.GetComponentInChildren<Village>())
-            {
-                var triangle = Instantiate(trianglePrefab);
-                var pos = endTile.GameObject.transform.position;
-                pos.z = -5;
-                triangle.transform.position = pos;
-                triangle.transform.parent = startTile.GameObject.transform;
+        Debug.Log("Release the Legion! Force:" + force + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
+        var startVillage = start.GameObject.GetComponentInChildren<Village>();
+        var endVillage = end.GameObject.GetComponentInChildren<Village>();
 
-                triangle.GetComponent<TriangleShape>().init(startTile, endTile);
+        Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
+        var group = new GameObject("Legion Group");
+        int amount = 50;
+        for (int i = 0; i < amount; i++)
+        {
+            switch ((int)(Random.value * 3))
+            {
+                // TODO
+                case 0:
+                    PathWalker.walk(spawn(legUnit1, startVillage.transform.position, group, amount / 50), start, end);
+                    break;
+                case 1:
+                    PathWalker.walk(spawn(legUnit2, startVillage.transform.position, group, amount / 50), start, end);
+                    break;
+                case 2:
+                    PathWalker.walk(spawn(legUnit3, startVillage.transform.position, group, amount / 50), start, end);
+                    break;
             }
         }
-        startTile = null;
-        endTile = null;
-        if (line != null)
-        {
-            Destroy(line);
-            line = null;
-        }
+    }
+
+    public GameObject spawn(GameObject type, Vector3 at, GameObject inHere, int spread)
+    {
+        var unit = Instantiate(type);
+        unit.transform.position = at + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
+        unit.transform.parent = inHere.transform;
+        return unit;
     }
 }

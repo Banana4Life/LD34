@@ -7,8 +7,6 @@ public class TriangleShape : MonoBehaviour
     public Camera camera;
     public Mesh mesh;
 
-    public GameObject legUnit1;
-
     private bool preparing = false;
 
     private Vector3 force;
@@ -116,7 +114,7 @@ public class TriangleShape : MonoBehaviour
         Destroy(theTriangle);
         theTriangle = null;
 
-        releaseLegion(force);
+        // releaseLegion(force);
     }
 
     private float toRate(Vector3 mouse, Vector3 point)
@@ -133,29 +131,7 @@ public class TriangleShape : MonoBehaviour
         }
         return len;
     }
-
-    private void releaseLegion(Vector3 force)
-    {
-        Debug.Log(start.GameObject + " " + end.GameObject);
-        var startVillage = start.GameObject.GetComponentInChildren<Village>();
-        var endVillage = end.GameObject.GetComponentInChildren<Village>();
-
-        Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
-        var group = new GameObject("Legion Group");
-        int amount = 50;
-        for (int i = 0; i < amount; i++)
-        {
-            PathWalker.walk(spawn(legUnit1, startVillage.transform.position, group, amount / 50), start, end);
-        }
-    }
-
-    public GameObject spawn(GameObject type, Vector3 at, GameObject inHere, int spread)
-    {
-        var unit = Instantiate(legUnit1);
-        unit.transform.position = at + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
-        unit.transform.parent = inHere.transform;
-        return unit;
-    }
+    
 
     public void init(Tile start, Tile end)
     {
