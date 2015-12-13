@@ -11,7 +11,7 @@ public class RiverPopulator : GridPopulator
     public GameObject riverPrefab;
     public Material straightMat;
 
-    private string getBendcase(Tile c, Tile p, Tile n)
+    private string getBendcase(int cx, int cy, int px, int py, int nx, int ny)
     {
         var snowflake = new Dictionary<string, string>();
         snowflake.Add(" 1|-1| 0|-1", "C|-60");
@@ -34,10 +34,10 @@ public class RiverPopulator : GridPopulator
         snowflake.Add(" 0|-1| 1|-1", "C|120");
 
         var diffs = new List<int>();
-        diffs.Add(c.X - p.X);
-        diffs.Add(c.Y - p.Y);
-        diffs.Add(n.X - c.X);
-        diffs.Add(n.Y - c.Y);
+        diffs.Add(cx - px);
+        diffs.Add(cy - py);
+        diffs.Add(nx - cx);
+        diffs.Add(ny - cy);
         var key = string.Join("|", diffs.Select(i => i.ToString().PadLeft(2)).ToArray());
         Debug.Log(key);
 
@@ -121,7 +121,7 @@ public class RiverPopulator : GridPopulator
 
             if (p != null && n != null)
             {
-                var bendcase = getBendcase(c, p, n);
+                var bendcase = getBendcase(c.X, c.Y, p.X, p.Y, n.X, n.Y);
                 var rotation = int.Parse(bendcase.Substring(2));
                 var type = bendcase.Substring(0, 1);
 
