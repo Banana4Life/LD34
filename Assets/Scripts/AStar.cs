@@ -116,6 +116,16 @@ public class Tile : GridObject, IHasNeighbours<Tile>
 
         Neighbours = neighbours;
     }
+
+    public static Tile of(GameObject obj)
+    {
+        var th = obj.GetComponent<TileBehaviour>();
+        if (th)
+        {
+            return th.tile;
+        }
+        return null;
+    }
 }
 
 public class Path<Node> : IEnumerable<Node>

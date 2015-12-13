@@ -12,6 +12,7 @@ GameObject:
   - 23: {fileID: 2378934}
   - 95: {fileID: 9586198}
   - 114: {fileID: 11431912}
+  - 64: {fileID: 6445074}
   m_Layer: 0
   m_Name: Hexagon
   m_TagString: Untagged
@@ -63,6 +64,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121562}
+  m_Mesh: {fileID: 4300000, guid: 53049a4f4912aa64e92caf82558dac2c, type: 3}
+--- !u!64 &6445074
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121562}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
   m_Mesh: {fileID: 4300000, guid: 53049a4f4912aa64e92caf82558dac2c, type: 3}
 --- !u!95 &9586198
 Animator:
@@ -138,6 +151,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
