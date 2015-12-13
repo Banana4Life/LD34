@@ -48,8 +48,6 @@ public class RiverPopulator : GridPopulator
     public
         override void populate(GameObject[,] gameObjects)
     {
-        if (true)
-            return;
         var borderTiles = new List<GameObject>();
 
         for (var x = 0; x < gameObjects.GetLength(0); x++)
