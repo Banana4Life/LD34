@@ -657,7 +657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de673d1bfdfaf243910a61feea6f237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riverPrefab: {fileID: 121562, guid: 93a9eccfd7374d04bbdadad3c9568005, type: 2}
   bentMat: {fileID: 2100000, guid: 5076fb7a47c36b34f94e95a39a4d6316, type: 2}
-  straightMat: {fileID: 2100000, guid: 4b89b8169308cc744867f3255fdf21f8, type: 2}
   lakeMat: {fileID: 2100000, guid: 46a57d0c4d4e8584d83f36246edae077, type: 2}
+  riverPrefab: {fileID: 121562, guid: 93a9eccfd7374d04bbdadad3c9568005, type: 2}
+  straightMat: {fileID: 2100000, guid: 4b89b8169308cc744867f3255fdf21f8, type: 2}
