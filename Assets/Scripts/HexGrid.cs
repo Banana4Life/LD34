@@ -81,17 +81,6 @@ public class HexGrid : MonoBehaviour
         hexHeight = size.y;
     }
 
-    double estimation(Tile tile, Tile end)
-    {
-        float deltaX = Mathf.Abs(end.X - tile.X);
-        float deltaY = Mathf.Abs(end.Y - tile.Y);
-        var z1 = -(tile.X + tile.Y);
-        var z2 = -(end.X + end.Y);
-        float deltaZ = Mathf.Abs(z2 - z1);
-
-        return Mathf.Max(deltaX, deltaY, deltaZ);
-    }
-
     //The grid should be generated on game start
     void Start()
     {
@@ -106,10 +95,7 @@ public class HexGrid : MonoBehaviour
         var start = grid[0, 0].GetComponent<TileBehaviour>().tile;
         var end = grid[grid.GetLength(0) - 1, grid.GetLength(1) - 1].GetComponent<TileBehaviour>().tile;
 
-        Func<Tile, Tile, double> distance = (last, current) => 1;
-        Func<Tile, double> estimate = (Tile tile) => this.estimation(tile, end);
-
-        var path = PathFinder.FindPath<Tile>(start, end, distance, estimate);
+        var path = PathFinder.FindPath<Tile>(start, end);
         if (path != null)
         {
             drawPath(path, Color.red, t => t.GameObject.transform.position);

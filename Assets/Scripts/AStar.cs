@@ -206,4 +206,23 @@ public static class PathFinder
 
         return null;
     }
+
+    public static Func<Node, double> defaultEstimation<Node>(Node destination) where Node : GridObject
+    {
+        return (tile) =>
+        {
+            float deltaX = Mathf.Abs(destination.X - tile.X);
+            float deltaY = Mathf.Abs(destination.Y - tile.Y);
+            var z1 = -(tile.X + tile.Y);
+            var z2 = -(destination.X + destination.Y);
+            float deltaZ = Mathf.Abs(z2 - z1);
+
+            return Mathf.Max(deltaX, deltaY, deltaZ);
+        };
+    }
+
+    public static Path<Node> FindPath<Node>(Node start, Node end) where Node : GridObject, IHasNeighbours<Node>
+    {
+        return FindPath(start, end, (n, n2) => 1, defaultEstimation(end));
+    }
 }
