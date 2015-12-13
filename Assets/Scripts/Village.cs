@@ -3,11 +3,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using Random = System.Random;
 
-public class Village : MonoBehaviour
+public class Village : TileObject
 {
     public static readonly float MIN_RADIUS = 0.3f;
     public static readonly float RADIUS_STEP_SCALE = 0.12f;
     private static readonly Random RANDOM = new Random();
+
+    public override bool canBePassed()
+    {
+        return false;
+    }
 
     // Village sprites
     public static Sprite[] camp = Resources.LoadAll<Sprite>("villages");

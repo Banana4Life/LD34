@@ -9,11 +9,6 @@ using Random = UnityEngine.Random;
 public class VillagePopulator : GridPopulator
 {
     public GameObject villagePrefab;
-    public int xStep = 2;
-    public int yStep = 2;
-    public int xOffset = 1;
-    public int yOffset = 1;
-    public float probability = .5f;
 
     public override void populate(GameObject[,] gameObjects)
     {
@@ -37,6 +32,10 @@ public class VillagePopulator : GridPopulator
     public bool isValidSpace(Tile t, HashSet<Tile> blocked)
     {
         if (blocked.Contains(t))
+        {
+            return false;
+        }
+        if (t.fromChildren<TileObject>())
         {
             return false;
         }
