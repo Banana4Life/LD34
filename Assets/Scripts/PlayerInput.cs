@@ -54,8 +54,14 @@ public class PlayerInput : MonoBehaviour {
         if (endTile != null)
         {
             Debug.Log("UP " + endTile.GameObject.transform.position);
-            var triangle = Instantiate(trianglePrefab);
-            triangle.transform.position = endTile.GameObject.transform.position;
+
+            if (endTile.GameObject.GetComponentInChildren<Village>())
+            {
+                var triangle = Instantiate(trianglePrefab);
+                var pos = endTile.GameObject.transform.position;
+                pos.z = -5;
+                triangle.transform.position = pos;
+            }
         }
         startTile = null;
         endTile = null;
@@ -65,11 +71,4 @@ public class PlayerInput : MonoBehaviour {
             line = null;
         }
     }
-    /*
-    TODO
-       if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    */
 }

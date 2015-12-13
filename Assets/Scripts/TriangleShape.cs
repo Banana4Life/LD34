@@ -5,6 +5,7 @@ using Math = System.Math;
 public class TriangleShape : MonoBehaviour
 {
     public Camera camera;
+    public Mesh mesh;
 
     private bool preparing = false;
 
@@ -15,20 +16,72 @@ public class TriangleShape : MonoBehaviour
     private Vector3 pointB;
     private Vector3 pointC;
 
-    private float sideLength;
+    private float toCenter;
     private float height;
+
+    private static GameObject theTriangle;
 
     void Start()
     {
-        height = (float)Math.Sqrt(sideLength * sideLength - sideLength / 2 * sideLength / 2);
-        // TODO init pointABC and sideLength
-        sideLength = (pointA - pointB).magnitude;
+        if (theTriangle != null)
+        {
+            Destroy(theTriangle);
+        }
+        theTriangle = gameObject;
+
+        this.camera = Camera.main;
+
+        var scaling = (camera.orthographicSize / camera.pixelHeight / 2) * 450;
+        var scale = new Vector3(scaling, scaling, scaling); ;
+        gameObject.transform.localScale = scale;
+
+        pointA = mesh.vertices[0]; 
+        pointB = mesh.vertices[1];
+        pointC = mesh.vertices[2];
+        pointA.z = 0;
+        pointB.z = 0;
+        pointC.z = 0;
+        pointA.Scale(scale);
+        pointA += gameObject.transform.position;
+        pointB.Scale(scale);
+        pointB += gameObject.transform.position;
+        pointC.Scale(scale);
+        pointC += gameObject.transform.position;
+
+        toCenter = (pointA - gameObject.transform.position).magnitude;
+        var sideLength = (pointA - pointB).magnitude;
+        height = (float)Math.Sqrt(toCenter * toCenter - (sideLength / 2 * sideLength / 2)) + toCenter;
+
+        Debug.Log("Init Triangle: " + pointA + ":" + pointB + ":" + pointC + " - l=" + sideLength + " c = " + toCenter + " h=" + height + " sc=" + scaling);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(pointA, toCenter);
+        Gizmos.DrawWireSphere(pointB, toCenter);
+        Gizmos.DrawWireSphere(pointC, toCenter);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(pointA, height);
+        Gizmos.DrawWireSphere(pointB, height);
+        Gizmos.DrawWireSphere(pointC, height);
     }
 
     void Update()
     {
         if (preparing)
         {
+            var pos = camera.ScreenToWorldPoint(Input.mousePosition);
+            pos.z = -5;
+            rate = new Vector3(toRate(pos, pointA), toRate(pos, pointB), toRate(pos, pointC));
+
+            Debug.Log("##A" + (pos - pointA) + " m=" + (pos - pointA).magnitude + " = " + toRate(pos, pointA));
+            Debug.Log("##B" + (pos - pointB) + " m=" + (pos - pointB).magnitude + " = " + toRate(pos, pointB));
+            Debug.Log("##C" + (pos - pointC) + " m=" + (pos - pointC).magnitude + " = " + toRate(pos, pointC));
+
+            Debug.Log("Pos:" + pos + " at rate " + rate);
+
             force += rate;
         }
     }
@@ -37,33 +90,35 @@ public class TriangleShape : MonoBehaviour
     {
         Debug.Log("Preparing Attack...");
         preparing = true;
+        force = Vector3.zero;
+
+        var pos = camera.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0;
+        rate = new Vector3(toRate(pos, pointA), toRate(pos, pointB), toRate(pos, pointC));
+
+        Debug.Log("Pos:" + pos + " at rate " + rate);
     }
 
     void OnMouseUp()
     {
         Debug.Log("Release the Legion! Force:" + force);
         preparing = false;
+        Destroy(theTriangle);
+        theTriangle = null;
     }
-
-    void OnMouseMove()
-    {
-        if (preparing)
-        {
-            var pos = camera.ScreenToWorldPoint(Input.mousePosition);
-            pos.z = 0;
-
-            rate = new Vector3(toRate(pos, pointA), toRate(pos, pointB), toRate(pos, pointC));
-        }
-    }
-
 
     private float toRate(Vector3 mouse, Vector3 point)
     {
         var len = (mouse - point).magnitude;
-        if (len > 0)
+        if (len <= toCenter)
         {
-            return 1;
+            return 100;
         }
-        return -len / (height - sideLength / 2);
+        len = 100 * (height - len) / (height - toCenter);
+        if (len < 0)
+        {
+            len = 0;
+        }
+        return len;
     }
 }
