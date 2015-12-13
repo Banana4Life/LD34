@@ -55,6 +55,8 @@ public class RiverPopulator : GridPopulator
             GameObject nextTile = allowedNeighbours[random.Next(0, allowedNeighbours.Count)];
 
             path.Add(nextTile);
+            nextTile.AddComponent<River>();
+
             Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
 
