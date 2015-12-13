@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.76.0 commit date:2015-11-03, commit time:10:56, hash:f337fea</authoring_tool>
     </contributor>
-    <created>2015-12-13T15:43:57</created>
-    <modified>2015-12-13T15:43:57</modified>
+    <created>2015-12-13T18:31:40</created>
+    <modified>2015-12-13T18:31:40</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -35,7 +35,7 @@
           </technique_common>
         </source>
         <source id="Circle-mesh-map-0">
-          <float_array id="Circle-mesh-map-0-array" count="6">0.5 0.8702116 9.31025e-5 0.004347264 0.999907 0.004347324</float_array>
+          <float_array id="Circle-mesh-map-0-array" count="6">0.5 0.8702116 9.31025e-5 0.004347205 0.999907 0.004347324</float_array>
           <technique_common>
             <accessor source="#Circle-mesh-map-0-array" count="3" stride="2">
               <param name="S" type="float"/>
@@ -59,9 +59,9 @@
   <library_controllers/>
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
-      <node id="Circle" name="Circle" type="NODE">
+      <node id="Triangle" name="Triangle" type="NODE">
         <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
-        <instance_geometry url="#Circle-mesh" name="Circle"/>
+        <instance_geometry url="#Circle-mesh" name="Triangle"/>
       </node>
     </visual_scene>
   </library_visual_scenes>
