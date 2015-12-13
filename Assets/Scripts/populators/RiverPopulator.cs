@@ -7,6 +7,7 @@ using System.Linq;
 public class RiverPopulator : GridPopulator
 {
     private static readonly Random random = new Random();
+    public GameObject riverPrefab;
 
     override
     public void populate(GameObject[,] gameObjects)
@@ -54,13 +55,28 @@ public class RiverPopulator : GridPopulator
 
             GameObject nextTile = allowedNeighbours[random.Next(0, allowedNeighbours.Count)];
 
+
             path.Add(nextTile);
             nextTile.AddComponent<River>();
+
+            var hexriver = Instantiate(riverPrefab);
+            hexriver.transform.parent = nextTile.transform;
+            hexriver.transform.localPosition = Vector3.up;
 
             Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
 
         HexGrid.drawPath(path, Color.blue, gameObject => gameObject.transform.position);
+        for (int i = 0; i < path.Count; i++)
+        {
+            var cur = path[i];
+            var prev = (i > 0 ? path[i-1] : null);
+            var next = (i < path.Count - 1 ? path[i+1] : null);
+
+
+        }
+
+
         /*        if (random.Next(probability) <= 100)
                 {
                     var village = Instantiate(villagePrefab);
