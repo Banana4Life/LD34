@@ -24,15 +24,15 @@ public class Village : MonoBehaviour
     public float radius;
     private static readonly Random random = new Random();
 
-    public float minRadius = 0.3f;
-    public int radiusSteps = 3;
-    public float radiusStepScale = 0.12f;
+    public static readonly float MIN_RADIUS = 0.3f;
+    public static readonly int RADIUS_STEPS = 3;
+    public static readonly float RADIUS_STEP_SCALE = 0.12f;
 
     void Start()
     {
         renderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
-        radius = (random.Next(radiusSteps) * radiusStepScale + minRadius);
+        radius = (random.Next(RADIUS_STEPS) * RADIUS_STEP_SCALE + MIN_RADIUS);
         //collider.radius = radius;
         //transform.localScale = new Vector3(radius * 2, radius * 2);
 
