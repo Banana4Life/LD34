@@ -102,7 +102,7 @@ public class HexGrid : MonoBehaviour
         }
     }
 
-    public static void drawPath<T>(IEnumerable<T> path, Color color, Func<T, Vector3> pos)
+    public static GameObject drawPath<T>(IEnumerable<T> path, Color color, Func<T, Vector3> pos)
     {
         GameObject line = new GameObject("Debug_Line");
         var positions = path.Select(pos).ToArray();
@@ -112,5 +112,6 @@ public class HexGrid : MonoBehaviour
         lr.SetWidth(0.5f, 0.5f);
         lr.SetVertexCount(positions.Length);
         lr.SetPositions(positions);
+        return line;
     }
 }

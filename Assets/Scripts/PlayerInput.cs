@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour {
     private static Tile startTile;
     private static Tile endTile;
 
+    private static GameObject line;
+
     void OnMouseDown()
     {
         startTile = Tile.of(gameObject);
@@ -33,13 +35,18 @@ public class PlayerInput : MonoBehaviour {
             gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
             var path = PathFinder.FindPath(startTile, Tile.of(gameObject));
-            HexGrid.drawPath(path, Color.yellow, t => t.GameObject.transform.position);
+            line = HexGrid.drawPath(path, Color.yellow, t => t.GameObject.transform.position);
         }
     }
 
-    void OnMouseLeave()
+    void OnMouseExit()
     {
-        // TODO delete prev. path if present
+        if (line != null)
+        {
+            Debug.Log("LEAVE " + gameObject.transform.position + " ### " + endTile.X + "x" + endTile.Y);
+            Destroy(line);
+            line = null;
+        }
     }
 
     void OnMouseUp()
@@ -50,6 +57,11 @@ public class PlayerInput : MonoBehaviour {
         }
         startTile = null;
         endTile = null;
+        if (line != null)
+        {
+            Destroy(line);
+            line = null;
+        }
     }
     /*
     TODO
