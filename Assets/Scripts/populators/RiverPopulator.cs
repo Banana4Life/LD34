@@ -64,7 +64,7 @@ public class RiverPopulator : GridPopulator
 
         var path = new List<GameObject>();
         path.Add(borderTiles[random.Next(0, borderTiles.Count)]);
-        //Debug.Log("rivered " + path[0].GetComponent<TileBehaviour>().tile);
+        //Debug.Log("rivered " + path[0].GetComponent<TileHolder>().tile);
 
         var blockedNeighbours = new List<GameObject>();
 
@@ -72,7 +72,7 @@ public class RiverPopulator : GridPopulator
         //activate after first tile and exit when hitting next border tile
         do
         {
-            var neighbours = path.Last().GetComponent<TileBehaviour>().tile.Neighbours.Select(n => n.GameObject);
+            var neighbours = path.Last().GetComponent<TileHolder>().tile.Neighbours.Select(n => n.GameObject);
 
             var allowedNeighbours =
                 neighbours.Where(go => !path.Contains(go) && !blockedNeighbours.Contains(go)).ToList();
@@ -99,7 +99,7 @@ public class RiverPopulator : GridPopulator
             hexriver.transform.localPosition = Vector3.back;
             nextTile.AddComponent<River>();
 
-            //Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
+            //Debug.Log("rivered " + nextTile.GetComponent<TileHolder>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
 
         //HexGrid.drawPath(path, Color.blue, gameObject => gameObject.transform.position);
@@ -114,9 +114,9 @@ public class RiverPopulator : GridPopulator
             var riverHex = tileHex.transform.GetChild(0);
 
             //current, previous, next
-            var c = tileHex.GetComponent<TileBehaviour>().tile;
-            var p = i > 0 ? path[i - 1].GetComponent<TileBehaviour>().tile : null;
-            var n = i < path.Count - 1 ? path[i + 1].GetComponent<TileBehaviour>().tile : null;
+            var c = tileHex.GetComponent<TileHolder>().tile;
+            var p = i > 0 ? path[i - 1].GetComponent<TileHolder>().tile : null;
+            var n = i < path.Count - 1 ? path[i + 1].GetComponent<TileHolder>().tile : null;
 
 
             if (p != null && n != null)

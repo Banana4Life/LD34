@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TileBehaviour : MonoBehaviour
+public class TileHolder : MonoBehaviour
 {
     public Tile tile;
 }

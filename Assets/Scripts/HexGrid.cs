@@ -58,7 +58,7 @@ public class HexGrid : MonoBehaviour
                 hex.transform.position = toWorldPosition(initialPos, x, y);
                 hex.transform.parent = this.gameObject.transform;
                 var tile = new Tile((int)(x - (y / 2)), (int)y, hex);
-                hex.GetComponent<TileBehaviour>().tile = tile;
+                hex.GetComponent<TileHolder>().tile = tile;
                 elements[(int)x, (int)y] = hex;
                 board.Add(tile.Location, tile);
                 // Debug.Log(hex.transform.position + " is tile: " + tile.X + " - " + tile.Y);

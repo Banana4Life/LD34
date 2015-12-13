@@ -35,6 +35,10 @@ public class VillagePopulator : GridPopulator
         {
             return false;
         }
+        if (t.fromChildren<TileObject>())
+        {
+            return false;
+        }
         var N = 0;
         foreach (var n in t.Neighbours)
         {
