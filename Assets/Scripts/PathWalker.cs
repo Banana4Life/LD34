@@ -45,9 +45,11 @@ public class PathWalker : MonoBehaviour
 	    }
 	}
 
-    public static void walk(GameObject unit, Tile start, Tile end)
+    public static void walk(GameObject unit, Tile end)
     {
         var walker = unit.AddComponent<PathWalker>();
-        walker.followPath(PathFinder.FindPath(start, end));
+        var list = new List<Tile>();
+        list.Add(end);
+        walker.followPath(list);
     }
 }

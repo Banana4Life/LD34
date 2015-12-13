@@ -91,20 +91,6 @@ public class HexGrid : MonoBehaviour
         {
             populator.populate(grid);
         }
-
-        var start = grid[0, 0].GetComponent<TileBehaviour>().tile;
-        var end = grid[grid.GetLength(0) - 1, grid.GetLength(1) - 1].GetComponent<TileBehaviour>().tile;
-
-        var path = PathFinder.FindPath<Tile>(start, end);
-        if (path != null)
-        {
-            drawPath(path, Color.red, t => t.GameObject.transform.position);
-        }
-
-        // TODO spawn me somewhere else!
-        var walker = GameObject.Find("legionnaire_spear").AddComponent<PathWalker>();
-        walker.followPath(path);
-
     }
 
     public static GameObject drawPath<T>(IEnumerable<T> path, Color color, Func<T, Vector3> pos)

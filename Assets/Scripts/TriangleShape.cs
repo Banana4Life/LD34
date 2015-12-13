@@ -141,14 +141,19 @@ public class TriangleShape : MonoBehaviour
         var endVillage = end.GameObject.GetComponentInChildren<Village>();
 
         Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
+        var group = new GameObject("Legion Group");
+        for (int i = 0; i < 100; i++)
+        {
+            PathWalker.walk(spawn(legUnit1, startVillage.transform.position, group), end);
 
-        PathWalker.walk(spawn(legUnit1, startVillage.transform.position), start, end);
+        }
     }
 
-    public GameObject spawn(GameObject type, Vector3 at)
+    public GameObject spawn(GameObject type, Vector3 at, GameObject inHere)
     {
         var unit = Instantiate(legUnit1);
         unit.transform.position = at;
+        unit.transform.parent = inHere.transform;
         return unit;
     }
 
