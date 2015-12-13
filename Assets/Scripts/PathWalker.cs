@@ -11,6 +11,8 @@ public class PathWalker : MonoBehaviour
     private float speed = 0.08f;
     private float rotationSpeed = 0.11f;
 
+    private float avoidRecover = 0;
+
     public void followPath(IEnumerable<Tile> path, bool invert = true)
     {
         this.path = invert ? path.Reverse() : path;
@@ -43,13 +45,43 @@ public class PathWalker : MonoBehaviour
 	            Destroy(this);
 	        }
 	    }
-	}
 
-    public static void walk(GameObject unit, Tile end)
+
+        if (avoidRecover > 0)
+        {
+            avoidRecover -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            foreach (Transform child in transform.parent)
+            {
+                if (transform != child)
+                {
+                    if ((transform.position - child.position).sqrMagnitude < 1)
+                    {
+                        var childWalker = child.GetComponent<PathWalker>();
+                        if (childWalker && childWalker.avoidRecover <= 0)
+                        {
+                            var randRot = transform.rotation;
+                            randRot.z += (Random.value - 0.5f) / 7;
+                            transform.rotation = randRot;
+
+                            if (avoidRecover <= 0)
+                            {
+                                avoidRecover = (Random.value);
+                                speed = 0.08f - Random.value / 500;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void walk(GameObject unit, Tile start, Tile end)
     {
         var walker = unit.AddComponent<PathWalker>();
-        var list = new List<Tile>();
-        list.Add(end);
-        walker.followPath(list);
+        walker.followPath(PathFinder.FindPath<Tile>(start, end));
     }
 }
