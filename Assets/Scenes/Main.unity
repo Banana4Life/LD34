@@ -658,3 +658,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de673d1bfdfaf243910a61feea6f237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  riverPrefab: {fileID: 121562, guid: 93a9eccfd7374d04bbdadad3c9568005, type: 2}
