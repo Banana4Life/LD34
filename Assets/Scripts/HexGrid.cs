@@ -1,15 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class HexGrid : MonoBehaviour
 {
+
     public GameObject hexPrefab;
-    //next two variables can also be instantiated using unity editor
     public int gridWidth = 10;
     public int gridHeight = 20;
 
-    //Hexagon tile width and height in game world
     private float hexWidth;
     private float hexHeight;
 
@@ -61,6 +61,7 @@ public class HexGrid : MonoBehaviour
                 hex.GetComponent<TileBehaviour>().tile = tile;
                 elements[(int)x, (int)y] = hex;
                 board.Add(tile.Location, tile);
+                //Debug.Log(tile.X + " - " + tile.Y);
             }
         }
 
@@ -73,13 +74,22 @@ public class HexGrid : MonoBehaviour
 
     }
 
-    //Method to initialise Hexagon width and height
     void setSizes()
     {
-        //renderer component attached to the hexPrefab prefab is used to get the current width and height
         var size = hexPrefab.GetComponent<Renderer>().bounds.size;
         hexWidth = size.x;
         hexHeight = size.y;
+    }
+
+    double estimation(Tile tile, Tile end)
+    {
+        float deltaX = Mathf.Abs(end.X - tile.X);
+        float deltaY = Mathf.Abs(end.Y - tile.Y);
+        var z1 = -(tile.X + tile.Y);
+        var z2 = -(end.X + end.Y);
+        float deltaZ = Mathf.Abs(z2 - z1);
+
+        return Mathf.Max(deltaX, deltaY, deltaZ);
     }
 
     //The grid should be generated on game start
@@ -93,15 +103,33 @@ public class HexGrid : MonoBehaviour
             populator.populate(grid);
         }
 
-        Debug.Log(grid.GetLength(0) + " - " + grid.GetLength(1));
         var start = grid[0, 0].GetComponent<TileBehaviour>().tile;
         var end = grid[grid.GetLength(0) - 1, grid.GetLength(1) - 1].GetComponent<TileBehaviour>().tile;
-        var path = PathFinder.FindPath<Tile>(start, end, (a, b) => 1, (a) => 1);
-        Debug.Log(start.X + " - " + start.Y);
-        Debug.Log(end.X + " - " + end.Y);
+
+        Func<Tile, Tile, double> distance = (last, current) => 1;
+        Func<Tile, double> estimate = (Tile tile) => this.estimation(tile, end);
+
+        var path = PathFinder.FindPath<Tile>(start, end, distance, estimate);
+        GameObject lastHex = null;
         foreach (var tile in path)
         {
-            Debug.Log(tile.X + " - " + tile.Y);
+            if (lastHex) {
+                var hex = tile.GameObject;
+                drawLine(lastHex.transform.position, hex.transform.position, Color.red);
+            }
+            lastHex = tile.GameObject;
         }
+    }
+
+    void drawLine(Vector3 start, Vector3 end, Color color)
+    {
+        GameObject myLine = new GameObject("Debug_Line");
+        myLine.transform.position = start;
+        LineRenderer lr = myLine.AddComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Particles/Additive"));
+        lr.SetColors(color, color);
+        lr.SetWidth(0.5f, 0.5f);
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
     }
 }

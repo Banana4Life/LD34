@@ -19,6 +19,21 @@ public struct Point
     {
         return new Point(X + p.X, Y + p.Y);
     }
+
+    public override int GetHashCode()
+    {
+        return X + 31 * Y;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Point)
+        {
+            var p = (Point)obj;
+            return X == p.X && Y == p.Y;
+        }
+        return false;
+    }
 }
 
 //abstract class implemented by Tile class
@@ -44,7 +59,7 @@ public abstract class GridObject
 //interface that should be implemented by grid nodes used in E. Lippert's generic path finding implementation
 public interface IHasNeighbours<N>
 {
-    IEnumerable<N> FreeNeighbours { get; }
+    IEnumerable<N> FreeNeighbours(N desitination);
 }
 
 public class Tile : GridObject, IHasNeighbours<Tile>
@@ -59,15 +74,16 @@ public class Tile : GridObject, IHasNeighbours<Tile>
     public bool canBePassed()
     {
         //return this.GameObject.GetComponent<HasVillage>() != null;
-        //return this.GameObject.GetComponentInChildren<Village>() != null;
-        return true;
+        return this.GameObject.GetComponentInChildren<Village>() == null;
+        //return true;
     }
 
     public IEnumerable<Tile> Neighbours { get; set; }
-    public IEnumerable<Tile> FreeNeighbours
+    public IEnumerable<Tile> FreeNeighbours(Tile destination)
     {
-        get { return Neighbours.Where(o => o.canBePassed()); }
+        return Neighbours.Where(t => t.canBePassed() || t == destination);
     }
+
     public static List<Point> NeighbourShift
     {
         get
@@ -164,9 +180,7 @@ public static class PathFinder
     public static Path<Node> FindPath<Node>(Node start, Node destination,
         Func<Node, Node, double> distance, Func<Node, double> estimate) where Node : IHasNeighbours<Node>
     {
-        //set of already checked nodes
-        var closed = new HashSet<Node>();
-        //queued nodes in open set
+        var alreadyChecked = new HashSet<Node>();
         var queue = new PriorityQueue<double, Path<Node>>();
         queue.Enqueue(0, new Path<Node>(start));
 
@@ -174,14 +188,14 @@ public static class PathFinder
         {
             var path = queue.Dequeue();
 
-            if (closed.Contains(path.LastStep))
+            if (alreadyChecked.Contains(path.LastStep))
                 continue;
             if (path.LastStep.Equals(destination))
                 return path;
 
-            closed.Add(path.LastStep);
+            alreadyChecked.Add(path.LastStep);
 
-            foreach (Node n in path.LastStep.FreeNeighbours)
+            foreach (Node n in path.LastStep.FreeNeighbours(destination))
             {
                 double d = distance(path.LastStep, n);
                 //new step added without modifying current path
