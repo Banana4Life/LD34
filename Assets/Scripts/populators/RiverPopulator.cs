@@ -11,48 +11,38 @@ public class RiverPopulator : GridPopulator
     public GameObject riverPrefab;
     public Material straightMat;
 
-    private int getBendcase(Tile c, Tile p, Tile n)
+    private string getBendcase(Tile c, Tile p, Tile n)
     {
-        if (p != null && n != null)
-        {
-            if (p.Y == n.Y)
-            {
-                return 1;
-            }
-            if (p.X == n.X)
-            {
-                return 2;
-            }
-            if ((p.X + n.X)/2 == c.X && (p.Y + n.Y)/2 == c.Y)
-            {
-                return 3;
-            }
-            if (p.Y == c.Y && c.X == n.X)
-            {
-                return 4;
-            }
-            if (p.X == c.X && c.X - 1 == n.X && c.Y + 1 == n.X)
-            {
-                return 5;
-            }
-            if (p.Y == c.Y && c.X + 1 == n.X && c.Y - 1 == n.Y)
-            {
-                return 6;
-            }
-            if (p.X == c.X && c.Y == n.Y)
-            {
-                return 7;
-            }
-            if (c.X + 1 == p.X && c.Y - 1 == p.Y && c.X == n.X)
-            {
-                return 8;
-            }
-            if (p.Y == n.Y && c.X - 1 == n.X && c.Y + 1 == n.Y)
-            {
-                return 9;
-            }
-        }
-        return 0;
+        var snowflake = new Dictionary<string, string>();
+        snowflake.Add(" 1|-1| 0|-1", "C|-60");
+        snowflake.Add(" 1|-1| 1|-1", "S|-60");
+        snowflake.Add(" 1|-1| 1| 0", "C|180");
+        snowflake.Add(" 1| 0| 1|-1", "C|0");
+        snowflake.Add(" 1| 0| 1| 0", "S|0");
+        snowflake.Add(" 1| 0| 0| 1", "C|-120");
+        snowflake.Add(" 0| 1| 1| 0", "C|60");
+        snowflake.Add(" 0| 1| 0| 1", "S|60");
+        snowflake.Add(" 0| 1|-1| 1", "C|-60");
+        snowflake.Add("-1| 1| 0| 1", "C|120");
+        snowflake.Add("-1| 1|-1| 1", "S|-60");
+        snowflake.Add("-1| 1|-1| 0", "C|0");
+        snowflake.Add("-1| 0|-1| 1", "C|180");
+        snowflake.Add("-1| 0|-1| 0", "S|0");
+        snowflake.Add("-1| 0| 0|-1", "C|60");
+        snowflake.Add(" 0|-1|-1| 0", "C|-120");
+        snowflake.Add(" 0|-1| 0|-1", "S|60");
+        snowflake.Add(" 0|-1| 1|-1", "C|120");
+
+        var diffs = new List<int>();
+        diffs.Add(c.X - p.X);
+        diffs.Add(c.Y - p.Y);
+        diffs.Add(n.X - c.X);
+        diffs.Add(n.Y - c.Y);
+        var key = string.Join("|", diffs.Select(i => i.ToString().PadLeft(2)).ToArray());
+        Debug.Log(key);
+
+        var lookup = snowflake[key];
+        return lookup == null ? "L|0" : lookup;
     }
 
     public
@@ -76,9 +66,8 @@ public class RiverPopulator : GridPopulator
 
         var path = new List<GameObject>();
         path.Add(borderTiles[random.Next(0, borderTiles.Count)]);
-        Debug.Log("rivered " + path[0].GetComponent<TileBehaviour>().tile);
+        //Debug.Log("rivered " + path[0].GetComponent<TileBehaviour>().tile);
 
-        Debug.Log(path.Contains(path[0]));
         var blockedNeighbours = new List<GameObject>();
 
 
@@ -112,10 +101,11 @@ public class RiverPopulator : GridPopulator
             hexriver.transform.localPosition = Vector3.back;
             nextTile.AddComponent<River>();
 
-            Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
+            //Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
 
-        HexGrid.drawPath(path, Color.blue, gameObject => gameObject.transform.position);
+        //HexGrid.drawPath(path, Color.blue, gameObject => gameObject.transform.position);
+
         for (var i = 0; i < path.Count; i++)
         {
             var tileHex = path[i];
@@ -130,55 +120,38 @@ public class RiverPopulator : GridPopulator
             var p = i > 0 ? path[i - 1].GetComponent<TileBehaviour>().tile : null;
             var n = i < path.Count - 1 ? path[i + 1].GetComponent<TileBehaviour>().tile : null;
 
-            var bendcase = getBendcase(c, p, n);
-            if (bendcase == 0) bendcase = getBendcase(c, n, p);
 
-            int r;
-            switch (bendcase)
+            if (p != null && n != null)
             {
-                case 1:
-                    r = 0;
+                var bendcase = getBendcase(c, p, n);
+                var rotation = int.Parse(bendcase.Substring(2));
+                var type = bendcase.Substring(0, 1);
+
+                if (type == "C")
+                {
+                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
+                }
+                else if (type == "S")
+                {
                     riverHex.GetComponent<MeshRenderer>().material = straightMat;
-                    break;
-                case 2:
-                    r = 60;
-                    riverHex.GetComponent<MeshRenderer>().material = straightMat;
-                    break;
-                case 3:
-                    r = 120;
-                    riverHex.GetComponent<MeshRenderer>().material = straightMat;
-                    break;
-                case 4:
-                    r = 120;
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
-                    break;
-                case 5:
-                    r = 60;
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
-                    break;
-                case 6:
-                    r = 0;
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
-                    break;
-                case 7:
-                    r = -60;
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
-                    break;
-                case 8:
-                    r = -120;
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
-                    break;
-                case 9:
-                    r = -180;
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
-                    break;
-                default:
-                    r = 0;
+                }
+                else if (type == "L")
+                {
+                    riverHex.GetComponent<MeshRenderer>().material = lakeMat;
+                }
+                else
+                {
                     riverHex.GetComponent<MeshRenderer>().material = lakeMat;
                     Debug.LogWarning("no bendcase");
-                    break;
+                }
+                var q = Quaternion.AngleAxis(-rotation, Vector3.forward);
+                riverHex.transform.rotation = q;
+                //riverHex.transform.localEulerAngles.Set(0, 0, rotation);
+                //riverHex.transform.localRotation.Set(0,0,rotation,0);
+
+                Debug.Log("(" + p.X + "," + p.Y + ")" + "->" + "(" + c.X + "," + c.Y + ")" + "->" + "(" + n.X + "," +
+                          n.Y + ")" + " ~~> " + bendcase);
             }
-            tileHex.transform.localEulerAngles.Set(0, 0, r);
         }
 
 
