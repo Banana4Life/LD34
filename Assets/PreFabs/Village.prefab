@@ -55,10 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6232de4e20584d8730c43b42f654a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 152360}
-  renderer: {fileID: 21201770}
-  collider: {fileID: 5837420}
-  transform: {fileID: 446932}
+  villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
   radius: 0
   minRadius: 0.3
   radiusSteps: 3
@@ -89,8 +86,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5bd85bdb5d7cb3840bb8032d54b6f384, type: 3}
-  m_Color: {r: 0.4068966, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 21300002, guid: 5bd85bdb5d7cb3840bb8032d54b6f384, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
@@ -102,11 +99,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Color.r
-      value: 0.4068966
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
@@ -159,12 +156,16 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5bd85bdb5d7cb3840bb8032d54b6f384,
+      objectReference: {fileID: 21300002, guid: 5bd85bdb5d7cb3840bb8032d54b6f384,
         type: 3}
     - target: {fileID: 0}
       propertyPath: m_UsedByEffector
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: villageTakenPrefab
+      value: 
+      objectReference: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
