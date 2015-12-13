@@ -1,14 +1,22 @@
 fileFormatVersion: 2
-guid: 57373122dff420f42a4b1cdc14d9535f
-timeCreated: 1450010443
+guid: a35e8db4b0d38eb47a1695fde0dd0964
+timeCreated: 1450015105
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
+    100000: Camera
+    100002: Hexagon
+    100004: //RootNode
+    100006: Lamp
+    400000: Camera
+    400002: Hexagon
+    400004: //RootNode
+    400006: Lamp
+    2300000: Hexagon
+    2300002: //RootNode
+    3300000: Hexagon
+    3300002: //RootNode
     4300000: Hexagon
     9500000: //RootNode
   materials:

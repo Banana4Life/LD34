@@ -5,12 +5,45 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.76.0 commit date:2015-11-03, commit time:10:56, hash:f337fea</authoring_tool>
     </contributor>
-    <created>2015-12-13T13:40:38</created>
-    <modified>2015-12-13T13:40:38</modified>
+    <created>2015-12-13T15:19:11</created>
+    <modified>2015-12-13T15:19:11</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
   <library_images/>
+  <library_effects>
+    <effect id="Default_001-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.25 0.25 0.25 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="Default_001-material" name="Default_001">
+      <instance_effect url="#Default_001-effect"/>
+    </material>
+  </library_materials>
   <library_geometries>
     <geometry id="Circle-mesh" name="Circle">
       <mesh>
@@ -34,14 +67,24 @@
             </accessor>
           </technique_common>
         </source>
+        <source id="Circle-mesh-map-0">
+          <float_array id="Circle-mesh-map-0-array" count="24">0.7499536 9.30432e-5 0.9999071 0.4330254 0.7499534 0.8659575 0.2500464 9.31028e-5 0.7499536 9.30432e-5 0.7499534 0.8659575 0.2500464 9.31028e-5 0.7499534 0.8659575 0.2500466 0.8659575 0.2500464 9.31028e-5 0.2500466 0.8659575 9.30432e-5 0.4330254</float_array>
+          <technique_common>
+            <accessor source="#Circle-mesh-map-0-array" count="12" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
         <vertices id="Circle-mesh-vertices">
           <input semantic="POSITION" source="#Circle-mesh-positions"/>
         </vertices>
-        <polylist count="4">
+        <polylist material="Default_001-material" count="4">
           <input semantic="VERTEX" source="#Circle-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Circle-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Circle-mesh-map-0" offset="2" set="0"/>
           <vcount>3 3 3 3 </vcount>
-          <p>1 0 0 0 5 0 2 0 1 0 5 0 2 0 5 0 4 0 2 0 4 0 3 0</p>
+          <p>1 0 0 0 0 1 5 0 2 2 0 3 1 0 4 5 0 5 2 0 6 5 0 7 4 0 8 2 0 9 4 0 10 3 0 11</p>
         </polylist>
       </mesh>
     </geometry>
@@ -51,7 +94,15 @@
     <visual_scene id="Scene" name="Scene">
       <node id="Hexagon" name="Hexagon" type="NODE">
         <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
-        <instance_geometry url="#Circle-mesh" name="Hexagon"/>
+        <instance_geometry url="#Circle-mesh" name="Hexagon">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Default_001-material" target="#Default_001-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
       </node>
     </visual_scene>
   </library_visual_scenes>
