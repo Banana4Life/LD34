@@ -57,7 +57,6 @@ public class Village : MonoBehaviour
         {
             villageTakenScript.Adapt();
         }
-                
 
         renderer.color = faction.color;
         var hexRenderer = transform.parent.gameObject.GetComponent<Renderer>();
