@@ -27,12 +27,12 @@ public struct Point
 
     public override bool Equals(object obj)
     {
-        if (obj is Point)
+        if (obj == null || GetType() != obj.GetType())
         {
-            var p = (Point)obj;
-            return X == p.X && Y == p.Y;
+            return false;
         }
-        return false;
+        var p = (Point)obj;
+        return X == p.X && Y == p.Y;
     }
 }
 
@@ -53,6 +53,20 @@ public abstract class GridObject
     public override string ToString()
     {
         return string.Format("({0}, {1})", X, Y);
+    }
+
+    public override int GetHashCode()
+    {
+        return Location.GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+        return ((GridObject) obj).Location.Equals(Location);
     }
 }
 
@@ -79,7 +93,7 @@ public class Tile : GridObject, IHasNeighbours<Tile>
     }
 
     public IEnumerable<Tile> Neighbours { get; set; }
-    public IEnumerable<Tile> FreeNeighbours(Tile destination)
+    public IEnumerable<Tile> FreeNeighbours(Tile destination = null)
     {
         return Neighbours.Where(t => t.canBePassed() || t == destination);
     }
