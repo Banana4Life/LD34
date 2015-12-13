@@ -45,8 +45,7 @@ public class PlayerInput : MonoBehaviour {
             {
                 startTile = null;
             }
-
-            if (village.faction != Village.Faction.FRIENDLY)
+            else if (village.faction != Village.Faction.FRIENDLY)
             {
                 startTile = null;
             }
