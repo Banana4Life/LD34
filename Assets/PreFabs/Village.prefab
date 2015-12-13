@@ -40,11 +40,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6232de4e20584d8730c43b42f654a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camp: {fileID: 21300000, guid: 1bc43f22c4699804ba1851be1c919299, type: 3}
+  castle: {fileID: 21300000, guid: 62f3358468cd1954cbf2d6ada0cf3cca, type: 3}
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
   radius: 0
-  minRadius: 0.3
-  radiusSteps: 3
-  radiusStepScale: 0.12
 --- !u!212 &21201770
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -71,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 5bd85bdb5d7cb3840bb8032d54b6f384, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -141,8 +140,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300002, guid: 5bd85bdb5d7cb3840bb8032d54b6f384,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_UsedByEffector
       value: 0
@@ -153,8 +151,23 @@ Prefab:
       objectReference: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: villages
+      value: 
+      objectReference: {fileID: 21300000, guid: 5bd85bdb5d7cb3840bb8032d54b6f384,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: camp
+      value: 
+      objectReference: {fileID: 21300000, guid: 1bc43f22c4699804ba1851be1c919299,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: castle
+      value: 
+      objectReference: {fileID: 21300000, guid: 62f3358468cd1954cbf2d6ada0cf3cca,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
