@@ -14,12 +14,14 @@ public class PlayerInput : MonoBehaviour {
     void OnMouseDown()
     {
         startTile = Tile.of(gameObject);
-        Debug.Log("CLICK " + gameObject.name + " - " + gameObject.transform.position
-            + " ### (" + gameObject.transform.childCount + ")" + gameObject.GetComponentInChildren<Village>()
-            + " ### (" + startTile.X + "x" + startTile.Y + ")"
-            );
-        
-        if (!gameObject.GetComponentInChildren<Village>())
+
+        var village = gameObject.GetComponentInChildren<Village>();
+        if (!village)
+        {
+            startTile = null;
+        }
+
+        if (village.faction != Village.Faction.FRIENDLY)
         {
             startTile = null;
         }
@@ -30,7 +32,6 @@ public class PlayerInput : MonoBehaviour {
         if (startTile != null)
         {
             endTile = Tile.of(gameObject);
-            Debug.Log("ENTER " + gameObject.transform.position + " ### " + endTile.X + "x" + endTile.Y);
 
             gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
@@ -43,7 +44,6 @@ public class PlayerInput : MonoBehaviour {
     {
         if (line != null)
         {
-            Debug.Log("LEAVE " + gameObject.transform.position + " ### " + endTile.X + "x" + endTile.Y);
             Destroy(line);
             line = null;
         }
@@ -53,14 +53,15 @@ public class PlayerInput : MonoBehaviour {
     {
         if (endTile != null)
         {
-            Debug.Log("UP " + endTile.GameObject.transform.position);
-
             if (endTile.GameObject.GetComponentInChildren<Village>())
             {
                 var triangle = Instantiate(trianglePrefab);
                 var pos = endTile.GameObject.transform.position;
                 pos.z = -5;
                 triangle.transform.position = pos;
+                triangle.transform.parent = startTile.GameObject.transform;
+
+                triangle.GetComponent<TriangleShape>().init(startTile, endTile);
             }
         }
         startTile = null;

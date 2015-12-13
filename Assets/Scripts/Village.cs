@@ -61,6 +61,9 @@ public class Village : MonoBehaviour
     public Size size;
     public float radius;
 
+    public Vector3 defendingUnits;
+    public Vector3 attackingUnits;
+
     void Start() {
         renderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 

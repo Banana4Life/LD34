@@ -7,6 +7,8 @@ public class TriangleShape : MonoBehaviour
     public Camera camera;
     public Mesh mesh;
 
+    public GameObject legUnit1;
+
     private bool preparing = false;
 
     private Vector3 force;
@@ -18,6 +20,9 @@ public class TriangleShape : MonoBehaviour
 
     private float toCenter;
     private float height;
+
+    private Tile start;
+    private Tile end;
 
     private static GameObject theTriangle;
 
@@ -76,13 +81,20 @@ public class TriangleShape : MonoBehaviour
             pos.z = -5;
             rate = new Vector3(toRate(pos, pointA), toRate(pos, pointB), toRate(pos, pointC));
 
-            Debug.Log("##A" + (pos - pointA) + " m=" + (pos - pointA).magnitude + " = " + toRate(pos, pointA));
-            Debug.Log("##B" + (pos - pointB) + " m=" + (pos - pointB).magnitude + " = " + toRate(pos, pointB));
-            Debug.Log("##C" + (pos - pointC) + " m=" + (pos - pointC).magnitude + " = " + toRate(pos, pointC));
-
-            Debug.Log("Pos:" + pos + " at rate " + rate);
-
             force += rate;
+
+            if (force.x > 100000)
+            {
+                // TODO effect A
+            }
+            if (force.y > 100000)
+            {
+                // TODO effect B
+            }
+            if (force.z > 100000)
+            {
+                // TODO effect C
+            }
         }
     }
 
@@ -95,8 +107,6 @@ public class TriangleShape : MonoBehaviour
         var pos = camera.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
         rate = new Vector3(toRate(pos, pointA), toRate(pos, pointB), toRate(pos, pointC));
-
-        Debug.Log("Pos:" + pos + " at rate " + rate);
     }
 
     void OnMouseUp()
@@ -105,6 +115,8 @@ public class TriangleShape : MonoBehaviour
         preparing = false;
         Destroy(theTriangle);
         theTriangle = null;
+
+        releaseLegion(force);
     }
 
     private float toRate(Vector3 mouse, Vector3 point)
@@ -120,5 +132,29 @@ public class TriangleShape : MonoBehaviour
             len = 0;
         }
         return len;
+    }
+
+    private void releaseLegion(Vector3 force)
+    {
+        Debug.Log(start.GameObject + " " + end.GameObject);
+        var startVillage = start.GameObject.GetComponentInChildren<Village>();
+        var endVillage = end.GameObject.GetComponentInChildren<Village>();
+
+        Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
+
+        PathWalker.walk(spawn(legUnit1, startVillage.transform.position), start, end);
+    }
+
+    public GameObject spawn(GameObject type, Vector3 at)
+    {
+        var unit = Instantiate(legUnit1);
+        unit.transform.position = at;
+        return unit;
+    }
+
+    public void init(Tile start, Tile end)
+    {
+        this.start = start;
+        this.end = end;
     }
 }
