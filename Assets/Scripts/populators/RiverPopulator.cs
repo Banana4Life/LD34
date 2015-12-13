@@ -61,7 +61,7 @@ public class RiverPopulator : GridPopulator
 
             var hexriver = Instantiate(riverPrefab);
             hexriver.transform.parent = nextTile.transform;
-            hexriver.transform.localPosition = Vector3.up;
+            hexriver.transform.localPosition = Vector3.back;
 
             Debug.Log("rivered " + nextTile.GetComponent<TileBehaviour>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
