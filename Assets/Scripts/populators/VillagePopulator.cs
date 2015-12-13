@@ -58,6 +58,7 @@ public class VillagePopulator : GridPopulator
     public GameObject villagePrefab;
     public float smallToMedium = 2f/1f;
     public float mediumToLarge = 5f/4f;
+    public int tries = 500;
 
     public override void populate(GameObject[,] gameObjects)
     {
@@ -67,7 +68,7 @@ public class VillagePopulator : GridPopulator
         var blocked = new HashSet<Tile>();
         var stats = new Stats(smallToMedium, mediumToLarge);
 
-        for (var i = 0; i < 1000; ++i)
+        for (var i = 0; i < tries; ++i)
         {
             var go = gameObjects[Random.Range(0, maxX), Random.Range(0, maxY)];
             var t = Tile.of(go);
