@@ -620,8 +620,8 @@ MonoBehaviour:
   gridWidth: 31
   gridHeight: 16
   populators:
-  - {fileID: 1956102855}
   - {fileID: 1956102856}
+  - {fileID: 1956102855}
 --- !u!4 &1956102854
 Transform:
   m_ObjectHideFlags: 0
@@ -646,6 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
+  probability: 900
 --- !u!114 &1956102856
 MonoBehaviour:
   m_ObjectHideFlags: 0
