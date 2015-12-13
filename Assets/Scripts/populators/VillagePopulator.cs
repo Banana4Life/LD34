@@ -21,8 +21,6 @@ public class VillagePopulator : GridPopulator
                     var hex = gameObjects[x, y];
                     village.transform.parent = hex.transform;
                     village.transform.localPosition = Vector3.zero;
-                    var hasVillage = hex.AddComponent<HasVillage>();
-                    hasVillage.village = village;
                 }
             }
         }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class HexGrid : MonoBehaviour
 {
@@ -52,7 +53,6 @@ public class HexGrid : MonoBehaviour
         {
             for (float x = 0; x < gridWidth; x++)
             {
-                //GameObject assigned to hexPrefab public variable is cloned
                 var hex = (GameObject)Instantiate(hexPrefab);
                 //Current position in grid
                 hex.transform.position = toWorldPosition(initialPos, x, y);
@@ -110,26 +110,21 @@ public class HexGrid : MonoBehaviour
         Func<Tile, double> estimate = (Tile tile) => this.estimation(tile, end);
 
         var path = PathFinder.FindPath<Tile>(start, end, distance, estimate);
-        GameObject lastHex = null;
-        foreach (var tile in path)
+        if (path != null)
         {
-            if (lastHex) {
-                var hex = tile.GameObject;
-                drawLine(lastHex.transform.position, hex.transform.position, Color.red);
-            }
-            lastHex = tile.GameObject;
+            drawPath(path, Color.red);
         }
     }
 
-    void drawLine(Vector3 start, Vector3 end, Color color)
+    void drawPath(Path<Tile> path, Color color)
     {
-        GameObject myLine = new GameObject("Debug_Line");
-        myLine.transform.position = start;
-        LineRenderer lr = myLine.AddComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Particles/Additive"));
-        lr.SetColors(color, color);
+        GameObject line = new GameObject("Debug_Line");
+        var positions = path.Select(t => t.GameObject.transform.position).ToArray();
+        line.transform.position = positions.First();
+        LineRenderer lr = line.AddComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Unlit/Color")) { color = color };
         lr.SetWidth(0.5f, 0.5f);
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
+        lr.SetVertexCount(positions.Length);
+        lr.SetPositions(positions);
     }
 }
