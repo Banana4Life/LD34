@@ -100,6 +100,11 @@ public class HexGrid : MonoBehaviour
         {
             drawPath(path, Color.red, t => t.GameObject.transform.position);
         }
+
+        // TODO spawn me somewhere else!
+        var walker = GameObject.Find("legionnaire_spear").AddComponent<PathWalker>();
+        walker.followPath(path);
+
     }
 
     public static void drawPath<T>(IEnumerable<T> path, Color color, Func<T, Vector3> pos)
