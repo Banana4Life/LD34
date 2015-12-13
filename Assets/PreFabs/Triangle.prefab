@@ -90,6 +90,8 @@ MonoBehaviour:
   camera: {fileID: 0}
   mesh: {fileID: 4300002, guid: c50961ed94b204846844602064c3b8b5, type: 3}
   legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
+  legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
+  legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -186,6 +188,14 @@ Prefab:
       propertyPath: legUnit1
       value: 
       objectReference: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
+    - target: {fileID: 0}
+      propertyPath: legUnit2
+      value: 
+      objectReference: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
+    - target: {fileID: 0}
+      propertyPath: legUnit3
+      value: 
+      objectReference: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194002}
