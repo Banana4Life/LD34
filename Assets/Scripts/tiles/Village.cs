@@ -21,7 +21,7 @@ public class Village : TileObject
     public bool flipY;
     public int angle;
 
-    private GameObject villageText;
+    private List<GameObject> villageTexts;
     private GameObject villageUIImage;
 
     public GameObject legUnit1;
@@ -77,7 +77,7 @@ public class Village : TileObject
 
         flipX = Random.value < 0.5;
         flipY = Random.value < 0.5;
-        angle = Random.Range(0, 3) * 90;
+        angle = Random.Range(0, 3)*90;
 
         gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
         gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
@@ -90,12 +90,15 @@ public class Village : TileObject
             this.villageUIImage.transform.localPosition = new Vector3(0, 2.5f, -1);
         }
 
-        if (villageText == null)
+        if (villageTexts == null)
         {
-            this.villageText = Instantiate(villageTextPrefab);
-            this.villageText.transform.SetParent(gameObject.transform.parent);
-            this.villageText.transform.localEulerAngles = new Vector3(0, 0, 0);
-            this.villageText.transform.localPosition = new Vector3(0, 2.5f, -2);
+            villageTexts = new List<GameObject>();
+            for (int i = 0; i < 3; i++)
+            {
+                villageTexts.Add(Instantiate(villageTextPrefab));
+                villageTexts[i].transform.SetParent(villageUIImage.transform);
+                villageTexts[i].transform.localPosition = new Vector3(-13 + 14 * i, 0, -1);
+            }
         }
 
         updateText();
@@ -117,18 +120,18 @@ public class Village : TileObject
 
             if (defMagnitude != 0)
             {
-                var defLoss = new Vector3(defForce.x / defMagnitude, defForce.y / defMagnitude, defForce.z / defMagnitude);
-                var atkLoss = new Vector3(atkForce.x / atkMagnitude, atkForce.y / atkMagnitude, atkForce.z / atkMagnitude);
+                var defLoss = new Vector3(defForce.x/defMagnitude, defForce.y/defMagnitude, defForce.z/defMagnitude);
+                var atkLoss = new Vector3(atkForce.x/atkMagnitude, atkForce.y/atkMagnitude, atkForce.z/atkMagnitude);
 
                 // potential Attacker Damage 
-                var atkDmg = new Vector3(atkForce.x + atkForce.y * bonus + atkForce.z,
-                                         atkForce.x + atkForce.y + atkForce.z * bonus,
-                                         atkForce.x * bonus + atkForce.y + atkForce.z);
+                var atkDmg = new Vector3(atkForce.x + atkForce.y*bonus + atkForce.z,
+                    atkForce.x + atkForce.y + atkForce.z*bonus,
+                    atkForce.x*bonus + atkForce.y + atkForce.z);
 
                 // potential Defender Damage 
-                var defDmg = new Vector3(defForce.x + defForce.y * bonus + defForce.z,
-                                         defForce.x + defForce.y + defForce.z * bonus,
-                                         defForce.x * bonus + defForce.y + defForce.z);
+                var defDmg = new Vector3(defForce.x + defForce.y*bonus + defForce.z,
+                    defForce.x + defForce.y + defForce.z*bonus,
+                    defForce.x*bonus + defForce.y + defForce.z);
 
                 atkDmg.Scale(defLoss);
                 defDmg.Scale(atkLoss);
@@ -185,34 +188,43 @@ public class Village : TileObject
 
         var group = new GameObject("Legion Group");
 
-        var atkForce = new Vector3((int)defForce.x, (int)defForce.y, (int)defForce.z);
-        atkForce = atkForce * percent / 100;
+        var atkForce = new Vector3((int) defForce.x, (int) defForce.y, (int) defForce.z);
+        atkForce = atkForce*percent/100;
         atkForce = new Vector3(Mathf.CeilToInt(atkForce.x), Mathf.CeilToInt(atkForce.y), Mathf.CeilToInt(atkForce.z));
         var amount = atkForce.x + atkForce.y + atkForce.z;
 
-        Debug.Log("Release the Legion! Force:" + atkForce + "/" + defForce + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
+        Debug.Log("Release the Legion! Force:" + atkForce + "/" + defForce + " " + start.GameObject.transform.position +
+                  "->" + end.GameObject.transform.position);
 
         defForce -= atkForce;
 
         for (var i = 0; i < atkForce.x; i++)
         {
-            PathWalker.walk(spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount / 50), start, end);
+            PathWalker.walk(
+                spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount/50),
+                start, end);
         }
         for (var i = 0; i < atkForce.y; i++)
         {
-            PathWalker.walk(spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), Faction.FRIENDLY, group, amount / 50), start, end);
+            PathWalker.walk(
+                spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), Faction.FRIENDLY, group, amount/50),
+                start, end);
         }
         for (var i = 0; i < atkForce.z; i++)
         {
-            PathWalker.walk(spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), Faction.FRIENDLY, group, amount / 50), start, end);
+            PathWalker.walk(
+                spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), Faction.FRIENDLY, group, amount/50),
+                start, end);
         }
     }
 
-    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere, float spread)
+    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere,
+        float spread)
     {
         var unit = Instantiate(type);
         Physics2D.IgnoreCollision(unit.GetComponent<Collider2D>(), at.GetComponent<Collider2D>(), true);
-        unit.transform.position = at.transform.position + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
+        unit.transform.position = at.transform.position +
+                                  new Vector3((Random.value - 0.5f)*spread, (Random.value - 0.5f)*spread, 0);
         unit.transform.parent = inHere.transform;
         var unitForce = unit.GetComponent<Force>();
         unitForce.force = force;
@@ -221,7 +233,7 @@ public class Village : TileObject
     }
 
     float delta;
-
+    
     int unitType = Random.Range(0,3);
     float productionFactor = 20;
 
@@ -232,24 +244,24 @@ public class Village : TileObject
         {
             var units = defForce.x + defForce.y + defForce.z;
             delta = 0;
-            switch(unitType)
+            switch (unitType)
             {
                 case 0:
                     if (units <= size.unitCap)
                     {
-                        defForce.x += size.production / productionFactor;
+                        defForce.x += size.production/productionFactor;
                     }
                     break;
                 case 1:
                     if (units <= size.unitCap)
                     {
-                        defForce.y += size.production / productionFactor;
+                        defForce.y += size.production/productionFactor;
                     }
                     break;
                 case 2:
                     if (units <= size.unitCap)
                     {
-                        defForce.z += size.production / productionFactor;
+                        defForce.z += size.production/productionFactor;
                     }
                     break;
             }
@@ -259,7 +271,10 @@ public class Village : TileObject
 
     private void updateText()
     {
-        villageText.GetComponent<Text>().text = (int)defForce.x + "/" + (int)defForce.y + "/" + (int)defForce.z;
+        for (int i = 0; i < 3; i++)
+        {
+            villageTexts[i].GetComponent<Text>().text = (int) defForce[i] + "";
+        }
     }
 }
 
