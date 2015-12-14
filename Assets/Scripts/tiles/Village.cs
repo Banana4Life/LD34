@@ -13,8 +13,12 @@ public class Village : TileObject
     }
 
     public GameObject villageTakenPrefab;
-    public GameObject villageUIImagePrefab;
+    public GameObject villageUiBackgroundPrefab;
+    public GameObject villageUiOverlayPrefab;
     public GameObject villageTextPrefab;
+    public Sprite villageUiNeutral;
+    public Sprite villageUiAlien;
+    public Sprite villageUiLegionnaire;
     public Faction faction;
     public Size size;
     public bool flipX;
@@ -22,7 +26,8 @@ public class Village : TileObject
     public int angle;
 
     private List<GameObject> villageTexts;
-    private GameObject villageUIImage;
+    private GameObject villageUIBackground;
+    private GameObject villageUIOverlay;
 
     public GameObject legUnit1;
     public GameObject legUnit2;
@@ -82,12 +87,19 @@ public class Village : TileObject
         gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
         gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
 
-        if (villageUIImage == null)
+        if (villageUIBackground == null)
         {
-            this.villageUIImage = Instantiate(villageUIImagePrefab);
-            this.villageUIImage.transform.SetParent(gameObject.transform.parent);
-            this.villageUIImage.transform.localEulerAngles = new Vector3(0, 0, 0);
-            this.villageUIImage.transform.localPosition = new Vector3(0, 2.5f, -1);
+            this.villageUIBackground = Instantiate(villageUiBackgroundPrefab);
+            this.villageUIBackground.transform.SetParent(gameObject.transform.parent);
+            this.villageUIBackground.transform.localPosition = new Vector3(0, 2.5f, -1);
+            updateUI();
+        }
+
+        if (villageUIOverlay == null)
+        {
+            this.villageUIOverlay = Instantiate(villageUiOverlayPrefab);
+            this.villageUIOverlay.transform.SetParent(villageUIBackground.transform);
+            this.villageUIOverlay.transform.localPosition = new Vector3(0, 0, -1);
         }
 
         if (villageTexts == null)
@@ -96,8 +108,8 @@ public class Village : TileObject
             for (int i = 0; i < 3; i++)
             {
                 villageTexts.Add(Instantiate(villageTextPrefab));
-                villageTexts[i].transform.SetParent(villageUIImage.transform);
-                villageTexts[i].transform.localPosition = new Vector3(-16 + 16 * i, 0, -1);
+                villageTexts[i].transform.SetParent(villageUIBackground.transform);
+                villageTexts[i].transform.localPosition = new Vector3(-13 + 16 * i, 0, -1);
             }
         }
 
@@ -174,6 +186,7 @@ public class Village : TileObject
                 {
                     Debug.Log("Attacker won: " + faction);
                     this.setFaction(faction);
+                    updateUI(); // Update Background of UI to new faction
                     this.defForce = atkForce;
                 }
             }
@@ -274,6 +287,22 @@ public class Village : TileObject
         for (int i = 0; i < 3; i++)
         {
             villageTexts[i].GetComponent<Text>().text = (int) defForce[i] + "";
+        }
+    }
+
+    private void updateUI()
+    {
+        if (faction == Faction.NEUTRAL)
+        {
+            villageUIBackground.GetComponent<Image>().sprite = villageUiNeutral;
+        }
+        else if (faction == Faction.ENEMY)
+        {
+            villageUIBackground.GetComponent<Image>().sprite = villageUiAlien;
+        }
+        else
+        {
+            villageUIBackground.GetComponent<Image>().sprite = villageUiLegionnaire;
         }
     }
 }
