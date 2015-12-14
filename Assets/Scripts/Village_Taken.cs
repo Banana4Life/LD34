@@ -10,49 +10,43 @@ public class Village_Taken : MonoBehaviour
     public Sprite villageLegionnaire;
     public Sprite castleAlien;
     public Sprite castleLegionnaire;
-    private Village village;
 
-    public void Adapt ()
+    public void Adapt(Size s, Faction f)
     {
-        village = gameObject.GetComponentInParent(typeof (Village)) as Village;
-
         gameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
         gameObject.transform.localScale = new Vector3(1, 1, 1);
-
-        if (village.faction != null)
+        
+        if (s == Size.CAMP)
         {
-            if (village.size == Size.CAMP)
+            if (f == Faction.ENEMY)
             {
-                if (village.faction == Faction.ENEMY)
-                {
-                    renderer.sprite = campAlien;
-                }
-                else if (village.faction == Faction.FRIENDLY)
-                {
-                    renderer.sprite = campLegionnaire;
-                }
+                renderer.sprite = campAlien;
             }
-            else if (village.size == Size.VILLAGE)
+            else if (f == Faction.FRIENDLY)
             {
-                if (village.faction == Faction.ENEMY)
-                {
-                    renderer.sprite = villageAlien;
-                }
-                else if (village.faction == Faction.FRIENDLY)
-                {
-                    renderer.sprite = villageLegionnaire;
-                }
+                renderer.sprite = campLegionnaire;
             }
-            else if (village.size == Size.CASTLE)
+        }
+        else if (s == Size.VILLAGE)
+        {
+            if (f == Faction.ENEMY)
             {
-                if (village.faction == Faction.ENEMY)
-                {
-                    renderer.sprite = castleAlien;
-                }
-                else if (village.faction == Faction.FRIENDLY)
-                {
-                    renderer.sprite = castleLegionnaire;
-                }
+                renderer.sprite = villageAlien;
+            }
+            else if (f == Faction.FRIENDLY)
+            {
+                renderer.sprite = villageLegionnaire;
+            }
+        }
+        else if (s == Size.CASTLE)
+        {
+            if (f == Faction.ENEMY)
+            {
+                renderer.sprite = castleAlien;
+            }
+            else if (f == Faction.FRIENDLY)
+            {
+                renderer.sprite = castleLegionnaire;
             }
         }
     }

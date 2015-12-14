@@ -13,7 +13,7 @@ public class Village : TileObject
     }
 
     public GameObject villageTakenPrefab;
-    public Faction faction = Faction.NEUTRAL;
+    public Faction faction;
     public Size size;
     public bool flipX;
     public bool flipY;
@@ -21,6 +21,8 @@ public class Village : TileObject
 
     public Vector3 defendingUnits;
     public Vector3 attackingUnits;
+
+    private GameObject factionObject;
 
     private SpriteRenderer getRenderer()
     {
@@ -33,19 +35,31 @@ public class Village : TileObject
         getRenderer().sprite = size.sprite;
     }
 
+    public void setFaction(Faction faction)
+    {
+        if (!this.factionObject)
+        {
+            this.factionObject = Instantiate(villageTakenPrefab);
+            this.factionObject.transform.parent = gameObject.transform;
+            this.factionObject.transform.localPosition = new Vector3(0, 0, -1);
+        }
+        var villageTakenScript = this.factionObject.GetComponent<Village_Taken>();
+        if (villageTakenScript)
+        {
+            villageTakenScript.Adapt(this.size, faction);
+        }
+        this.faction = faction;
+    }
+
     void Start() {
 
-        switch (RANDOM.Next(3))
+        if (this.size == null)
         {
-            case 0:
-                faction = Faction.FRIENDLY;
-                break;
-            case 1:
-                faction = Faction.NEUTRAL;
-                break;
-            case 2:
-                faction = Faction.ENEMY;
-                break;
+            setSize(Size.CAMP);
+        }
+        if (this.faction == null)
+        {
+            setFaction(Faction.NEUTRAL);
         }
 
         flipX = RANDOM.Next(2) != 0;
@@ -54,18 +68,6 @@ public class Village : TileObject
 
         gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
         gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
-
-        var villageTaken = Instantiate(villageTakenPrefab);
-        villageTaken.transform.parent = gameObject.transform;
-        villageTaken.transform.localPosition = new Vector3(0, 0, -1);
-        var villageTakenScript = villageTaken.GetComponent<Village_Taken>();
-        if (villageTakenScript)
-        {
-            villageTakenScript.Adapt();
-        }
-        
-        var hexRenderer = transform.parent.gameObject.GetComponent<Renderer>();
-        hexRenderer.material.color = faction.color;
     }
 }
 
