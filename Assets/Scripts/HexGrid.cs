@@ -105,8 +105,8 @@ public class HexGrid : MonoBehaviour
         var calcHeight = hexWidth / 2;
         calcHeight = (float) Math.Sqrt(hexHeight * hexHeight - calcHeight * calcHeight);
 
-        var vertExtent = hexWidth * gridHeight;
-        var horzExtent = calcHeight * gridWidth;
+        var vertExtent = hexWidth * (gridHeight - 3);
+        var horzExtent = calcHeight * (gridWidth - 3);
 
         Debug.Log(vertExtent + "x" + horzExtent);
         // Calculations assume map is position at the origin
