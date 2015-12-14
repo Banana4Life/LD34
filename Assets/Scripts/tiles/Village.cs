@@ -150,7 +150,20 @@ public class Village : TileObject
                 defForce.z = 0;
             }
 
-            if (defForce.sqrMagnitude == 0)
+            if (atkForce.x < 0)
+            {
+                atkForce.x = 0;
+            }
+            if (atkForce.y < 0)
+            {
+                atkForce.y = 0;
+            }
+            if (atkForce.z < 0)
+            {
+                atkForce.z = 0;
+            }
+
+            if (defForce.sqrMagnitude == 0 && atkForce.sqrMagnitude != 0)
             {
                 Debug.Log("Attacker won: " + faction);
                 this.setFaction(faction);
