@@ -225,23 +225,24 @@ public class Village : TileObject
         delta += Time.fixedDeltaTime;
         if (delta > 1)
         {
+            var units = defForce.x + defForce.y + defForce.z;
             delta = 0;
             switch(unitType)
             {
                 case 0:
-                    if (defForce.x < size.unitCap)
+                    if (units < size.unitCap)
                     {
                         defForce.x += size.production / productionFactor;
                     }
                     break;
                 case 1:
-                    if (defForce.y < size.unitCap)
+                    if (units < size.unitCap)
                     {
                         defForce.y += size.production / productionFactor;
                     }
                     break;
                 case 2:
-                    if (defForce.z < size.unitCap)
+                    if (units < size.unitCap)
                     {
                         defForce.z += size.production / productionFactor;
                     }
