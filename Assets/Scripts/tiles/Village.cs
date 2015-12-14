@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Village : TileObject
 {
     public static float percent = 70;
+    private static readonly System.Random random = new System.Random();
 
     public override bool canBePassed()
     {
@@ -242,6 +243,11 @@ public class Village : TileObject
         attackingLegion.destination = endVillage;
         attackingLegion.faction = faction;
         attackingLegion.force = atkForce;
+
+        if (attackingLegion.faction == Faction.FRIENDLY && attackingLegion.destination.faction != Faction.FRIENDLY)
+        {
+            AudioSource.PlayClipAtPoint(releaseSounds[random.Next(0, releaseSounds.Length)], Camera.main.transform.position, releaseSoundsVol);
+        }
 
         var unit1 = legUnit1;
         var unit2 = legUnit2;
