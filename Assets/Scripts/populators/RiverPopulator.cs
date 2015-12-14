@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
-public class RiverPopulator : GridPopulator
+public class RiverPopulator : TilePopulator
 {
     private static readonly Random random = new Random();
     public Material bentMat;
@@ -11,9 +12,10 @@ public class RiverPopulator : GridPopulator
     public GameObject riverPrefab;
     public Material straightMat;
 
-    private string getBendcase(int cx, int cy, int px, int py, int nx, int ny)
+    private Dictionary<string, string> snowflake = new Dictionary<string, string>();
+
+    public RiverPopulator()
     {
-        var snowflake = new Dictionary<string, string>();
         snowflake.Add(" 1|-1| 0|-1", "C|-60");
         snowflake.Add(" 1|-1| 1|-1", "S|-60");
         snowflake.Add(" 1|-1| 1| 0", "C|180");
@@ -32,7 +34,10 @@ public class RiverPopulator : GridPopulator
         snowflake.Add(" 0|-1|-1| 0", "C|-120");
         snowflake.Add(" 0|-1| 0|-1", "S|60");
         snowflake.Add(" 0|-1| 1|-1", "C|120");
+    }
 
+    private string getBendcase(int cx, int cy, int px, int py, int nx, int ny)
+    {
         var diffs = new List<int>();
         diffs.Add(cx - px);
         diffs.Add(cy - py);
@@ -45,8 +50,19 @@ public class RiverPopulator : GridPopulator
         return lookup == null ? "L|0" : lookup;
     }
 
-    public
-        override void populate(GameObject[,] gameObjects)
+    protected void spawnRiver(GameObject g)
+    {
+        var existingObject = g.GetComponentInChildren<TileObject>();
+        if (existingObject)
+        {
+            Destroy(existingObject.gameObject);
+        }
+        var hexriver = Instantiate(riverPrefab);
+        hexriver.transform.parent = g.transform;
+        hexriver.transform.localPosition = Vector3.back;
+    }
+
+    public override void populate(GameObject[,] gameObjects)
     {
         var borderTiles = new List<GameObject>();
 
@@ -93,10 +109,7 @@ public class RiverPopulator : GridPopulator
 
 
             path.Add(nextTile);
-
-            var hexriver = Instantiate(riverPrefab);
-            hexriver.transform.parent = nextTile.transform;
-            hexriver.transform.localPosition = Vector3.back;
+            spawnRiver(nextTile);
 
             //Debug.Log("rivered " + nextTile.GetComponent<TileHolder>().tile);
         } while (!borderTiles.Contains(path[path.Count - 1]));
@@ -110,7 +123,7 @@ public class RiverPopulator : GridPopulator
             {
                 continue;
             }
-            var riverHex = tileHex.transform.GetChild(0);
+            var riverHex = tileHex.GetComponentInChildren<River>().gameObject;
 
             //current, previous, next
             var c = tileHex.GetComponent<TileHolder>().tile;
@@ -118,29 +131,31 @@ public class RiverPopulator : GridPopulator
             var n = i < path.Count - 1 ? path[i + 1].GetComponent<TileHolder>().tile : null;
 
 
+            var renderer = riverHex.GetComponent<MeshRenderer>();
             if (p != null && n != null)
             {
                 var bendcase = getBendcase(c.X, c.Y, p.X, p.Y, n.X, n.Y);
                 var rotation = int.Parse(bendcase.Substring(2));
                 var type = bendcase.Substring(0, 1);
 
-                if (type == "C")
+                switch (type)
                 {
-                    riverHex.GetComponent<MeshRenderer>().material = bentMat;
+                    case "C":
+                        renderer.material = bentMat;
+                        break;
+                    case "S":
+                        renderer.material = straightMat;
+                        break;
+                    case "L":
+                        renderer.material = lakeMat;
+                        break;
+                    default:
+                        renderer.material = lakeMat;
+                        Debug.LogWarning("no bendcase");
+                        break;
+
                 }
-                else if (type == "S")
-                {
-                    riverHex.GetComponent<MeshRenderer>().material = straightMat;
-                }
-                else if (type == "L")
-                {
-                    riverHex.GetComponent<MeshRenderer>().material = lakeMat;
-                }
-                else
-                {
-                    riverHex.GetComponent<MeshRenderer>().material = lakeMat;
-                    Debug.LogWarning("no bendcase");
-                }
+
                 var q = Quaternion.AngleAxis(-rotation, Vector3.forward);
                 riverHex.transform.rotation = q;
                 //riverHex.transform.localEulerAngles.Set(0, 0, rotation);
@@ -153,7 +168,7 @@ public class RiverPopulator : GridPopulator
             {
                 if (i == path.Count - 1 && i > 0)
                 {
-                    riverHex.GetComponent<MeshRenderer>().material = lakeMat;
+                    renderer.material = lakeMat;
                     var diff = (c.X - p.X) + "|" + (c.Y - p.Y);
                     int rotation = 180;
                     if (diff == "-1|0") rotation += 0;

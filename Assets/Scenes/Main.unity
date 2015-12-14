@@ -364,6 +364,7 @@ GameObject:
   - 114: {fileID: 1956102855}
   - 114: {fileID: 1956102856}
   - 114: {fileID: 1956102857}
+  - 114: {fileID: 1956102858}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -383,9 +384,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexPrefab: {fileID: 121562, guid: 6d7e5479e76959d419db0d3d70ac4f1a, type: 2}
-  gridWidth: 31
-  gridHeight: 16
+  gridWidth: 33
+  gridHeight: 18
   populators:
+  - {fileID: 1956102858}
   - {fileID: 1956102856}
   - {fileID: 1956102857}
   - {fileID: 1956102855}
@@ -443,3 +445,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forestPrefab: {fileID: 121562, guid: 26a02f26b50cae642a2cac455c2e68e7, type: 2}
+--- !u!114 &1956102858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1956102852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20b42ba8dd8d844bada2859c3c80bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  borderPrefab: {fileID: 153754, guid: 23515293bd9b07948a72c91e10c59b60, type: 2}
+  borderStrength: 2
