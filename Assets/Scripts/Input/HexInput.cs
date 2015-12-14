@@ -17,10 +17,6 @@ public class HexInput : MonoBehaviour {
 
     private float force = 1;
 
-    public GameObject legUnit1;
-    public GameObject legUnit2;
-    public GameObject legUnit3;
-
     public void OnMouseDown()
     {
         if (startTile != null)
@@ -29,7 +25,7 @@ public class HexInput : MonoBehaviour {
             {
                 if (endTile.hasVillage())
                 {
-                    releaseLegion(new Vector3(force, force, force), startTile, endTile);
+                    startTile.getVillage().releaseLegion(new Vector3(force, force, force), startTile, endTile);
                 }
             }
             startTile = null;
@@ -98,43 +94,5 @@ public class HexInput : MonoBehaviour {
             Destroy(line);
             line = null;
         }
-    }
-
-    private void releaseLegion(Vector3 force, Tile start, Tile end)
-    {
-        Debug.Log("Release the Legion! Force:" + force + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
-        var startVillage = start.getVillage();
-        var endVillage = end.getVillage();
-
-        var group = new GameObject("Legion Group");
-        int amount = 50;
-        for (int i = 0; i < amount; i++)
-        {
-            switch ((int)(Random.value * 3))
-            {
-                // TODO
-                case 0:
-                    PathWalker.walk(spawn(legUnit1, startVillage.gameObject, new Vector3(1,0,0), Faction.FRIENDLY, group, amount / 50), start, end);
-                    break;
-                case 1:
-                    PathWalker.walk(spawn(legUnit2, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount / 50), start, end);
-                    break;
-                case 2:
-                    PathWalker.walk(spawn(legUnit3, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount / 50), start, end);
-                    break;
-            }
-        }
-    }
-
-    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere, int spread)
-    {
-        var unit = Instantiate(type);
-        Physics2D.IgnoreCollision(unit.GetComponent<Collider2D>(), at.GetComponent<Collider2D>(), true);
-        unit.transform.position = at.transform.position + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
-        unit.transform.parent = inHere.transform;
-        var unitForce = unit.GetComponent<Force>();
-        unitForce.force = force;
-        unitForce.faction = faction;
-        return unit;
     }
 }

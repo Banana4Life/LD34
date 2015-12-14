@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using Random = System.Random;
 
 public class Village : TileObject
 {
-    private static readonly Random RANDOM = new Random();
+    public static float percent = 50;
 
     public override bool canBePassed()
     {
@@ -18,6 +16,11 @@ public class Village : TileObject
     public bool flipX;
     public bool flipY;
     public float angle;
+
+
+    public GameObject legUnit1;
+    public GameObject legUnit2;
+    public GameObject legUnit3;
 
     public Vector3 defForce = new Vector3(10, 0, 0);
 
@@ -62,9 +65,9 @@ public class Village : TileObject
             setFaction(Faction.NEUTRAL);
         }
 
-        flipX = RANDOM.Next(2) != 0;
-        flipY = RANDOM.Next(2) != 0;
-        angle = RANDOM.Next(4) * 90;
+        flipX = Random.value < 0.5;
+        flipY = Random.value < 0.5;
+        angle = Random.Range(0, 3) * 90;
 
         gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
         gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
@@ -140,6 +143,46 @@ public class Village : TileObject
             }
         }
     }
+
+    public void releaseLegion(Vector3 force, Tile start, Tile end)
+    {
+        var startVillage = start.getVillage();
+        var endVillage = end.getVillage();
+
+        var group = new GameObject("Legion Group");
+
+        var atkForce = defForce * percent / 100;
+        var amount = atkForce.x + atkForce.y + atkForce.z;
+
+        Debug.Log("Release the Legion! Force:" + atkForce + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
+
+
+        for (var i = 0; i < atkForce.x; i++)
+        {
+            PathWalker.walk(spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount / 50), start, end);
+        }
+        for (var i = 0; i < atkForce.y; i++)
+        {
+            PathWalker.walk(spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), Faction.FRIENDLY, group, amount / 50), start, end);
+        }
+        for (var i = 0; i < atkForce.z; i++)
+        {
+            PathWalker.walk(spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), Faction.FRIENDLY, group, amount / 50), start, end);
+        }
+    }
+
+    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere, float spread)
+    {
+        var unit = Instantiate(type);
+        Physics2D.IgnoreCollision(unit.GetComponent<Collider2D>(), at.GetComponent<Collider2D>(), true);
+        unit.transform.position = at.transform.position + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
+        unit.transform.parent = inHere.transform;
+        var unitForce = unit.GetComponent<Force>();
+        unitForce.force = force;
+        unitForce.faction = faction;
+        return unit;
+    }
+
 }
 
 public class Faction

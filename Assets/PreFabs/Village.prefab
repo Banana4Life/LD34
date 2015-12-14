@@ -77,6 +77,9 @@ MonoBehaviour:
   flipX: 0
   flipY: 0
   angle: 0
+  legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
+  legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
+  legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
   defForce: {x: 10, y: 0, z: 0}
   bonus: 4
 --- !u!212 &21201770
@@ -236,6 +239,18 @@ Prefab:
       propertyPath: m_Text
       value: ~100~
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: legUnit1
+      value: 
+      objectReference: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
+    - target: {fileID: 0}
+      propertyPath: legUnit2
+      value: 
+      objectReference: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
+    - target: {fileID: 0}
+      propertyPath: legUnit3
+      value: 
+      objectReference: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
