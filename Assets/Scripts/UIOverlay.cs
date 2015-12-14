@@ -5,6 +5,8 @@ public class UIOverlay : MonoBehaviour
     public static GameObject uiOverlay;
     public static GameObject scrollUi;
 
+    private static bool paused = false;
+
     void Start ()
     {
         uiOverlay = gameObject;
@@ -25,5 +27,12 @@ public class UIOverlay : MonoBehaviour
         {
             uiOverlay.transform.GetChild(2).gameObject.SetActive(true);
         }
+    }
+
+    public static void pauseUnpause()
+    {
+        paused = !paused;
+        Time.timeScale = paused ? 0 : 1;
+        uiOverlay.transform.GetChild(3).gameObject.SetActive(paused);
     }
 }
