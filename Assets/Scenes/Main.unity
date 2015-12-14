@@ -370,7 +370,7 @@ AudioSource:
   m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   Priority: 128
   DopplerLevel: 1
@@ -460,6 +460,7 @@ MonoBehaviour:
   camera: {fileID: 1811316474}
   grid: {fileID: 1956102852}
   speed: 25
+  boxPrefab: {fileID: 0}
 --- !u!4 &1899473108
 Transform:
   m_ObjectHideFlags: 0
