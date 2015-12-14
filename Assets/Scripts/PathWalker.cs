@@ -9,6 +9,7 @@ public class PathWalker : MonoBehaviour
     private IEnumerator<Tile> enumerator;
     private float minimumDistance = 1f;
     private float speed = 0.08f;
+    private float speedModifier = 1f;
     private float rotationSpeed = 0.11f;
 
     private float avoidRecover = 0;
@@ -18,6 +19,11 @@ public class PathWalker : MonoBehaviour
         this.path = invert ? path.Reverse() : path;
         this.enumerator = this.path.GetEnumerator();
         this.enumerator.MoveNext();
+    }
+
+    internal void setSpeedModifier(float s)
+    {
+        this.speedModifier = s;
     }
 
     public Tile getEnd()
@@ -30,7 +36,7 @@ public class PathWalker : MonoBehaviour
         return (v2 - v1).sqrMagnitude <= (minimumDistance * minimumDistance);
     }
 
-	void FixedUpdate()
+    void FixedUpdate()
 	{
 	    var transform = gameObject.transform;
         var here = transform.position;
@@ -41,8 +47,10 @@ public class PathWalker : MonoBehaviour
         var rot = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed);
 
+	    var tileSpeed = this.speed * this.speedModifier;
+
 	    direction.z = here.z;
-        transform.position += transform.up * -1 * speed;
+        transform.position += transform.up * -1 * tileSpeed;
 	    if (closeEnough(gameObject.transform.position, target))
 	    {
 	        if (!this.enumerator.MoveNext())
@@ -74,7 +82,7 @@ public class PathWalker : MonoBehaviour
                             if (avoidRecover <= 0)
                             {
                                 avoidRecover = (Random.value);
-                                speed = 0.08f - Random.value / 500;
+                                tileSpeed = 0.08f - Random.value / 500;
                             }
                             break;
                         }
