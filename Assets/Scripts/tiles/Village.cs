@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Village : TileObject
 {
-    public static float percent = 50;
+    public static float percent = 70;
 
     public override bool canBePassed()
     {
@@ -40,6 +40,9 @@ public class Village : TileObject
     private readonly int unitType = Random.Range(0, 3);
 
     private GameObject factionObject;
+
+    public AudioClip[] releaseSounds;
+    public float releaseSoundsVol;
 
     private SpriteRenderer getRenderer()
     {

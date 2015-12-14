@@ -8,7 +8,7 @@ public class HexGrid : MonoBehaviour
 {
 
     public GameObject hexPrefab;
-    private static Path<Tile> markedPath = null;
+    private static List<Path<Tile>> markedPaths = new List<Path<Tile>>();
     public int gridWidth = 10;
     public int gridHeight = 20;
 
@@ -21,6 +21,8 @@ public class HexGrid : MonoBehaviour
     public float maxY;
 
     public List<TilePopulator> populators = new List<TilePopulator>();
+
+    public static List<GameObject> villages = new List<GameObject>();
 
     //Method to calculate the position of the first hexagon tile
     //The center of the hex grid is (0,0,0)
@@ -99,7 +101,21 @@ public class HexGrid : MonoBehaviour
             populator.populate(grid);
         }
 
+        findVillages(grid);
+
         SendMessage("GridReady", grid);
+    }
+
+    private void findVillages(GameObject[,] grid)
+    {
+        foreach (var hex in grid)
+        {
+            var v = hex.GetComponentInChildren<Village>();
+            if (v)
+            {
+                villages.Add(v.gameObject);
+            }
+        }
     }
 
     private void setupForCamera()
@@ -131,18 +147,24 @@ public class HexGrid : MonoBehaviour
         return line;
     }
 
-    public static void markTilePath(Path<Tile> path, Material normal, Material coloring)
+    public static void clearTilePaths(Material normal)
     {
-        if (markedPath != null)
+        foreach (var markedPath in markedPaths)
         {
             foreach (var tile in markedPath)
             {
                 tile.GameObject.GetComponent<MeshRenderer>().material = normal;
             }
         }
-        markedPath = path;
+        markedPaths.Clear();
+    }
+
+
+    public static void markTilePath(Path<Tile> path, Material coloring)
+    {
         if (path != null)
         {
+            markedPaths.Add(path);
             foreach (var tile in path)
             {
                 tile.GameObject.GetComponent<MeshRenderer>().material = coloring;

@@ -25,12 +25,25 @@ public class VillageCollision : MonoBehaviour {
             }
             else
             {
+
                 Destroy(coll.collider.gameObject);
                 var village = gameObject.GetComponent<Village>();
                 village.fight(force.force, force.faction);
-                if (village.faction != Faction.FRIENDLY)
+                if (village.faction != force.faction)
                 {
                     if (!smoker.isPlaying) smoker.Play();
+                    if ((force.faction == Faction.ENEMY && village.faction == Faction.FRIENDLY) ||
+                        force.faction == Faction.FRIENDLY)
+                    {
+                        AudioSource.PlayClipAtPoint(force.deathSound, force.transform.position, force.deathSoundVol);
+                    }
+                }
+                else
+                {
+                    if (force.faction == Faction.FRIENDLY)
+                    {
+                        AudioSource.PlayClipAtPoint(force.arrivalSound, force.transform.position, force.arrivalSoundVol);
+                    }
                 }
             }
         }
