@@ -70,7 +70,6 @@ public class Village : TileObject
 
     void Start()
     {
-
         if (this.size == null)
         {
             setSize(Size.CAMP);
@@ -194,8 +193,19 @@ public class Village : TileObject
         updateText();
     }
 
+    public void releaseLegion(Vector3 force, Village target)
+    {
+        releaseLegion(force, Tile.of(gameObject.transform.parent.gameObject), Tile.of(target.gameObject.transform.parent.gameObject));
+    }
+
     public void releaseLegion(Vector3 force, Tile start, Tile end)
     {
+        if (start == end)
+        {
+            Debug.Log("Tried to release a legion to itself:" + start);
+            return;
+        }
+
         var startVillage = start.getVillage();
         var endVillage = end.getVillage();
 
@@ -214,19 +224,19 @@ public class Village : TileObject
         for (var i = 0; i < atkForce.x; i++)
         {
             PathWalker.walk(
-                spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount/50),
+                spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), this.faction, group, amount/50),
                 start, end);
         }
         for (var i = 0; i < atkForce.y; i++)
         {
             PathWalker.walk(
-                spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), Faction.FRIENDLY, group, amount/50),
+                spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), this.faction, group, amount/50),
                 start, end);
         }
         for (var i = 0; i < atkForce.z; i++)
         {
             PathWalker.walk(
-                spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), Faction.FRIENDLY, group, amount/50),
+                spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), this.faction, group, amount/50),
                 start, end);
         }
     }
