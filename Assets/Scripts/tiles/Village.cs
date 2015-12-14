@@ -168,14 +168,17 @@ public class Village : TileObject
                 if (defForce.x < 0)
                 {
                     defForce.x = 0;
+                    this.defForce.x = 0;
                 }
                 if (defForce.y < 0)
                 {
                     defForce.y = 0;
+                    this.defForce.y = 0;
                 }
                 if (defForce.z < 0)
                 {
                     defForce.z = 0;
+                    this.defForce.z = 0;
                 }
 
                 if (atkForce.x < 0)
