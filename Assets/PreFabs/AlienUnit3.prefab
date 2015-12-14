@@ -13,7 +13,7 @@ GameObject:
   - 58: {fileID: 5837372}
   - 114: {fileID: 11458280}
   m_Layer: 0
-  m_Name: LegUnit3
+  m_Name: AlienUnit3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   force: {x: 0, y: 0, z: 0}
   arrivalSound: {fileID: 8300000, guid: 8525a503768080547a34494c065105b9, type: 3}
   arrivalSoundVol: 0.2
-  deathSound: {fileID: 8300000, guid: 9864bdf8e5065024bae85ed2626617d1, type: 3}
+  deathSound: {fileID: 8300000, guid: 205896a2d9625bd4dac847f3d385b09d, type: 3}
   deathSoundVol: 0.7
 --- !u!212 &21297072
 SpriteRenderer:
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 849c031542a2d134d937a3ac0b09d8b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aa0472de777e2c740a0a883d649796ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -154,7 +154,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: deathSound
       value: 
-      objectReference: {fileID: 8300000, guid: 9864bdf8e5065024bae85ed2626617d1, type: 3}
+      objectReference: {fileID: 8300000, guid: 205896a2d9625bd4dac847f3d385b09d, type: 3}
     - target: {fileID: 0}
       propertyPath: arrivalSound
       value: 
@@ -167,6 +167,11 @@ Prefab:
       propertyPath: deathSoundVol
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: aa0472de777e2c740a0a883d649796ac,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 147548}
