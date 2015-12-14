@@ -98,6 +98,8 @@ public class HexGrid : MonoBehaviour
         {
             populator.populate(grid);
         }
+
+        SendMessage("GridReady", grid);
     }
 
     private void setupForCamera()
