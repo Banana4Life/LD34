@@ -187,7 +187,7 @@ public static class PathFinder
             var obj = tile.fromChildren<TileObject>();
             if (obj)
             {
-                return obj.passingCost();
+                return obj.getCostToPass();
             }
         }
         return 1d;

@@ -6,7 +6,12 @@ public class VillageCollision : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        var end = coll.collider.gameObject.GetComponent<PathWalker>().getEnd();
+        var walker = coll.collider.gameObject.GetComponent<PathWalker>();
+        if (!walker)
+        {
+            return;
+        }
+        var end = walker.getEnd();
         if (Tile.of(gameObject.transform.parent.gameObject) == end)
         {
             Force force = coll.collider.gameObject.GetComponent<Force>();

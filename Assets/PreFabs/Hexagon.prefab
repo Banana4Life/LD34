@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11431912}
   - 114: {fileID: 11492624}
   - 58: {fileID: 5800754}
+  - 114: {fileID: 11419988}
   m_Layer: 0
   m_Name: Hexagon
   m_TagString: Untagged
@@ -97,6 +98,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11419988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949f5bfc11c15b240865f161a66871b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11431912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,9 +136,6 @@ MonoBehaviour:
   tileHighlighted: {fileID: 2100000, guid: 8973734327429994f9c85d8ab29bb6dd, type: 2}
   tileBlocked: {fileID: 2100000, guid: 6971a12f174b04744b389d61ef17946b, type: 2}
   tileAllowed: {fileID: 2100000, guid: 93260194f4c5d9940a1a42ab24dd3b70, type: 2}
-  legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
-  legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
-  legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -230,6 +239,22 @@ Prefab:
       propertyPath: tileAllowed
       value: 
       objectReference: {fileID: 2100000, guid: 93260194f4c5d9940a1a42ab24dd3b70, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SleepingMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121562}

@@ -13,6 +13,7 @@ GameObject:
   - 58: {fileID: 5860308}
   - 114: {fileID: 11400796}
   - 50: {fileID: 5010002}
+  - 114: {fileID: 11455978}
   m_Layer: 0
   m_Name: Village
   m_TagString: Untagged
@@ -62,6 +63,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e6f7aa5f85fa14b96fc30cc144fed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11455978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949f5bfc11c15b240865f161a66871b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11489540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,6 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   costToPass: 1
   passable: 0
+  speedFactor: 1
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
   villageTextPrefab: {fileID: 119932, guid: 836330e83006cdb409a3bbd75c50cef0, type: 2}
   flipX: 0
@@ -83,8 +96,8 @@ MonoBehaviour:
   legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
   legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
-  defForce: {x: 10, y: 0, z: 0}
-  bonus: 4
+  defForce: {x: 0, y: 0, z: 0}
+  malus: 4
 --- !u!212 &21201770
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -258,9 +271,10 @@ Prefab:
       propertyPath: passable
       value: 0
       objectReference: {fileID: 0}
-      propertyPath: villageTextPrefab
-      value: 
-      objectReference: {fileID: 119932, guid: 836330e83006cdb409a3bbd75c50cef0, type: 2}
+    - target: {fileID: 0}
+      propertyPath: defForce.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}

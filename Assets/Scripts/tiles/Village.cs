@@ -85,6 +85,8 @@ public class Village : TileObject
             this.villageText.transform.parent = gameObject.transform;
             this.villageText.transform.eulerAngles = new Vector3(0, 0, 0);
             this.villageText.transform.localPosition = new Vector3(0, 0, -1);
+
+            updateText();
         }
     }
 

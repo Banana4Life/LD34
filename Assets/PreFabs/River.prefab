@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   costToPass: 6
   passable: 1
+  speedFactor: 0.2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -158,6 +159,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: costToPass
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: speedFactor
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
