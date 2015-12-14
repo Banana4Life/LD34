@@ -77,7 +77,7 @@ MonoBehaviour:
   arrivalSound: {fileID: 8300000, guid: 8525a503768080547a34494c065105b9, type: 3}
   arrivalSoundVol: 0.2
   deathSound: {fileID: 8300000, guid: e4f9c9b528facb145ae3039c686a09ef, type: 3}
-  deathSoundVol: 0.5
+  deathSoundVol: 0.7
 --- !u!212 &21297072
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -165,7 +165,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: deathSoundVol
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

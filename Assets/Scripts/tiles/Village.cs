@@ -41,6 +41,9 @@ public class Village : TileObject
 
     private GameObject factionObject;
 
+    public AudioClip[] releaseSounds;
+    public float releaseSoundsVol;
+
     private SpriteRenderer getRenderer()
     {
         return GetComponent<SpriteRenderer>();
@@ -217,6 +220,11 @@ public class Village : TileObject
         var endVillage = end.getVillage();
 
         var group = new GameObject("Legion Group");
+        var random = new System.Random();
+        if (this.faction == Faction.FRIENDLY)
+        {
+            AudioSource.PlayClipAtPoint(releaseSounds[random.Next(0, releaseSounds.Length)], start.GameObject.transform.position, releaseSoundsVol);
+        }
 
         var atkForce = new Vector3((int) defForce.x, (int) defForce.y, (int) defForce.z);
         atkForce = atkForce*percent/100;
