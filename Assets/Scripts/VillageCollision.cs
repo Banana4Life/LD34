@@ -25,12 +25,18 @@ public class VillageCollision : MonoBehaviour {
             }
             else
             {
+
                 Destroy(coll.collider.gameObject);
                 var village = gameObject.GetComponent<Village>();
                 village.fight(force.force, force.faction);
                 if (village.faction != Faction.FRIENDLY)
                 {
                     if (!smoker.isPlaying) smoker.Play();
+                    AudioSource.PlayClipAtPoint(force.deathSound, force.transform.position, force.deathSoundVol);
+                }
+                else
+                {
+                    AudioSource.PlayClipAtPoint(force.arrivalSound, force.transform.position, force.arrivalSoundVol);
                 }
             }
         }
