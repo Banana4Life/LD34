@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6232de4e20584d8730c43b42f654a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 1
+  passable: 0
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
   flipX: 0
   flipY: 0
@@ -235,6 +237,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Text
       value: ~100~
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: passable
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

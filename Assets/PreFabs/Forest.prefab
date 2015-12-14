@@ -11,9 +11,9 @@ GameObject:
   - 33: {fileID: 3316428}
   - 23: {fileID: 2378934}
   - 114: {fileID: 11431912}
-  - 114: {fileID: 11441520}
+  - 114: {fileID: 11420636}
   m_Layer: 0
-  m_Name: River
+  m_Name: Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,6 +64,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121562}
   m_Mesh: {fileID: 4300000, guid: a35e8db4b0d38eb47a1695fde0dd0964, type: 3}
+--- !u!114 &11420636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4759e0b3e8134495ee378567384d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  costToPass: 4
+  passable: 1
 --- !u!114 &11431912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,19 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209e4df7244b21a4fade9b65f3af397a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11441520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc4759e0b3e8134495ee378567384d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  costToPass: 6
-  passable: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -153,11 +153,11 @@ Prefab:
       objectReference: {fileID: 4300000, guid: a35e8db4b0d38eb47a1695fde0dd0964, type: 3}
     - target: {fileID: 0}
       propertyPath: cost
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: costToPass
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

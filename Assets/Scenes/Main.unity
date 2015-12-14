@@ -908,6 +908,7 @@ GameObject:
   - 114: {fileID: 1956102853}
   - 114: {fileID: 1956102855}
   - 114: {fileID: 1956102856}
+  - 114: {fileID: 1956102857}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -931,6 +932,7 @@ MonoBehaviour:
   gridHeight: 16
   populators:
   - {fileID: 1956102856}
+  - {fileID: 1956102857}
   - {fileID: 1956102855}
 --- !u!4 &1956102854
 Transform:
@@ -974,3 +976,15 @@ MonoBehaviour:
   lakeMat: {fileID: 2100000, guid: 46a57d0c4d4e8584d83f36246edae077, type: 2}
   riverPrefab: {fileID: 121562, guid: 93a9eccfd7374d04bbdadad3c9568005, type: 2}
   straightMat: {fileID: 2100000, guid: 4b89b8169308cc744867f3255fdf21f8, type: 2}
+--- !u!114 &1956102857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1956102852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d48812b43c3134b83e6bb676e61440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forestPrefab: {fileID: 121562, guid: 26a02f26b50cae642a2cac455c2e68e7, type: 2}
