@@ -89,8 +89,15 @@ MonoBehaviour:
   passable: 0
   speedFactor: 1
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
-  villageUIImagePrefab: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2, type: 2}
+  villageUiBackgroundPrefab: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2,
+    type: 2}
+  villageUiOverlayPrefab: {fileID: 106648, guid: 4d2960a8a25d29843bb21b7f9a63d5cc,
+    type: 2}
   villageTextPrefab: {fileID: 119932, guid: 836330e83006cdb409a3bbd75c50cef0, type: 2}
+  villageUiNeutral: {fileID: 21300000, guid: 63b9b234692d16d499941ee5022fb286, type: 3}
+  villageUiAlien: {fileID: 21300000, guid: 7502cfb447276f4418d6d4f81a5199d6, type: 3}
+  villageUiLegionnaire: {fileID: 21300000, guid: e9b2ac6d7906970449dae6df2f73d647,
+    type: 3}
   flipX: 0
   flipY: 0
   angle: 0
@@ -98,7 +105,7 @@ MonoBehaviour:
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
   legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
   defForce: {x: 0, y: 0, z: 0}
-  malus: 4
+  bonus: 4
 --- !u!212 &21201770
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -280,6 +287,37 @@ Prefab:
       propertyPath: villageUIImagePrefab
       value: 
       objectReference: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2, type: 2}
+    - target: {fileID: 0}
+      propertyPath: villageUIOverlayPrefab
+      value: 
+      objectReference: {fileID: 106648, guid: 4d2960a8a25d29843bb21b7f9a63d5cc, type: 2}
+    - target: {fileID: 0}
+      propertyPath: villageUIBackgroundPrefab
+      value: 
+      objectReference: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2, type: 2}
+    - target: {fileID: 0}
+      propertyPath: villageUiNeutral
+      value: 
+      objectReference: {fileID: 21300000, guid: 63b9b234692d16d499941ee5022fb286,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: villageUiAlien
+      value: 
+      objectReference: {fileID: 21300000, guid: 7502cfb447276f4418d6d4f81a5199d6,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: villageUiLegionnaire
+      value: 
+      objectReference: {fileID: 21300000, guid: e9b2ac6d7906970449dae6df2f73d647,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: villageUiBackgroundPrefab
+      value: 
+      objectReference: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2, type: 2}
+    - target: {fileID: 0}
+      propertyPath: villageUiOverlayPrefab
+      value: 
+      objectReference: {fileID: 106648, guid: 4d2960a8a25d29843bb21b7f9a63d5cc, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
