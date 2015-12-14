@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HexInput : MonoBehaviour {
 
     public GameObject trianglePrefab;
 
-    public static Tile startTile;
+    public static List<Tile> startTiles = new List<Tile>();
     public static Tile endTile;
     public Material tileNormal;
     public Material tileHighlighted;
@@ -13,29 +14,31 @@ public class HexInput : MonoBehaviour {
     public Material tileAllowed;
 
     private static GameObject line;
-    private static Path<Tile> markedPath;
 
     private float force = 1;
 
     public static bool villageSelected()
     {
-        return startTile != null;
+        return startTiles.Count > 0;
     }
 
     public void OnMouseDown()
     {
-        if (startTile != null)
+        if (startTiles.Count > 0)
         {
             if (endTile != null)
             {
                 if (endTile.hasVillage())
                 {
-                    startTile.getVillage().releaseLegion(new Vector3(force, force, force), startTile, endTile);
+                    foreach (var startTile in startTiles)
+                    {
+                        startTile.getVillage().releaseLegion(new Vector3(force, force, force), startTile, endTile);
+                    }
                 }
             }
-            startTile = null;
+            startTiles.Clear();
             endTile = null;
-            HexGrid.markTilePath(markedPath, tileNormal, tileNormal);
+            HexGrid.clearTilePaths(tileNormal);
             if (line != null)
             {
                 Destroy(line);
@@ -44,21 +47,23 @@ public class HexInput : MonoBehaviour {
         }
         else
         {
-            startTile = Tile.of(gameObject);
-
+            var startTile = Tile.of(gameObject);
             var village = gameObject.GetComponentInChildren<Village>();
+            startTiles.Clear();
+            HexGrid.clearTilePaths(tileNormal);
             if (!village)
             {
-                startTile = null;
+                startTiles.Clear();
             }
             else if (village.faction != Faction.FRIENDLY)
             {
-                startTile = null;
+                startTiles.Clear();
             }
             else
             {
+                startTiles.Add(startTile);
                 var noPathYet = PathFinder.FindPath(startTile, startTile);
-                HexGrid.markTilePath(noPathYet, tileNormal, tileHighlighted);
+                HexGrid.markTilePath(noPathYet, tileHighlighted);
             }
         }
 
@@ -66,40 +71,40 @@ public class HexInput : MonoBehaviour {
 
     public void OnMouseEnter()
     {
-        if (startTile != null)
+        if (startTiles != null)
         {
             endTile = Tile.of(gameObject);
-            var theoreticalPath = PathFinder.FindPath(startTile, endTile);
-
-            if (startTile == endTile)
+            HexGrid.clearTilePaths(tileNormal);
+            foreach (var startTile in startTiles)
             {
-                endTile = null;
-                HexGrid.markTilePath(theoreticalPath, tileNormal, tileHighlighted);
-            }
-            else
-            {
-                gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                var theoreticalPath = PathFinder.FindPath(startTile, endTile);
 
-                markedPath = theoreticalPath;
-                var color = tileBlocked;
-                if (endTile != null)
+                if (startTile == endTile)
                 {
-                    if (endTile.GameObject.transform.childCount > 0 && endTile.GameObject.transform.GetChild(0).GetComponent<Village>() != null)
-                    {
-                        color = tileAllowed;
-                    }
+                    endTile = null;
+                    HexGrid.markTilePath(theoreticalPath, tileHighlighted);
                 }
-                HexGrid.markTilePath(markedPath, tileNormal, color);
+                else
+                {
+                    gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+
+                    var color = tileBlocked;
+                    if (endTile != null)
+                    {
+                        if (endTile.GameObject.transform.childCount > 0 && endTile.GameObject.transform.GetChild(0).GetComponent<Village>() != null)
+                        {
+                            color = tileAllowed;
+                        }
+                    }
+                    HexGrid.markTilePath(theoreticalPath, color);
+                }
             }
         }
     }
 
     void OnMouseExit()
     {
-        if (markedPath != null)
-        {
-            HexGrid.markTilePath(markedPath, tileNormal, tileNormal);
-        }
+        HexGrid.clearTilePaths(tileNormal);
         if (line != null)
         {
             Destroy(line);

@@ -37,12 +37,12 @@ public class CamInput : MonoBehaviour {
             if (boxDrag && !Input.GetMouseButton(0))
             {
                 Debug.Log("left U");
+                HexInput.startTiles.Clear();
                 foreach (var village in HexGrid.villages)
                 {
-                    if (IsWithinSelectionBounds(village))
+                    if (village.GetComponent<Village>().faction == Faction.FRIENDLY && IsWithinSelectionBounds(village))
                     {
-                        HexInput.startTile = Tile.of(village.transform.parent.gameObject);
-                        break;
+                        HexInput.startTiles.Add(Tile.of(village.transform.parent.gameObject));
                     }
                 }
                 boxDrag = false;
