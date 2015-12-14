@@ -223,12 +223,12 @@ public class Village : TileObject
     float delta;
 
     int unitType = Random.Range(0,3);
-    float productionFactor = 10;
+    float productionFactor = 20;
 
     void FixedUpdate()
     {
         delta += Time.fixedDeltaTime;
-        if (delta > 1)
+        if (delta > 0.5)
         {
             var units = defForce.x + defForce.y + defForce.z;
             delta = 0;
