@@ -7,8 +7,13 @@ public class HexInput : MonoBehaviour {
 
     private static Tile startTile;
     private static Tile endTile;
+    public Material tileNormal;
+    public Material tileHighlighted;
+    public Material tileBlocked;
+    public Material tileAllowed;
 
     private static GameObject line;
+    private static Path<Tile> markedPath;
 
     private float force = 1;
 
@@ -29,6 +34,7 @@ public class HexInput : MonoBehaviour {
             }
             startTile = null;
             endTile = null;
+            HexGrid.markTilePath(markedPath, tileNormal);
             if (line != null)
             {
                 Destroy(line);
@@ -65,13 +71,15 @@ public class HexInput : MonoBehaviour {
 
             gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
-            var path = PathFinder.FindPath(startTile, Tile.of(gameObject));
-            line = HexGrid.drawPath(path, Color.yellow, t => t.GameObject.transform.position);
+            markedPath = PathFinder.FindPath(startTile, Tile.of(gameObject));
+            //line = HexGrid.drawPath(markedPath, Color.yellow, t => t.GameObject.transform.position);
+            HexGrid.markTilePath(markedPath, tileHighlighted);
         }
     }
 
     void OnMouseExit()
     {
+        HexGrid.markTilePath(markedPath, tileNormal);
         if (line != null)
         {
             Destroy(line);

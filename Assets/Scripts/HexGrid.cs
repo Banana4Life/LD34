@@ -105,4 +105,13 @@ public class HexGrid : MonoBehaviour
         lr.SetPositions(positions);
         return line;
     }
+
+    public static void markTilePath(Path<Tile> path, Material material)
+    {
+        foreach (var tile in path)
+        {
+            tile.GameObject.GetComponent<MeshRenderer>().material = material;
+        }
+    }
+
 }
