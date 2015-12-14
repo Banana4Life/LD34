@@ -366,6 +366,13 @@ Prefab:
       propertyPath: alienUnit3
       value: 
       objectReference: {fileID: 147548, guid: 9942da33f2109af48bcb4b20cdc115b6, type: 2}
+      propertyPath: releaseSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5495e19188f3a9840b5acd83e22e110b, type: 3}
+    - target: {fileID: 0}
+      propertyPath: releaseSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 53301243532a4fa4fbf599af9a72551e, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}

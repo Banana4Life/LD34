@@ -41,6 +41,8 @@ public class CamInput : MonoBehaviour {
                 {
                     if (village.GetComponent<Village>().faction == Faction.FRIENDLY && IsWithinSelectionBounds(village))
                     {
+                        HexInput.scrollUi.SetActive(true);
+                        CameraScroll.updateScrollUi();
                         HexInput.startTiles.Add(Tile.of(village.transform.parent.gameObject));
                     }
                 }

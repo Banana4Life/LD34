@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Net;
+using System.Xml.Serialization;
+using UnityEngine.UI;
 using Math = System.Math;
 
 public class CameraScroll : MonoBehaviour {
 
     public Camera camera;
+    public static GameObject scrollUi;
     // public float moveSpeed = 45;
 
-	void Update () {
+    void Update () {
         movement();
         scroll();
     }
@@ -23,11 +27,11 @@ public class CameraScroll : MonoBehaviour {
         {
             if (scroll > 0)
             {
-                Village.percent += 5;
+                Village.percent += 10;
             }
             else if (scroll < 0)
             {
-                Village.percent -= 5;
+                Village.percent -= 10;
             }
             else
             {
@@ -37,11 +41,12 @@ public class CameraScroll : MonoBehaviour {
             {
                 Village.percent = 100;
             }
-            if (Village.percent < 5)
+            if (Village.percent < 10)
             {
-                Village.percent = 5;
+                Village.percent = 10;
             }
             Debug.Log(Village.percent);
+            updateScrollUi();
             return;
         }
 
@@ -54,6 +59,16 @@ public class CameraScroll : MonoBehaviour {
         {
             camera.orthographicSize = maxScroll;
         }
+    }
+
+    public static void updateScrollUi()
+    {
+        int bars = (int)Village.percent / 10;
+        for (int i = 0; i < 10; i++)
+        {
+            scrollUi.transform.GetChild(i).gameObject.SetActive(i < bars);
+        }
+        scrollUi.transform.GetChild(10).GetComponent<Text>().text = Village.percent + "%";
     }
 
     private void movement()
