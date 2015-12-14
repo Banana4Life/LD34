@@ -110,6 +110,9 @@ MonoBehaviour:
   legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
   legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
+  alienUnit1: {fileID: 141234, guid: 9f6bc873d8fc141458e96ea648153b9d, type: 2}
+  alienUnit2: {fileID: 141234, guid: de9a3f56652716049ae7ffd52d54ab1d, type: 2}
+  alienUnit3: {fileID: 147548, guid: 9942da33f2109af48bcb4b20cdc115b6, type: 2}
   defForce: {x: 0, y: 0, z: 0}
   releaseSounds:
   - {fileID: 8300000, guid: 5495e19188f3a9840b5acd83e22e110b, type: 3}
@@ -351,6 +354,18 @@ Prefab:
       propertyPath: releaseSoundsVol
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: alienUnit1
+      value: 
+      objectReference: {fileID: 141234, guid: 9f6bc873d8fc141458e96ea648153b9d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: alienUnit2
+      value: 
+      objectReference: {fileID: 141234, guid: de9a3f56652716049ae7ffd52d54ab1d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: alienUnit3
+      value: 
+      objectReference: {fileID: 147548, guid: 9942da33f2109af48bcb4b20cdc115b6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}

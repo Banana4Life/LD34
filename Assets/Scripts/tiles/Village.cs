@@ -35,6 +35,9 @@ public class Village : TileObject
     public GameObject legUnit1;
     public GameObject legUnit2;
     public GameObject legUnit3;
+    public GameObject alienUnit1;
+    public GameObject alienUnit2;
+    public GameObject alienUnit3;
 
     public Vector3 defForce = new Vector3(10, 0, 0);
     private readonly int unitType = Random.Range(0, 3);
@@ -237,22 +240,32 @@ public class Village : TileObject
         attackingLegion.faction = faction;
         attackingLegion.force = atkForce;
 
+        var unit1 = legUnit1;
+        var unit2 = legUnit2;
+        var unit3 = legUnit3;
+        if (attackingLegion.faction == Faction.ENEMY)
+        {
+            unit1 = alienUnit1;
+            unit2 = alienUnit2;
+            unit3 = alienUnit3;
+        }
+
         for (var i = 0; i < atkForce.x; i++)
         {
             PathWalker.walk(
-                spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), this.faction, group, amount/50),
+                spawn(unit1, startVillage.gameObject, new Vector3(1, 0, 0), this.faction, group, amount/50),
                 start, end);
         }
         for (var i = 0; i < atkForce.y; i++)
         {
             PathWalker.walk(
-                spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), this.faction, group, amount/50),
+                spawn(unit2, startVillage.gameObject, new Vector3(0, 1, 0), this.faction, group, amount/50),
                 start, end);
         }
         for (var i = 0; i < atkForce.z; i++)
         {
             PathWalker.walk(
-                spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), this.faction, group, amount/50),
+                spawn(unit3, startVillage.gameObject, new Vector3(0, 0, 1), this.faction, group, amount/50),
                 start, end);
         }
     }
