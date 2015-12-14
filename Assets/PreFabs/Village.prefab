@@ -96,8 +96,8 @@ MonoBehaviour:
   legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
   legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
-  defForce: {x: 10, y: 0, z: 0}
-  bonus: 4
+  defForce: {x: 0, y: 0, z: 0}
+  malus: 4
 --- !u!212 &21201770
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -269,6 +269,10 @@ Prefab:
       objectReference: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
     - target: {fileID: 0}
       propertyPath: passable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: defForce.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

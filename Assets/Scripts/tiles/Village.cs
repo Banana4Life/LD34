@@ -85,10 +85,12 @@ public class Village : TileObject
             this.villageText.transform.parent = gameObject.transform;
             this.villageText.transform.eulerAngles = new Vector3(0, 0, 0);
             this.villageText.transform.localPosition = new Vector3(0, 0, -1);
+
+            updateText();
         }
     }
 
-    public int bonus = 4;
+    public int malus = 2;
 
     public void fight(Vector3 atkForce, Faction faction)
     {
@@ -109,30 +111,30 @@ public class Village : TileObject
             float atkMagnitude = atkForce.x + atkForce.y + atkForce.z;
             // Attacker...
             // Attack X (Melee)
-            defLossX += defForce.x / defMagnitude * atkForce.x * 1 * 1;
-            defLossY += defForce.y / defMagnitude * atkForce.x * 1 * 1;
-            defLossZ += defForce.z / defMagnitude * atkForce.x * 1 * bonus;
+            defLossX += defForce.x / defMagnitude * atkForce.x * 1 / malus;
+            defLossY += defForce.y / defMagnitude * atkForce.x * 1 / malus;
+            defLossZ += defForce.z / defMagnitude * atkForce.x * 1 * 1;
             // Attack Y (Ranged)
-            defLossX += defForce.x / defMagnitude * atkForce.y * 1 * bonus;
-            defLossY += defForce.y / defMagnitude * atkForce.y * 1 * 1;
-            defLossZ += defForce.z / defMagnitude * atkForce.y * 1 * 1;
+            defLossX += defForce.x / defMagnitude * atkForce.y * 1 * 1;
+            defLossY += defForce.y / defMagnitude * atkForce.y * 1 / malus;
+            defLossZ += defForce.z / defMagnitude * atkForce.y * 1 / malus;
             // Attack Z (Mounted)
-            defLossX += defForce.x / defMagnitude * atkForce.z * 1 * 1;
-            defLossY += defForce.y / defMagnitude * atkForce.z * 1 * bonus;
-            defLossZ += defForce.z / defMagnitude * atkForce.z * 1 * 1;
+            defLossX += defForce.x / defMagnitude * atkForce.z * 1 / malus;
+            defLossY += defForce.y / defMagnitude * atkForce.z * 1 * 1;
+            defLossZ += defForce.z / defMagnitude * atkForce.z * 1 / malus;
             // Defender...
             // Defend X (Melee)
-            atkLossX += atkForce.x / atkMagnitude * defForce.x * 1 * 1;
-            atkLossY += atkForce.y / atkMagnitude * defForce.x * 1 * 1;
-            atkLossZ += atkForce.z / atkMagnitude * defForce.x * 1 * bonus;
+            atkLossX += atkForce.x / atkMagnitude * defForce.x * 1 / malus;
+            atkLossY += atkForce.y / atkMagnitude * defForce.x * 1 / malus;
+            atkLossZ += atkForce.z / atkMagnitude * defForce.x * 1 * 1;
             // Defend Y (Ranged)
-            atkLossX += atkForce.x / atkMagnitude * defForce.y * 1 * bonus;
-            atkLossY += atkForce.y / atkMagnitude * defForce.y * 1 * 1;
-            atkLossZ += atkForce.z / atkMagnitude * defForce.y * 1 * 1;
+            atkLossX += atkForce.x / atkMagnitude * defForce.y * 1 * 1;
+            atkLossY += atkForce.y / atkMagnitude * defForce.y * 1 / malus;
+            atkLossZ += atkForce.z / atkMagnitude * defForce.y * 1 / malus;
             // Defend Z (Mounted)
-            atkLossX += atkForce.x / atkMagnitude * defForce.z * 1 * 1;
-            atkLossY += atkForce.y / atkMagnitude * defForce.z * 1 * bonus;
-            atkLossZ += atkForce.z / atkMagnitude * defForce.z * 1 * 1;
+            atkLossX += atkForce.x / atkMagnitude * defForce.z * 1 / malus;
+            atkLossY += atkForce.y / atkMagnitude * defForce.z * 1 * 1;
+            atkLossZ += atkForce.z / atkMagnitude * defForce.z * 1 / malus;
 
             defForce -= new Vector3(defLossX, defLossY, defLossZ);
             atkForce -= new Vector3(atkLossX, atkLossY, atkLossZ);
@@ -249,11 +251,12 @@ public class Village : TileObject
                     break;
             }
         }
+        updateText();
     }
 
     private void updateText()
     {
-        villageText.GetComponent<Text>().text = defForce.x + " / " + defForce.y + " / " + defForce.z;
+        villageText.GetComponent<Text>().text = (int)defForce.x + "/" + (int)defForce.y + "/" + (int)defForce.z;
     }
 }
 
