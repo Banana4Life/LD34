@@ -179,8 +179,22 @@ public static class PathFinder
         };
     }
 
+    public static double defaultCost<Node>(Node n1, Node n2) where Node : GridObject
+    {
+        var tile = n2 as Tile;
+        if (tile != null)
+        {
+            var obj = tile.fromChildren<TileObject>();
+            if (obj)
+            {
+                return obj.passingCost();
+            }
+        }
+        return 1d;
+    }
+
     public static Path<Node> FindPath<Node>(Node start, Node end) where Node : GridObject, IHasNeighbours<Node>
     {
-        return FindPath(start, end, (n, n2) => 1, defaultEstimation(end));
+        return FindPath(start, end, defaultCost, defaultEstimation(end));
     }
 }
