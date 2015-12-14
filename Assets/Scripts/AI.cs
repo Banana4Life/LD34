@@ -9,6 +9,7 @@ public class AI : MonoBehaviour
     public float initialDelay = 1f;
     public float stepDelay = 1f;
     public int actionsPerStep = 1;
+    public int concurrency = 3;
     private List<Village> villages = new List<Village>();
 
     private static readonly string STEP_METHOD = "AIStep";
@@ -120,7 +121,7 @@ public class AI : MonoBehaviour
         var incomingAttacks = legionsByFaction.GetOrElse(Faction.FRIENDLY, new List<AttackingLegion>());
         var outgoingAttacks = legionsByFaction.GetOrElse(Faction.ENEMY, new List<AttackingLegion>());
 
-        if (outgoingAttacks.Count > 2)
+        if (outgoingAttacks.Count >= this.concurrency)
         {
             return;
         }
@@ -202,6 +203,10 @@ public class AI : MonoBehaviour
             if (attForce < 15)
             {
                 return 0;
+            }
+            if (target.faction == Faction.NEUTRAL)
+            {
+                unitMalus *= .5;
             }
             var r = distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
             return r * unitMalus;
