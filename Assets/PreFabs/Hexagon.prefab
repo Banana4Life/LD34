@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cf6018c733312429c46f5ba92a4ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
   trianglePrefab: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
   legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
