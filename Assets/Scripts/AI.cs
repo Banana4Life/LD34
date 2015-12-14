@@ -70,7 +70,15 @@ public class AI : MonoBehaviour
 
     private IDictionary<Faction, IList<Village>> partitionedVillages()
     {
-        return partition(this.villages, v => v.faction);
+        return partition(this.villages, v => {
+
+            if (v.faction == null)
+            {
+                Debug.Log(v + " " + Tile.of(v.gameObject.transform.parent.gameObject) + " " + v.size);
+            }
+            return v.faction;
+
+            });
     }
 
     private List<Action> possibleOffensive(IEnumerable<Village> sources, IEnumerable<Village> targets)

@@ -8,7 +8,6 @@ using Math = System.Math;
 public class CameraScroll : MonoBehaviour {
 
     public Camera camera;
-    public static GameObject scrollUi;
     // public float moveSpeed = 45;
 
     void Update () {
@@ -66,9 +65,9 @@ public class CameraScroll : MonoBehaviour {
         int bars = (int)Village.percent / 10;
         for (int i = 0; i < 10; i++)
         {
-            scrollUi.transform.GetChild(i).gameObject.SetActive(i < bars);
+            UIOverlay.scrollUi.transform.GetChild(i).gameObject.SetActive(i < bars);
         }
-        scrollUi.transform.GetChild(10).GetComponent<Text>().text = Village.percent + "%";
+        UIOverlay.scrollUi.transform.GetChild(10).GetComponent<Text>().text = Village.percent + "%";
     }
 
     private void movement()
