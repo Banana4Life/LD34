@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -40,10 +40,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6232de4e20584d8730c43b42f654a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camp: {fileID: 21300000, guid: 1bc43f22c4699804ba1851be1c919299, type: 3}
-  castle: {fileID: 21300000, guid: 62f3358468cd1954cbf2d6ada0cf3cca, type: 3}
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
-  radius: 0
+  flipX: 0
+  flipY: 0
+  angle: 0
+  defendingUnits: {x: 0, y: 0, z: 0}
+  attackingUnits: {x: 0, y: 0, z: 0}
 --- !u!212 &21201770
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -168,6 +170,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 62f3358468cd1954cbf2d6ada0cf3cca,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
