@@ -15,7 +15,7 @@ public class HexGrid : MonoBehaviour
     private float hexWidth;
     private float hexHeight;
 
-    public List<GridPopulator> populators = new List<GridPopulator>();
+    public List<TilePopulator> populators = new List<TilePopulator>();
 
     //Method to calculate the position of the first hexagon tile
     //The center of the hex grid is (0,0,0)

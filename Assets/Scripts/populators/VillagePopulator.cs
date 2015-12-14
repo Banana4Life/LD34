@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine.Assertions.Comparers;
 using Random = UnityEngine.Random;
 
-public class VillagePopulator : GridPopulator
+public class VillagePopulator : TilePopulator
 {
 
     protected class Stats

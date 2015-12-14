@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ForestPopulator : GridPopulator
+public class ForestPopulator : TilePopulator
 {
     public GameObject forestPrefab;
 
