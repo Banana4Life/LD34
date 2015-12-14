@@ -18,6 +18,33 @@ public class CameraScroll : MonoBehaviour {
     private void scroll()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (HexInput.villageSelected())
+        {
+            if (scroll > 0)
+            {
+                Village.percent += 5;
+            }
+            else if (scroll < 0)
+            {
+                Village.percent -= 5;
+            }
+            else
+            {
+                return;
+            }
+            if (Village.percent > 100)
+            {
+                Village.percent = 100;
+            }
+            if (Village.percent < 0)
+            {
+                Village.percent = 0;
+            }
+            Debug.Log(Village.percent);
+            return;
+        }
+
         camera.orthographicSize -= scroll * 4;
         if (camera.orthographicSize < minScroll)
         {
