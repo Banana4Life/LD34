@@ -100,6 +100,7 @@ public class Village : TileObject
         }
         else
         {
+            var defForce = new Vector3(this.defForce.x, this.defForce.y, this.defForce.z);
             float defMagnitude = defForce.x + defForce.y + defForce.z;
             float atkMagnitude = atkForce.x + atkForce.y + atkForce.z;
 
@@ -120,11 +121,14 @@ public class Village : TileObject
 
                 atkDmg.Scale(defLoss);
                 defDmg.Scale(atkLoss);
+                atkDmg /= bonus / 2;
+                defDmg /= bonus / 2;
 
 
-//                Debug.Log("ATK(" + atkForce + ":" + atkMagnitude + ") " + atkDmg + " : DEF(" + defForce + ":" + defMagnitude + ") " + defDmg);
+                //                Debug.Log("ATK(" + atkForce + ":" + atkMagnitude + ") " + atkDmg + " : DEF(" + defForce + ":" + defMagnitude + ") " + defDmg);
                 defForce -= atkDmg;
                 atkForce -= defDmg;
+                this.defForce -= atkDmg;
 
                 if (defForce.x < 0)
                 {
@@ -156,7 +160,7 @@ public class Village : TileObject
                 {
                     Debug.Log("Attacker won: " + faction);
                     this.setFaction(faction);
-                    defForce = atkForce;
+                    this.defForce = atkForce;
                 }
             }
         }
