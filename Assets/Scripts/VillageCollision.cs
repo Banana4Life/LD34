@@ -16,15 +16,22 @@ public class VillageCollision : MonoBehaviour {
         {
             Force force = coll.collider.gameObject.GetComponent<Force>();
             var group = coll.collider.gameObject.transform.parent;
+                var smoker = gameObject.GetComponentInChildren<ParticleSystem>();
             if (group.childCount <= 1)
             {
                 Destroy(group.gameObject);
                 gameObject.GetComponent<Village>().fight(force.force, force.faction);
+                if (smoker.isPlaying) smoker.Stop();
             }
             else
             {
                 Destroy(coll.collider.gameObject);
-                gameObject.GetComponent<Village>().fight(force.force, force.faction);
+                var village = gameObject.GetComponent<Village>();
+                village.fight(force.force, force.faction);
+                if (village.faction != Faction.FRIENDLY)
+                {
+                    if (!smoker.isPlaying) smoker.Play();
+                }
             }
         }
     }

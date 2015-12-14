@@ -90,7 +90,7 @@ public class Village : TileObject
         }
     }
 
-    public int malus = 2;
+    public int bonus = 4;
 
     public void fight(Vector3 atkForce, Faction faction)
     {
@@ -100,76 +100,64 @@ public class Village : TileObject
         }
         else
         {
-            var defLossX = 0f;
-            var defLossY = 0f;
-            var defLossZ = 0f;
-            var atkLossX = 0f;
-            var atkLossY = 0f;
-            var atkLossZ = 0f;
-
             float defMagnitude = defForce.x + defForce.y + defForce.z;
             float atkMagnitude = atkForce.x + atkForce.y + atkForce.z;
-            // Attacker...
-            // Attack X (Melee)
-            defLossX += defForce.x / defMagnitude * atkForce.x * 1 / malus;
-            defLossY += defForce.y / defMagnitude * atkForce.x * 1 / malus;
-            defLossZ += defForce.z / defMagnitude * atkForce.x * 1 * 1;
-            // Attack Y (Ranged)
-            defLossX += defForce.x / defMagnitude * atkForce.y * 1 * 1;
-            defLossY += defForce.y / defMagnitude * atkForce.y * 1 / malus;
-            defLossZ += defForce.z / defMagnitude * atkForce.y * 1 / malus;
-            // Attack Z (Mounted)
-            defLossX += defForce.x / defMagnitude * atkForce.z * 1 / malus;
-            defLossY += defForce.y / defMagnitude * atkForce.z * 1 * 1;
-            defLossZ += defForce.z / defMagnitude * atkForce.z * 1 / malus;
-            // Defender...
-            // Defend X (Melee)
-            atkLossX += atkForce.x / atkMagnitude * defForce.x * 1 / malus;
-            atkLossY += atkForce.y / atkMagnitude * defForce.x * 1 / malus;
-            atkLossZ += atkForce.z / atkMagnitude * defForce.x * 1 * 1;
-            // Defend Y (Ranged)
-            atkLossX += atkForce.x / atkMagnitude * defForce.y * 1 * 1;
-            atkLossY += atkForce.y / atkMagnitude * defForce.y * 1 / malus;
-            atkLossZ += atkForce.z / atkMagnitude * defForce.y * 1 / malus;
-            // Defend Z (Mounted)
-            atkLossX += atkForce.x / atkMagnitude * defForce.z * 1 / malus;
-            atkLossY += atkForce.y / atkMagnitude * defForce.z * 1 * 1;
-            atkLossZ += atkForce.z / atkMagnitude * defForce.z * 1 / malus;
 
-            defForce -= new Vector3(defLossX, defLossY, defLossZ);
-            atkForce -= new Vector3(atkLossX, atkLossY, atkLossZ);
+            if (defMagnitude != 0)
+            {
+                var defLoss = new Vector3(defForce.x / defMagnitude, defForce.y / defMagnitude, defForce.z / defMagnitude);
+                var atkLoss = new Vector3(atkForce.x / atkMagnitude, atkForce.y / atkMagnitude, atkForce.z / atkMagnitude);
 
-            if (defForce.x < 0)
-            {
-                defForce.x = 0;
-            }
-            if (defForce.y < 0)
-            {
-                defForce.y = 0;
-            }
-            if (defForce.z < 0)
-            {
-                defForce.z = 0;
-            }
+                // potential Attacker Damage 
+                var atkDmg = new Vector3(atkForce.x + atkForce.y * bonus + atkForce.z,
+                                         atkForce.x + atkForce.y + atkForce.z * bonus,
+                                         atkForce.x * bonus + atkForce.y + atkForce.z);
 
-            if (atkForce.x < 0)
-            {
-                atkForce.x = 0;
-            }
-            if (atkForce.y < 0)
-            {
-                atkForce.y = 0;
-            }
-            if (atkForce.z < 0)
-            {
-                atkForce.z = 0;
-            }
+                // potential Defender Damage 
+                var defDmg = new Vector3(defForce.x + defForce.y * bonus + defForce.z,
+                                         defForce.x + defForce.y + defForce.z * bonus,
+                                         defForce.x * bonus + defForce.y + defForce.z);
 
-            if (defForce.sqrMagnitude == 0 && atkForce.sqrMagnitude != 0)
-            {
-                Debug.Log("Attacker won: " + faction);
-                this.setFaction(faction);
-                defForce = atkForce;
+                atkDmg.Scale(defLoss);
+                defDmg.Scale(atkLoss);
+
+
+//                Debug.Log("ATK(" + atkForce + ":" + atkMagnitude + ") " + atkDmg + " : DEF(" + defForce + ":" + defMagnitude + ") " + defDmg);
+                defForce -= atkDmg;
+                atkForce -= defDmg;
+
+                if (defForce.x < 0)
+                {
+                    defForce.x = 0;
+                }
+                if (defForce.y < 0)
+                {
+                    defForce.y = 0;
+                }
+                if (defForce.z < 0)
+                {
+                    defForce.z = 0;
+                }
+
+                if (atkForce.x < 0)
+                {
+                    atkForce.x = 0;
+                }
+                if (atkForce.y < 0)
+                {
+                    atkForce.y = 0;
+                }
+                if (atkForce.z < 0)
+                {
+                    atkForce.z = 0;
+                }
+
+                if (defForce.sqrMagnitude == 0 && atkForce.sqrMagnitude != 0)
+                {
+                    Debug.Log("Attacker won: " + faction);
+                    this.setFaction(faction);
+                    defForce = atkForce;
+                }
             }
         }
         updateText();
@@ -232,19 +220,19 @@ public class Village : TileObject
             switch(unitType)
             {
                 case 0:
-                    if (units < size.unitCap)
+                    if (units <= size.unitCap)
                     {
                         defForce.x += size.production / productionFactor;
                     }
                     break;
                 case 1:
-                    if (units < size.unitCap)
+                    if (units <= size.unitCap)
                     {
                         defForce.y += size.production / productionFactor;
                     }
                     break;
                 case 2:
-                    if (units < size.unitCap)
+                    if (units <= size.unitCap)
                     {
                         defForce.z += size.production / productionFactor;
                     }
