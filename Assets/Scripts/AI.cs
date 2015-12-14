@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using UnityEditor;
 
 public class AI : MonoBehaviour
@@ -12,6 +11,14 @@ public class AI : MonoBehaviour
     public float stepDelay = 1f;
     public int actionsPerStep = 1;
     private List<Village> villages = new List<Village>();
+
+    private static readonly string STEP_METHOD = "AIStep";
+    private static readonly string DEFEATED_MESSAGE = "FactionDefeated";
+
+    void Start()
+    {
+        Application.runInBackground = true;
+    }
 
     // Use this for initialization
     void GridReady(GameObject[,] grid)
@@ -24,31 +31,37 @@ public class AI : MonoBehaviour
                 villages.Add(v);
             }
         }
-        InvokeRepeating("AIStep", initialDelay, stepDelay);
+        InvokeRepeating(STEP_METHOD, initialDelay, stepDelay);
     }
 
-    private Dictionary<Faction, List<Village>> partitionedVillages()
+    private static IDictionary<K, IList<V>> partition<K, V>(IEnumerable<V> input, Func<V, K> key)
     {
-        var partitions = new Dictionary<Faction, List<Village>>();
-        foreach (var village in this.villages)
+        IDictionary<K, IList<V>> partitions = new Dictionary<K, IList<V>>();
+        foreach (var v in input)
         {
-            List<Village> villages;
-            if (!partitions.ContainsKey(village.faction))
+            IList<V> partition;
+            var k = key(v);
+            if (!partitions.ContainsKey(k))
             {
-                villages = new List<Village>();
-                partitions.Add(village.faction, villages);
+                partition = new List<V>();
+                partitions.Add(k, partition);
             }
             else
             {
-                villages = partitions[village.faction];
+                partition = partitions[k];
             }
-            villages.Add(village);
+            partition.Add(v);
         }
 
         return partitions;
     }
 
-    private List<AttackScenario> possibleScenarios(List<Village> sources, List<Village> targets)
+    private IDictionary<Faction, IList<Village>> partitionedVillages()
+    {
+        return partition(this.villages, v => v.faction);
+    }
+
+    private List<AttackScenario> possibleScenarios(IEnumerable<Village> sources, IEnumerable<Village> targets)
     {
         var scenarios = new List<AttackScenario>();
         foreach (var source in sources)
@@ -62,21 +75,53 @@ public class AI : MonoBehaviour
         return scenarios;
     }
 
+    void finished(Faction defeated)
+    {
+        SendMessage(DEFEATED_MESSAGE, defeated);
+        CancelInvoke(STEP_METHOD);
+        Destroy(this);
+    }
+
     void AIStep()
     {
+        var legionsByFaction = partition(GameObject.FindGameObjectsWithTag(AttackingLegion.TAG).Select(g => g.GetComponent<AttackingLegion>()), a => a.faction);
+        var incomingAttacks = legionsByFaction.GetOrElse(Faction.FRIENDLY, new List<AttackingLegion>());
+        var outgoingAttacks = legionsByFaction.GetOrElse(Faction.ENEMY, new List<AttackingLegion>());
+
+        if (outgoingAttacks.Count > 2)
+        {
+            return;
+        }
+
         var villagesByFaction = partitionedVillages();
 
-        var myVillages = villagesByFaction[Faction.ENEMY];
-        var hisVillages = villagesByFaction[Faction.FRIENDLY];
-        var openVillages = villagesByFaction[Faction.NEUTRAL];
+        var myVillages = villagesByFaction.GetOrElse(Faction.ENEMY, new List<Village>());
+        if (myVillages.Count == 0)
+        {
+            finished(Faction.ENEMY);
+            return;
+        }
+
+        var hisVillages = villagesByFaction.GetOrElse(Faction.FRIENDLY, new List<Village>());
+        if (hisVillages.Count == 0)
+        {
+            finished(Faction.FRIENDLY);
+            return;
+        }
+
+        var openVillages = villagesByFaction.GetOrElse(Faction.NEUTRAL, new List<Village>());
         var targets = hisVillages.Union(openVillages).ToList();
 
         var scenarios = possibleScenarios(myVillages, targets);
 
+        var leastRisky = scenarios.Select(s => new ScoredScenario(s, risk(s.source, s.target)))
+            .Where(s => s.score >= 0)
+            .OrderBy(s => s.score);
 
-        var max = scenarios.Select(s => new ScoredScenario(s, score(s.source, s.target))).OrderByDescending(s => s.score).First();
-        Debug.Log(max.score);
-        executeScenario(max.scenario);
+        if (leastRisky.Any())
+        {
+            executeScenario(leastRisky.First().scenario);
+        }
     }
 
     void executeScenario(AttackScenario scenario)
@@ -96,11 +141,16 @@ public class AI : MonoBehaviour
         return v.x + v.y + v.z;
     }
 
-    double score(Village source, Village target)
+    double risk(Village source, Village target)
     {
         var att = source.defForce;
         var def = target.defForce;
-        return 1d/distance(source, target) + force(def) - force(att);
+        var attForce = force(att);
+        if (attForce < 15)
+        {
+            return -1;
+        }
+        return distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
     }
 
     protected class AttackScenario
@@ -125,5 +175,14 @@ public class AI : MonoBehaviour
             this.scenario = scenario;
             this.score = score;
         }
+    }
+}
+
+public static class MapHelper
+{
+    public static V GetOrElse<K, V>(this IDictionary<K, V> dictionary, K key, V defaultValue)
+    {
+        V value;
+        return dictionary.TryGetValue(key, out value) ? value : defaultValue;
     }
 }

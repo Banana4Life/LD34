@@ -216,8 +216,6 @@ public class Village : TileObject
         var startVillage = start.getVillage();
         var endVillage = end.getVillage();
 
-        var group = new GameObject("Legion Group");
-
         var atkForce = new Vector3((int) defForce.x, (int) defForce.y, (int) defForce.z);
         atkForce = atkForce*percent/100;
         atkForce = new Vector3(Mathf.CeilToInt(atkForce.x), Mathf.CeilToInt(atkForce.y), Mathf.CeilToInt(atkForce.z));
@@ -227,6 +225,14 @@ public class Village : TileObject
                   "->" + end.GameObject.transform.position);
 
         defForce -= atkForce;
+
+        var group = new GameObject("Legion Group");
+        group.tag = AttackingLegion.TAG;
+        var attackingLegion = group.AddComponent<AttackingLegion>();
+        attackingLegion.origin = startVillage;
+        attackingLegion.destination = endVillage;
+        attackingLegion.faction = faction;
+        attackingLegion.force = atkForce;
 
         for (var i = 0; i < atkForce.x; i++)
         {
@@ -327,15 +333,22 @@ public class Village : TileObject
 
 public class Faction
 {
-    public static readonly Faction FRIENDLY = new Faction(Color.green);
-    public static readonly Faction NEUTRAL = new Faction(Color.yellow);
-    public static readonly Faction ENEMY = new Faction(Color.red);
+    public static readonly Faction FRIENDLY = new Faction("Legionare", Color.green);
+    public static readonly Faction NEUTRAL = new Faction("Nobody", Color.yellow);
+    public static readonly Faction ENEMY = new Faction("Aliens", Color.red);
 
+    public readonly string name;
     public readonly Color color;
 
-    private Faction(Color color)
+    private Faction(string name, Color color)
     {
+        this.name = name;
         this.color = color;
+    }
+
+    public override string ToString()
+    {
+        return this.name;
     }
 }
 

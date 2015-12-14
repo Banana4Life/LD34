@@ -150,4 +150,9 @@ public class HexGrid : MonoBehaviour
         }
     }
 
+    void FactionDefeated(Faction f)
+    {
+        Debug.Log(f);
+    }
+
 }
