@@ -120,7 +120,7 @@ public class Village : TileObject
             defDmg.Scale(atkLoss);
 
 
-            Debug.Log("ATK("+ atkForce + ") " + atkDmg + " : DEF(" + defForce + ") " + defDmg);
+            //Debug.Log("ATK("+ atkForce + ":" + atkMagnitude + ") " + atkDmg + " : DEF(" + defForce +":" + defMagnitude + ") " + defDmg);
             defForce -= atkDmg;
             atkForce -= defDmg;
 
@@ -236,6 +236,7 @@ public class Village : TileObject
                     break;
             }
         }
+        updateText();
     }
 
     private void updateText()
