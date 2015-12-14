@@ -56,6 +56,7 @@ public class VillagePopulator : GridPopulator
     }
 
     public GameObject villagePrefab;
+    public GameObject smokePrefab;
     public float smallToMedium = 2f/1f;
     public float mediumToLarge = 5f/4f;
     public int tries = 500;
@@ -145,6 +146,11 @@ public class VillagePopulator : GridPopulator
         village.transform.localPosition = new Vector3(0, 0, tile.transform.position.z - 0.5f);
         var v = village.GetComponent<Village>();
         v.setSize(stats.nextSize());
+
+        var smoker = Instantiate(smokePrefab);
+        smoker.transform.parent = village.transform;
+        smoker.transform.localPosition = village.transform.localPosition;
+        smoker.GetComponent<ParticleSystem>().playbackSpeed = 2;
     }
 
     protected bool isBigVillage(Tile t)
