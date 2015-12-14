@@ -34,6 +34,10 @@ public class Village : TileObject
     public void setSize(Size size)
     {
         this.size = size;
+        if (faction == Faction.NEUTRAL)
+        {
+            size.production /= 2;
+        }
         getRenderer().sprite = size.sprite;
     }
 
@@ -95,28 +99,28 @@ public class Village : TileObject
             // Attacker...
             // Attack X (Melee)
             defLossX += defForce.x / defMagnitude * atkForce.x * 1 * 1;
-            defLossY += defForce.x / defMagnitude * atkForce.y * 1 * 1;
-            defLossZ += defForce.x / defMagnitude * atkForce.z * 1 * bonus;
+            defLossY += defForce.y / defMagnitude * atkForce.x * 1 * 1;
+            defLossZ += defForce.z / defMagnitude * atkForce.x * 1 * bonus;
             // Attack Y (Ranged)
-            defLossX += defForce.y / defMagnitude * atkForce.x * 1 * bonus;
+            defLossX += defForce.x / defMagnitude * atkForce.y * 1 * bonus;
             defLossY += defForce.y / defMagnitude * atkForce.y * 1 * 1;
-            defLossZ += defForce.y / defMagnitude * atkForce.z * 1 * 1;
+            defLossZ += defForce.z / defMagnitude * atkForce.y * 1 * 1;
             // Attack Z (Mounted)
-            defLossX += defForce.z / defMagnitude * atkForce.x * 1 * 1;
-            defLossY += defForce.z / defMagnitude * atkForce.y * 1 * bonus;
+            defLossX += defForce.x / defMagnitude * atkForce.z * 1 * 1;
+            defLossY += defForce.y / defMagnitude * atkForce.z * 1 * bonus;
             defLossZ += defForce.z / defMagnitude * atkForce.z * 1 * 1;
             // Defender...
             // Defend X (Melee)
             atkLossX += atkForce.x / atkMagnitude * defForce.x * 1 * 1;
-            atkLossY += atkForce.x / atkMagnitude * defForce.y * 1 * 1;
-            atkLossZ += atkForce.x / atkMagnitude * defForce.z * 1 * bonus;
+            atkLossY += atkForce.y / atkMagnitude * defForce.x * 1 * 1;
+            atkLossZ += atkForce.z / atkMagnitude * defForce.x * 1 * bonus;
             // Defend Y (Ranged)
-            atkLossX += atkForce.y / atkMagnitude * defForce.x * 1 * bonus;
+            atkLossX += atkForce.x / atkMagnitude * defForce.y * 1 * bonus;
             atkLossY += atkForce.y / atkMagnitude * defForce.y * 1 * 1;
-            atkLossZ += atkForce.y / atkMagnitude * defForce.z * 1 * 1;
+            atkLossZ += atkForce.z / atkMagnitude * defForce.y * 1 * 1;
             // Defend Z (Mounted)
-            atkLossX += atkForce.z / atkMagnitude * defForce.x * 1 * 1;
-            atkLossY += atkForce.z / atkMagnitude * defForce.y * 1 * bonus;
+            atkLossX += atkForce.x / atkMagnitude * defForce.z * 1 * 1;
+            atkLossY += atkForce.y / atkMagnitude * defForce.z * 1 * bonus;
             atkLossZ += atkForce.z / atkMagnitude * defForce.z * 1 * 1;
 
             defForce -= new Vector3(defLossX, defLossY, defLossZ);
@@ -151,11 +155,14 @@ public class Village : TileObject
 
         var group = new GameObject("Legion Group");
 
-        var atkForce = defForce * percent / 100;
+        var atkForce = new Vector3((int)defForce.x, (int)defForce.y, (int)defForce.z);
+        atkForce = atkForce * percent / 100;
+        atkForce = new Vector3(Mathf.CeilToInt(atkForce.x), Mathf.CeilToInt(atkForce.y), Mathf.CeilToInt(atkForce.z));
         var amount = atkForce.x + atkForce.y + atkForce.z;
 
-        Debug.Log("Release the Legion! Force:" + atkForce + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
+        Debug.Log("Release the Legion! Force:" + atkForce + "/" + defForce + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
 
+        defForce -= atkForce;
 
         for (var i = 0; i < atkForce.x; i++)
         {
@@ -181,6 +188,41 @@ public class Village : TileObject
         unitForce.force = force;
         unitForce.faction = faction;
         return unit;
+    }
+
+    float delta;
+
+    int unitType = Random.Range(0,3);
+    float productionFactor = 10;
+
+    void FixedUpdate()
+    {
+        delta += Time.fixedDeltaTime;
+        if (delta > 1)
+        {
+            delta = 0;
+            switch(unitType)
+            {
+                case 0:
+                    if (defForce.x < size.unitCap)
+                    {
+                        defForce.x += size.production / productionFactor;
+                    }
+                    break;
+                case 1:
+                    if (defForce.y < size.unitCap)
+                    {
+                        defForce.y += size.production / productionFactor;
+                    }
+                    break;
+                case 2:
+                    if (defForce.z < size.unitCap)
+                    {
+                        defForce.z += size.production / productionFactor;
+                    }
+                    break;
+            }
+        }
     }
 
 }
@@ -214,12 +256,17 @@ public class Size
     public readonly float radius;
     public readonly Sprite sprite;
 
+    public float production;
+    public int unitCap;
+
     private static List<Size> SIZES;
 
     private Size()
     {
         sprite = sprites[index];
         radius = MIN_RADIUS + (++index) * RADIUS_STEP_SCALE;
+        production = index * index * 2;
+        unitCap = index * 50;
 
         if (SIZES == null)
         {
