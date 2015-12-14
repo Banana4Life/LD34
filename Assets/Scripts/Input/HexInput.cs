@@ -65,14 +65,19 @@ public class HexInput : MonoBehaviour {
                 HexGrid.markTilePath(PathFinder.FindPath(startTile, startTile), tileHighlighted);
             }
         }
+    }
 
+    public void OnMouseUp()
+    {
+        OnMouseEnter();
     }
 
     public void OnMouseEnter()
     {
-        if (startTiles != null)
+        if (startTiles.Count > 0)
         {
             endTile = Tile.of(gameObject);
+
             HexGrid.clearTilePaths(tileNormal);
 
             Path<Tile> selfPath = null;

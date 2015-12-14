@@ -13,8 +13,7 @@ public class CamInput : MonoBehaviour {
 
     private bool boxDrag = false;
     private Vector3 boxDragOrigin;
-
-    public GameObject boxPrefab;
+    public Material yellowTile;
 
     void Update()
     {
@@ -45,6 +44,12 @@ public class CamInput : MonoBehaviour {
                         HexInput.startTiles.Add(Tile.of(village.transform.parent.gameObject));
                     }
                 }
+
+                foreach (var startTile in HexInput.startTiles)
+                {
+                    HexGrid.markTilePath(PathFinder.FindPath(startTile, startTile), yellowTile);
+                }
+
                 boxDrag = false;
                 return;
             }
