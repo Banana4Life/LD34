@@ -37,7 +37,10 @@ public class AI : MonoBehaviour
         {
             foreach (var b in villages)
             {
-                distances.Add(distance(a, b));
+                if (a != b)
+                {
+                    distances.Add(distance(a, b));
+                }
             }
         }
         maxDistance = distances.OrderByDescending(x => x).First();
@@ -94,7 +97,10 @@ public class AI : MonoBehaviour
         {
             foreach (var target in mine)
             {
-                actions.Add(new OffensiveAction(source, target));
+                if (source != target)
+                {
+                    actions.Add(new DefensiveAction(source, target));
+                }
             }
         }
 
@@ -147,9 +153,11 @@ public class AI : MonoBehaviour
         var best = scored.Take(this.actionsPerStep);
         if (best.Any())
         {
-            foreach (var action in best)
+            foreach (var scoredAction in best)
             {
-                executeScenario(action.action);
+                var action = scoredAction.action;
+                Debug.Log(action.GetType().Name + " with " + scoredAction.score + " for " + Tile.of(action.target.gameObject.transform.parent.gameObject));
+                executeScenario(action);
             }
         }
     }
@@ -179,6 +187,15 @@ public class AI : MonoBehaviour
 
         public override double risk(Village origin, Village target)
         {
+            var unitMalus = 1d;
+            if (target.unitType == origin.unitType)
+            {
+                unitMalus = 2d;
+            }
+            else if (origin.unitType != ((target.unitType + 1) % 3))
+            {
+                unitMalus = 16d;
+            }
             var att = source.defForce;
             var def = target.defForce;
             var attForce = force(att);
@@ -186,12 +203,13 @@ public class AI : MonoBehaviour
             {
                 return 0;
             }
-            return distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
+            var r = distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
+            return r * unitMalus;
         }
 
         public override double profit(Village origin, Village target)
         {
-            return target.size.unitCap + Math.Max(0, maxDistance - distance(origin, target));
+            return target.size.production * .5d + Math.Max(0, maxDistance - distance(origin, target));
         }
     }
 
@@ -215,12 +233,12 @@ public class AI : MonoBehaviour
 
         public override double risk(Village origin, Village target)
         {
-            return 1;
+            return 0;
         }
 
         public override double profit(Village origin, Village target)
         {
-            return 1;
+            return 0;
         }
     }
 
@@ -240,7 +258,14 @@ public class AI : MonoBehaviour
 
         public double score(Village origin, Village target)
         {
-            return profit(origin, target) / risk(origin, target);
+            var r = risk(origin, target);
+            if (r <= 0)
+            {
+                return 0;
+            }
+            var p = profit(origin, target);
+            var s = p/r;
+            return s;
         }
     }
 }

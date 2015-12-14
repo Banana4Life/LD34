@@ -40,7 +40,7 @@ public class Village : TileObject
     public GameObject alienUnit3;
 
     public Vector3 defForce = new Vector3(10, 0, 0);
-    private readonly int unitType = Random.Range(0, 3);
+    public readonly int unitType = Random.Range(0, 3);
 
     private GameObject factionObject;
 
