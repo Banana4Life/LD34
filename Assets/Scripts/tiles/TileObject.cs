@@ -6,4 +6,9 @@ public abstract class TileObject : MonoBehaviour {
     {
         return true;
     }
+
+    public virtual double passingCost()
+    {
+        return 1d;
+    }
 }
