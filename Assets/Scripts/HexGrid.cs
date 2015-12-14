@@ -22,6 +22,8 @@ public class HexGrid : MonoBehaviour
 
     public List<TilePopulator> populators = new List<TilePopulator>();
 
+    public static List<GameObject> villages = new List<GameObject>();
+
     //Method to calculate the position of the first hexagon tile
     //The center of the hex grid is (0,0,0)
     Vector3 initialPosition() {
@@ -99,7 +101,21 @@ public class HexGrid : MonoBehaviour
             populator.populate(grid);
         }
 
+        findVillages(grid);
+
         SendMessage("GridReady", grid);
+    }
+
+    private void findVillages(GameObject[,] grid)
+    {
+        foreach (var hex in grid)
+        {
+            var v = hex.GetComponentInChildren<Village>();
+            if (v)
+            {
+                villages.Add(v.gameObject);
+            }
+        }
     }
 
     private void setupForCamera()

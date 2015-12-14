@@ -5,8 +5,8 @@ public class HexInput : MonoBehaviour {
 
     public GameObject trianglePrefab;
 
-    private static Tile startTile;
-    private static Tile endTile;
+    public static Tile startTile;
+    public static Tile endTile;
     public Material tileNormal;
     public Material tileHighlighted;
     public Material tileBlocked;
