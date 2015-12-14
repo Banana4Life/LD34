@@ -8,6 +8,7 @@ public class HexGrid : MonoBehaviour
 {
 
     public GameObject hexPrefab;
+    private static Path<Tile> markedPath = null;
     public int gridWidth = 10;
     public int gridHeight = 20;
 
@@ -106,11 +107,19 @@ public class HexGrid : MonoBehaviour
         return line;
     }
 
-    public static void markTilePath(Path<Tile> path, Material material)
+    public static void markTilePath(Path<Tile> path, Material normal, Material coloring)
     {
+        if (markedPath != null)
+        {
+            foreach (var tile in markedPath)
+            {
+                tile.GameObject.GetComponent<MeshRenderer>().material = normal;
+            }
+        }
+        markedPath = path;
         foreach (var tile in path)
         {
-            tile.GameObject.GetComponent<MeshRenderer>().material = material;
+            tile.GameObject.GetComponent<MeshRenderer>().material = coloring;
         }
     }
 

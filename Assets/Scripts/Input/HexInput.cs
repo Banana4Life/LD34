@@ -30,7 +30,7 @@ public class HexInput : MonoBehaviour {
             }
             startTile = null;
             endTile = null;
-            HexGrid.markTilePath(markedPath, tileNormal);
+            HexGrid.markTilePath(markedPath, tileNormal, tileNormal);
             if (line != null)
             {
                 Destroy(line);
@@ -78,7 +78,7 @@ public class HexInput : MonoBehaviour {
                         color = tileAllowed;
                     }
                 }
-                HexGrid.markTilePath(markedPath, color);
+                HexGrid.markTilePath(markedPath, tileNormal, color);
             }
         }
     }
@@ -87,7 +87,7 @@ public class HexInput : MonoBehaviour {
     {
         if (markedPath != null)
         {
-            HexGrid.markTilePath(markedPath, tileNormal);
+            HexGrid.markTilePath(markedPath, tileNormal, tileNormal);
         }
         if (line != null)
         {
