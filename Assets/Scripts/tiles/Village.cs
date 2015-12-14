@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Village : TileObject
 {
@@ -11,12 +12,14 @@ public class Village : TileObject
     }
 
     public GameObject villageTakenPrefab;
+    public GameObject villageTextPrefab;
     public Faction faction;
     public Size size;
     public bool flipX;
     public bool flipY;
     public float angle;
 
+    private GameObject villageText;
 
     public GameObject legUnit1;
     public GameObject legUnit2;
@@ -71,6 +74,14 @@ public class Village : TileObject
 
         gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
         gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
+
+        if (this.villageText == null)
+        {
+            this.villageText = Instantiate(villageTextPrefab);
+            this.villageText.transform.parent = gameObject.transform;
+            this.villageText.transform.eulerAngles = new Vector3(0, 0, 0);
+            this.villageText.transform.localPosition = new Vector3(0, 0, -1);
+        }
     }
 
     public int bonus = 4;
@@ -142,6 +153,7 @@ public class Village : TileObject
                 defForce = atkForce;
             }
         }
+        updateText();
     }
 
     public void releaseLegion(Vector3 force, Tile start, Tile end)
@@ -183,6 +195,10 @@ public class Village : TileObject
         return unit;
     }
 
+    private void updateText()
+    {
+        villageText.GetComponent<Text>().text = defForce.x + " / " + defForce.y + " / " + defForce.z;
+    }
 }
 
 public class Faction
