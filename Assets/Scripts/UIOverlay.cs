@@ -10,7 +10,7 @@ public class UIOverlay : MonoBehaviour
     void Start ()
     {
         uiOverlay = gameObject;
-        scrollUi = scrollUi.transform.GetChild(0).gameObject;
+        scrollUi = uiOverlay.transform.GetChild(0).gameObject;
         for (int i = 0; i < uiOverlay.transform.childCount; i++)
         {
             uiOverlay.transform.GetChild(i).gameObject.SetActive(false);
