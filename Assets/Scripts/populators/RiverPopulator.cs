@@ -60,7 +60,7 @@ public class RiverPopulator : TilePopulator
         }
         var hexriver = Instantiate(riverPrefab);
         hexriver.transform.parent = g.transform;
-        hexriver.transform.localPosition = Vector3.back;
+        hexriver.transform.localPosition = new Vector3(0, 0, -0.1f);
     }
 
     public override void populate(GameObject[,] gameObjects)
