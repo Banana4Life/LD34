@@ -171,6 +171,10 @@ public class Village : TileObject
                 this.setFaction(faction);
                 defForce = atkForce;
             }
+            else
+            {
+                Debug.Log(atkForce);
+            }
         }
         updateText();
     }
