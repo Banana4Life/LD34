@@ -17,6 +17,11 @@ public class HexInput : MonoBehaviour {
 
     private float force = 1;
 
+    public static bool villageSelected()
+    {
+        return startTile != null;
+    }
+
     public void OnMouseDown()
     {
         if (startTile != null)
