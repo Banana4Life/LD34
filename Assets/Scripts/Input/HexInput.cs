@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput : MonoBehaviour {
+public class HexInput : MonoBehaviour {
 
     public GameObject trianglePrefab;
 
@@ -57,6 +57,11 @@ public class PlayerInput : MonoBehaviour {
         if (startTile != null)
         {
             endTile = Tile.of(gameObject);
+
+            if (startTile == endTile)
+            {
+                endTile = null;
+            }
 
             gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
