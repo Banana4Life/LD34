@@ -21,7 +21,7 @@ public class HexInput : MonoBehaviour {
     public GameObject legUnit2;
     public GameObject legUnit3;
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         if (startTile != null)
         {
@@ -58,7 +58,7 @@ public class HexInput : MonoBehaviour {
 
     }
 
-    void OnMouseEnter()
+    public void OnMouseEnter()
     {
         if (startTile != null)
         {
@@ -68,26 +68,31 @@ public class HexInput : MonoBehaviour {
             {
                 endTile = null;
             }
-
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
-
-            markedPath = PathFinder.FindPath(startTile, Tile.of(gameObject));
-            //line = HexGrid.drawPath(markedPath, Color.yellow, t => t.GameObject.transform.position);
-            var color = tileBlocked;
-            if (endTile != null)
+            else
             {
-                if (endTile.GameObject.transform.childCount > 0 && endTile.GameObject.transform.GetChild(0).GetComponent<Village>() != null)
+                gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+
+                markedPath = PathFinder.FindPath(startTile, endTile);
+                //line = HexGrid.drawPath(markedPath, Color.yellow, t => t.GameObject.transform.position);
+                var color = tileBlocked;
+                if (endTile != null)
                 {
-                    color = tileAllowed;
+                    if (endTile.GameObject.transform.childCount > 0 && endTile.GameObject.transform.GetChild(0).GetComponent<Village>() != null)
+                    {
+                        color = tileAllowed;
+                    }
                 }
+                HexGrid.markTilePath(markedPath, color);
             }
-            HexGrid.markTilePath(markedPath, color);
         }
     }
 
     void OnMouseExit()
     {
-        HexGrid.markTilePath(markedPath, tileNormal);
+        if (markedPath != null)
+        {
+            HexGrid.markTilePath(markedPath, tileNormal);
+        }
         if (line != null)
         {
             Destroy(line);
@@ -101,7 +106,6 @@ public class HexInput : MonoBehaviour {
         var startVillage = start.getVillage();
         var endVillage = end.getVillage();
 
-        Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
         var group = new GameObject("Legion Group");
         int amount = 50;
         for (int i = 0; i < amount; i++)
@@ -110,22 +114,23 @@ public class HexInput : MonoBehaviour {
             {
                 // TODO
                 case 0:
-                    PathWalker.walk(spawn(legUnit1, startVillage.transform.position, group, amount / 50), start, end);
+                    PathWalker.walk(spawn(legUnit1, startVillage.gameObject, group, amount / 50), start, end);
                     break;
                 case 1:
-                    PathWalker.walk(spawn(legUnit2, startVillage.transform.position, group, amount / 50), start, end);
+                    PathWalker.walk(spawn(legUnit2, startVillage.gameObject, group, amount / 50), start, end);
                     break;
                 case 2:
-                    PathWalker.walk(spawn(legUnit3, startVillage.transform.position, group, amount / 50), start, end);
+                    PathWalker.walk(spawn(legUnit3, startVillage.gameObject, group, amount / 50), start, end);
                     break;
             }
         }
     }
 
-    public GameObject spawn(GameObject type, Vector3 at, GameObject inHere, int spread)
+    public GameObject spawn(GameObject type, GameObject at, GameObject inHere, int spread)
     {
         var unit = Instantiate(type);
-        unit.transform.position = at + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
+        Physics2D.IgnoreCollision(unit.GetComponent<Collider2D>(), at.GetComponent<Collider2D>(), true);
+        unit.transform.position = at.transform.position + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
         unit.transform.parent = inHere.transform;
         return unit;
     }

@@ -140,12 +140,6 @@ public class Village : TileObject
             }
         }
     }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(
-        collision.collider.name);
-    }
 }
 
 public class Faction

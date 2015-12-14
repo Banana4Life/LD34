@@ -20,6 +20,11 @@ public class PathWalker : MonoBehaviour
         this.enumerator.MoveNext();
     }
 
+    public Tile getEnd()
+    {
+        return path.Last<Tile>();
+    }
+
     private bool closeEnough(Vector3 v1, Vector3 v2)
     {
         return (v2 - v1).sqrMagnitude <= (minimumDistance * minimumDistance);
