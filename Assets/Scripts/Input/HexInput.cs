@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class HexInput : MonoBehaviour {
 
     public GameObject trianglePrefab;
+    public static GameObject scrollUi;
 
     public static List<Tile> startTiles = new List<Tile>();
     public static Tile endTile;
@@ -24,6 +25,7 @@ public class HexInput : MonoBehaviour {
 
     public void OnMouseDown()
     {
+        scrollUi.SetActive(false);
         if (startTiles.Count > 0)
         {
             if (endTile != null)
@@ -61,6 +63,8 @@ public class HexInput : MonoBehaviour {
             }
             else
             {
+                scrollUi.SetActive(true);
+                CameraScroll.updateScrollUi();
                 startTiles.Add(startTile);
                 HexGrid.markTilePath(PathFinder.FindPath(startTile, startTile), tileHighlighted);
             }
