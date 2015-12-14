@@ -111,6 +111,10 @@ MonoBehaviour:
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
   legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
   defForce: {x: 0, y: 0, z: 0}
+  releaseSounds:
+  - {fileID: 8300000, guid: 5495e19188f3a9840b5acd83e22e110b, type: 3}
+  - {fileID: 8300000, guid: 53301243532a4fa4fbf599af9a72551e, type: 3}
+  releaseSoundsVol: 1
   bonus: 4
 --- !u!212 &21201770
 SpriteRenderer:
@@ -166,6 +170,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: releaseSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.r
       value: 1
@@ -339,6 +347,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 6ce05bf4081cb7c4ab2b66e3d7aacb2d,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: releaseSoundsVol
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
