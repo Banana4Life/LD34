@@ -76,7 +76,7 @@ MonoBehaviour:
   force: {x: 0, y: 0, z: 0}
   arrivalSound: {fileID: 8300000, guid: 8525a503768080547a34494c065105b9, type: 3}
   arrivalSoundVol: 0.2
-  deathSound: {fileID: 8300000, guid: 9864bdf8e5065024bae85ed2626617d1, type: 3}
+  deathSound: {fileID: 8300000, guid: e4f9c9b528facb145ae3039c686a09ef, type: 3}
   deathSoundVol: 0.7
 --- !u!212 &21297072
 SpriteRenderer:
@@ -154,7 +154,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: deathSound
       value: 
-      objectReference: {fileID: 8300000, guid: 9864bdf8e5065024bae85ed2626617d1, type: 3}
+      objectReference: {fileID: 8300000, guid: e4f9c9b528facb145ae3039c686a09ef, type: 3}
     - target: {fileID: 0}
       propertyPath: arrivalSound
       value: 
