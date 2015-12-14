@@ -21,35 +21,35 @@ public class Village_Taken : MonoBehaviour
 
         if (village.faction != null)
         {
-            if (village.size == Village.Size.CAMP)
+            if (village.size == Size.CAMP)
             {
-                if (village.faction == Village.Faction.ENEMY)
+                if (village.faction == Faction.ENEMY)
                 {
                     renderer.sprite = campAlien;
                 }
-                else if (village.faction == Village.Faction.FRIENDLY)
+                else if (village.faction == Faction.FRIENDLY)
                 {
                     renderer.sprite = campLegionnaire;
                 }
             }
-            else if (village.size == Village.Size.VILLAGE)
+            else if (village.size == Size.VILLAGE)
             {
-                if (village.faction == Village.Faction.ENEMY)
+                if (village.faction == Faction.ENEMY)
                 {
                     renderer.sprite = villageAlien;
                 }
-                else if (village.faction == Village.Faction.FRIENDLY)
+                else if (village.faction == Faction.FRIENDLY)
                 {
                     renderer.sprite = villageLegionnaire;
                 }
             }
-            else if (village.size == Village.Size.CASTLE)
+            else if (village.size == Size.CASTLE)
             {
-                if (village.faction == Village.Faction.ENEMY)
+                if (village.faction == Faction.ENEMY)
                 {
                     renderer.sprite = castleAlien;
                 }
-                else if (village.faction == Village.Faction.FRIENDLY)
+                else if (village.faction == Faction.FRIENDLY)
                 {
                     renderer.sprite = castleLegionnaire;
                 }

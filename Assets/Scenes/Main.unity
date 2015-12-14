@@ -896,6 +896,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   villagePrefab: {fileID: 152360, guid: c5cc9728b47d2e741a753827149133ed, type: 2}
+  smallToMedium: 2
+  mediumToLarge: 1.25
+  tries: 100
 --- !u!114 &1956102856
 MonoBehaviour:
   m_ObjectHideFlags: 0
