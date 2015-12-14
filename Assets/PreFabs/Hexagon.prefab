@@ -122,8 +122,8 @@ MonoBehaviour:
   trianglePrefab: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
   tileNormal: {fileID: 2100000, guid: 8d73297b018cbf646aeb78c9a06479b7, type: 2}
   tileHighlighted: {fileID: 2100000, guid: 8973734327429994f9c85d8ab29bb6dd, type: 2}
-  tileBlocked: {fileID: 0}
-  tileAllowed: {fileID: 0}
+  tileBlocked: {fileID: 2100000, guid: 6971a12f174b04744b389d61ef17946b, type: 2}
+  tileAllowed: {fileID: 2100000, guid: 93260194f4c5d9940a1a42ab24dd3b70, type: 2}
   legUnit1: {fileID: 141234, guid: 796688d28a69f7f48baa80156215b7df, type: 2}
   legUnit2: {fileID: 153886, guid: e7c344cfb13927242a362b0cd75ee333, type: 2}
   legUnit3: {fileID: 147548, guid: 1d15163607b17e449aa2ae75b534092b, type: 2}
@@ -222,6 +222,14 @@ Prefab:
       propertyPath: tileHighlighted
       value: 
       objectReference: {fileID: 2100000, guid: 8973734327429994f9c85d8ab29bb6dd, type: 2}
+    - target: {fileID: 0}
+      propertyPath: tileBlocked
+      value: 
+      objectReference: {fileID: 2100000, guid: 6971a12f174b04744b389d61ef17946b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: tileAllowed
+      value: 
+      objectReference: {fileID: 2100000, guid: 93260194f4c5d9940a1a42ab24dd3b70, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121562}

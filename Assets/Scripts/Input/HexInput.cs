@@ -73,7 +73,15 @@ public class HexInput : MonoBehaviour {
 
             markedPath = PathFinder.FindPath(startTile, Tile.of(gameObject));
             //line = HexGrid.drawPath(markedPath, Color.yellow, t => t.GameObject.transform.position);
-            HexGrid.markTilePath(markedPath, tileHighlighted);
+            var color = tileBlocked;
+            if (endTile != null)
+            {
+                if (endTile.GameObject.transform.childCount > 0 && endTile.GameObject.transform.GetChild(0).GetComponent<Village>() != null)
+                {
+                    color = tileAllowed;
+                }
+            }
+            HexGrid.markTilePath(markedPath, color);
         }
     }
 
