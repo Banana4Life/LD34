@@ -8,17 +8,15 @@ public class BorderPopulator : TilePopulator
 
     public override void populate(GameObject[,] gameObjects)
     {
-        for (var x = 0; x < borderStrength; ++x)
+        for (var x = 0; x < gameObjects.GetLength(0); ++x)
         {
             for (var y = 0; y < borderStrength; ++y)
             {
                 spawnBorder(gameObjects[x, y]);
-                Debug.Log("X: " + x + ", Y: " + y);
             }
             for (var y = gameObjects.GetLength(1) - borderStrength; y < gameObjects.GetLength(1); ++y)
             {
                 spawnBorder(gameObjects[x, y]);
-                Debug.Log("X: " + x + ", Y: " + y);
             }
         }
 
@@ -27,12 +25,10 @@ public class BorderPopulator : TilePopulator
             for (var x = 0; x < borderStrength; ++x)
             {
                 spawnBorder(gameObjects[x, y]);
-                Debug.Log("X: " + x + ", Y: " + y);
             }
             for (var x = gameObjects.GetLength(0) - borderStrength; x < gameObjects.GetLength(0); ++x)
             {
                 spawnBorder(gameObjects[x, y]);
-                Debug.Log("X: " + x + ", Y: " + y);
             }
         }
     }

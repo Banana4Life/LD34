@@ -50,8 +50,10 @@ public class RiverPopulator : TilePopulator
         return lookup == null ? "L|0" : lookup;
     }
 
+    private int counter = 0;
     protected void spawnRiver(GameObject g)
     {
+        Debug.Log(++counter);
         var existingObject = g.GetComponentInChildren<TileObject>();
         if (existingObject)
         {
@@ -79,7 +81,9 @@ public class RiverPopulator : TilePopulator
         }
 
         var path = new List<GameObject>();
-        path.Add(borderTiles[random.Next(0, borderTiles.Count)]);
+        var initial = borderTiles[random.Next(0, borderTiles.Count)];
+        path.Add(initial);
+        spawnRiver(initial);
         //Debug.Log("rivered " + path[0].GetComponent<TileHolder>().tile);
 
         var blockedNeighbours = new List<GameObject>();
@@ -122,6 +126,11 @@ public class RiverPopulator : TilePopulator
             if (tileHex.transform.childCount == 0)
             {
                 continue;
+            }
+            Debug.Log(i+1);
+            if (!tileHex.GetComponentInChildren<River>())
+            {
+                Debug.Log(tileHex.transform.position);
             }
             var riverHex = tileHex.GetComponentInChildren<River>().gameObject;
 
