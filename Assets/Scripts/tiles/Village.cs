@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Village : TileObject
 {
-    public static float percent = 50;
+    public static float percent = 70;
 
     public override bool canBePassed()
     {

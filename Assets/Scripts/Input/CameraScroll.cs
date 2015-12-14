@@ -37,9 +37,9 @@ public class CameraScroll : MonoBehaviour {
             {
                 Village.percent = 100;
             }
-            if (Village.percent < 0)
+            if (Village.percent < 5)
             {
-                Village.percent = 0;
+                Village.percent = 5;
             }
             Debug.Log(Village.percent);
             return;

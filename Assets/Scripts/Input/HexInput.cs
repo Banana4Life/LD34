@@ -62,8 +62,7 @@ public class HexInput : MonoBehaviour {
             else
             {
                 startTiles.Add(startTile);
-                var noPathYet = PathFinder.FindPath(startTile, startTile);
-                HexGrid.markTilePath(noPathYet, tileHighlighted);
+                HexGrid.markTilePath(PathFinder.FindPath(startTile, startTile), tileHighlighted);
             }
         }
 

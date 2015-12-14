@@ -162,10 +162,13 @@ public class HexGrid : MonoBehaviour
 
     public static void markTilePath(Path<Tile> path, Material coloring)
     {
-        markedPaths.Add(path);
-        foreach (var tile in path)
+        if (path != null)
         {
-            tile.GameObject.GetComponent<MeshRenderer>().material = coloring;
+            markedPaths.Add(path);
+            foreach (var tile in path)
+            {
+                tile.GameObject.GetComponent<MeshRenderer>().material = coloring;
+            }
         }
     }
 
