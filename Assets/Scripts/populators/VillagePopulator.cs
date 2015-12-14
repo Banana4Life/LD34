@@ -142,13 +142,13 @@ public class VillagePopulator : TilePopulator
     protected void spawnVillage(GameObject tile, Stats stats)
     {
         var village = Instantiate(villagePrefab);
-        village.transform.parent = tile.transform;
+        village.transform.SetParent(tile.transform);
         village.transform.localPosition = new Vector3(0, 0, tile.transform.position.z - 0.5f);
         var v = village.GetComponent<Village>();
         v.setSize(stats.nextSize());
 
         var smoker = Instantiate(smokePrefab);
-        smoker.transform.parent = village.transform;
+        smoker.transform.SetParent(village.transform);
         smoker.transform.localPosition = village.transform.localPosition;
         smoker.GetComponent<ParticleSystem>().playbackSpeed = 2;
     }

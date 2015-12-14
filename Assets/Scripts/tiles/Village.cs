@@ -97,7 +97,7 @@ public class Village : TileObject
             {
                 villageTexts.Add(Instantiate(villageTextPrefab));
                 villageTexts[i].transform.SetParent(villageUIImage.transform);
-                villageTexts[i].transform.localPosition = new Vector3(-13 + 14 * i, 0, -1);
+                villageTexts[i].transform.localPosition = new Vector3(-16 + 16 * i, 0, -1);
             }
         }
 
@@ -273,7 +273,7 @@ public class Village : TileObject
     {
         for (int i = 0; i < 3; i++)
         {
-            villageTexts[i].GetComponent<Text>().text = (int) defForce[i] + "";
+            //villageTexts[i].GetComponent<Text>().text = (int) defForce[i] + "";
         }
     }
 }
