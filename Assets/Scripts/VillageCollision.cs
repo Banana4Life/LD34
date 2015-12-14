@@ -28,7 +28,10 @@ public class VillageCollision : MonoBehaviour {
                 Destroy(coll.collider.gameObject);
                 var village = gameObject.GetComponent<Village>();
                 village.fight(force.force, force.faction);
-                if (!smoker.isPlaying) smoker.Play();
+                if (village.faction != Faction.FRIENDLY)
+                {
+                    if (!smoker.isPlaying) smoker.Play();
+                }
             }
         }
     }
