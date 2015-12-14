@@ -241,7 +241,7 @@ public class Village : TileObject
 
     private void updateText()
     {
-        villageText.GetComponent<Text>().text = defForce.x + " / " + defForce.y + " / " + defForce.z;
+        villageText.GetComponent<Text>().text = (int)defForce.x + "/" + (int)defForce.y + "/" + (int)defForce.z;
     }
 }
 
