@@ -72,7 +72,7 @@ public class Village : TileObject
 
     public int bonus = 4;
 
-    void fight(Vector3 atkForce, Faction faction)
+    public void fight(Vector3 atkForce, Faction faction)
     {
         if (this.faction == faction)
         {
@@ -135,7 +135,7 @@ public class Village : TileObject
             if (defForce.sqrMagnitude == 0)
             {
                 Debug.Log("Attacker won: " + faction);
-                this.faction = faction;
+                this.setFaction(faction);
                 defForce = atkForce;
             }
         }

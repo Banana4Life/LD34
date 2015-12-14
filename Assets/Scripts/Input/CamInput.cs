@@ -15,7 +15,7 @@ public class CamInput : MonoBehaviour {
         {
             RaycastHit2D hit = Physics2D.Raycast(camera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<Village>() == null)
+            if (hit.collider != null)
             {
                 drag = true;
                 dragOrigin = Input.mousePosition;

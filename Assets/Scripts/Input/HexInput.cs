@@ -114,24 +114,27 @@ public class HexInput : MonoBehaviour {
             {
                 // TODO
                 case 0:
-                    PathWalker.walk(spawn(legUnit1, startVillage.gameObject, group, amount / 50), start, end);
+                    PathWalker.walk(spawn(legUnit1, startVillage.gameObject, new Vector3(1,0,0), Faction.FRIENDLY, group, amount / 50), start, end);
                     break;
                 case 1:
-                    PathWalker.walk(spawn(legUnit2, startVillage.gameObject, group, amount / 50), start, end);
+                    PathWalker.walk(spawn(legUnit2, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount / 50), start, end);
                     break;
                 case 2:
-                    PathWalker.walk(spawn(legUnit3, startVillage.gameObject, group, amount / 50), start, end);
+                    PathWalker.walk(spawn(legUnit3, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount / 50), start, end);
                     break;
             }
         }
     }
 
-    public GameObject spawn(GameObject type, GameObject at, GameObject inHere, int spread)
+    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere, int spread)
     {
         var unit = Instantiate(type);
         Physics2D.IgnoreCollision(unit.GetComponent<Collider2D>(), at.GetComponent<Collider2D>(), true);
         unit.transform.position = at.transform.position + new Vector3((Random.value - 0.5f) * spread, (Random.value - 0.5f) * spread, 0);
         unit.transform.parent = inHere.transform;
+        var unitForce = unit.GetComponent<Force>();
+        unitForce.force = force;
+        unitForce.faction = faction;
         return unit;
     }
 }
