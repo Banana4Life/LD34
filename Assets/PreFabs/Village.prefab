@@ -89,6 +89,7 @@ MonoBehaviour:
   passable: 0
   speedFactor: 1
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
+  villageUIImagePrefab: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2, type: 2}
   villageTextPrefab: {fileID: 119932, guid: 836330e83006cdb409a3bbd75c50cef0, type: 2}
   flipX: 0
   flipY: 0
@@ -275,6 +276,10 @@ Prefab:
       propertyPath: defForce.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: villageUIImagePrefab
+      value: 
+      objectReference: {fileID: 186684, guid: ed3ab5590319b21438ac431acb9c8eb2, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}

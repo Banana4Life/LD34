@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.CodeDom;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -12,14 +13,16 @@ public class Village : TileObject
     }
 
     public GameObject villageTakenPrefab;
+    public GameObject villageUIImagePrefab;
     public GameObject villageTextPrefab;
     public Faction faction;
     public Size size;
     public bool flipX;
     public bool flipY;
-    public float angle;
+    public int angle;
 
     private GameObject villageText;
+    private GameObject villageUIImage;
 
     public GameObject legUnit1;
     public GameObject legUnit2;
@@ -79,15 +82,23 @@ public class Village : TileObject
         gameObject.transform.localEulerAngles = new Vector3(0, 0, angle);
         gameObject.transform.localScale = new Vector3(flipX ? -1 : 1, flipY ? -1 : 1, 1);
 
-        if (this.villageText == null)
+        if (villageUIImage == null)
+        {
+            this.villageUIImage = Instantiate(villageUIImagePrefab);
+            this.villageUIImage.transform.SetParent(gameObject.transform.parent);
+            this.villageUIImage.transform.localEulerAngles = new Vector3(0, 0, 0);
+            this.villageUIImage.transform.localPosition = new Vector3(0, 2.5f, -1);
+        }
+
+        if (villageText == null)
         {
             this.villageText = Instantiate(villageTextPrefab);
-            this.villageText.transform.parent = gameObject.transform;
-            this.villageText.transform.eulerAngles = new Vector3(0, 0, 0);
-            this.villageText.transform.localPosition = new Vector3(0, 0, -1);
-
-            updateText();
+            this.villageText.transform.SetParent(gameObject.transform.parent);
+            this.villageText.transform.localEulerAngles = new Vector3(0, 0, 0);
+            this.villageText.transform.localPosition = new Vector3(0, 2.5f, -2);
         }
+
+        updateText();
     }
 
     public int bonus = 4;
