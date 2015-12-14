@@ -7,8 +7,13 @@ public class HexInput : MonoBehaviour {
 
     private static Tile startTile;
     private static Tile endTile;
+    public Material tileNormal;
+    public Material tileHighlighted;
+    public Material tileBlocked;
+    public Material tileAllowed;
 
     private static GameObject line;
+    private static Path<Tile> markedPath;
 
     private float force = 1;
 
@@ -22,13 +27,14 @@ public class HexInput : MonoBehaviour {
         {
             if (endTile != null)
             {
-                if (endTile.GameObject.GetComponentInChildren<Village>())
+                if (endTile.hasVillage())
                 {
                     releaseLegion(new Vector3(force, force, force), startTile, endTile);
                 }
             }
             startTile = null;
             endTile = null;
+            HexGrid.markTilePath(markedPath, tileNormal);
             if (line != null)
             {
                 Destroy(line);
@@ -65,13 +71,23 @@ public class HexInput : MonoBehaviour {
 
             gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
-            var path = PathFinder.FindPath(startTile, Tile.of(gameObject));
-            line = HexGrid.drawPath(path, Color.yellow, t => t.GameObject.transform.position);
+            markedPath = PathFinder.FindPath(startTile, Tile.of(gameObject));
+            //line = HexGrid.drawPath(markedPath, Color.yellow, t => t.GameObject.transform.position);
+            var color = tileBlocked;
+            if (endTile != null)
+            {
+                if (endTile.GameObject.transform.childCount > 0 && endTile.GameObject.transform.GetChild(0).GetComponent<Village>() != null)
+                {
+                    color = tileAllowed;
+                }
+            }
+            HexGrid.markTilePath(markedPath, color);
         }
     }
 
     void OnMouseExit()
     {
+        HexGrid.markTilePath(markedPath, tileNormal);
         if (line != null)
         {
             Destroy(line);
@@ -82,8 +98,8 @@ public class HexInput : MonoBehaviour {
     private void releaseLegion(Vector3 force, Tile start, Tile end)
     {
         Debug.Log("Release the Legion! Force:" + force + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
-        var startVillage = start.GameObject.GetComponentInChildren<Village>();
-        var endVillage = end.GameObject.GetComponentInChildren<Village>();
+        var startVillage = start.getVillage();
+        var endVillage = end.getVillage();
 
         Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
         var group = new GameObject("Legion Group");
