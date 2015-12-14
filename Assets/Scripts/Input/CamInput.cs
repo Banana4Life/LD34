@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput2 : MonoBehaviour {
+public class CamInput : MonoBehaviour {
 
     public Camera camera;
     private bool drag = false;
