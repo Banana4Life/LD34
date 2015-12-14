@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput : MonoBehaviour {
+public class HexInput : MonoBehaviour {
 
-    public Camera camera;
     public GameObject trianglePrefab;
 
     private static Tile startTile;
@@ -50,6 +49,7 @@ public class PlayerInput : MonoBehaviour {
                 startTile = null;
             }
         }
+
     }
 
     void OnMouseEnter()
@@ -57,6 +57,11 @@ public class PlayerInput : MonoBehaviour {
         if (startTile != null)
         {
             endTile = Tile.of(gameObject);
+
+            if (startTile == endTile)
+            {
+                endTile = null;
+            }
 
             gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
