@@ -55,6 +55,11 @@ public class HexInput : MonoBehaviour {
             {
                 startTile = null;
             }
+            else
+            {
+                var noPathYet = PathFinder.FindPath(startTile, startTile);
+                HexGrid.markTilePath(noPathYet, tileNormal, tileHighlighted);
+            }
         }
 
     }
@@ -64,17 +69,18 @@ public class HexInput : MonoBehaviour {
         if (startTile != null)
         {
             endTile = Tile.of(gameObject);
+            var theoreticalPath = PathFinder.FindPath(startTile, endTile);
 
             if (startTile == endTile)
             {
                 endTile = null;
+                HexGrid.markTilePath(theoreticalPath, tileNormal, tileHighlighted);
             }
             else
             {
                 gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
-                markedPath = PathFinder.FindPath(startTile, endTile);
-                //line = HexGrid.drawPath(markedPath, Color.yellow, t => t.GameObject.transform.position);
+                markedPath = theoreticalPath;
                 var color = tileBlocked;
                 if (endTile != null)
                 {

@@ -19,6 +19,9 @@ public class Village : TileObject
     public Sprite villageUiNeutral;
     public Sprite villageUiAlien;
     public Sprite villageUiLegionnaire;
+    public Sprite villageUiOverlayNeutral;
+    public Sprite villageUiOverlayAlien;
+    public Sprite villageUiOverlayLegionnaire;
     public Faction faction;
     public Size size;
     public bool flipX;
@@ -34,6 +37,7 @@ public class Village : TileObject
     public GameObject legUnit3;
 
     public Vector3 defForce = new Vector3(10, 0, 0);
+    private readonly int unitType = Random.Range(0, 3);
 
     private GameObject factionObject;
 
@@ -70,7 +74,6 @@ public class Village : TileObject
 
     void Start()
     {
-
         if (this.size == null)
         {
             setSize(Size.CAMP);
@@ -92,15 +95,14 @@ public class Village : TileObject
             this.villageUIBackground = Instantiate(villageUiBackgroundPrefab);
             this.villageUIBackground.transform.SetParent(gameObject.transform.parent);
             this.villageUIBackground.transform.localPosition = new Vector3(0, 2.5f, -1);
-            updateUI();
         }
-
         if (villageUIOverlay == null)
         {
             this.villageUIOverlay = Instantiate(villageUiOverlayPrefab);
             this.villageUIOverlay.transform.SetParent(villageUIBackground.transform);
             this.villageUIOverlay.transform.localPosition = new Vector3(0, 0, -1);
         }
+        updateUI();
 
         if (villageTexts == null)
         {
@@ -109,7 +111,11 @@ public class Village : TileObject
             {
                 villageTexts.Add(Instantiate(villageTextPrefab));
                 villageTexts[i].transform.SetParent(villageUIBackground.transform);
-                villageTexts[i].transform.localPosition = new Vector3(-13 + 16 * i, 0, -1);
+                villageTexts[i].transform.localPosition = new Vector3(-13 + 16.5f * i, 0, -1);
+                if (i == unitType)
+                {
+                    villageTexts[i].GetComponent<Text>().color = new Color(251f / 255f, 242f / 255f, 54f / 255f);
+                }
             }
         }
 
@@ -194,8 +200,19 @@ public class Village : TileObject
         updateText();
     }
 
+    public void releaseLegion(Vector3 force, Village target)
+    {
+        releaseLegion(force, Tile.of(gameObject.transform.parent.gameObject), Tile.of(target.gameObject.transform.parent.gameObject));
+    }
+
     public void releaseLegion(Vector3 force, Tile start, Tile end)
     {
+        if (start == end)
+        {
+            Debug.Log("Tried to release a legion to itself:" + start);
+            return;
+        }
+
         var startVillage = start.getVillage();
         var endVillage = end.getVillage();
 
@@ -214,19 +231,19 @@ public class Village : TileObject
         for (var i = 0; i < atkForce.x; i++)
         {
             PathWalker.walk(
-                spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), Faction.FRIENDLY, group, amount/50),
+                spawn(legUnit1, startVillage.gameObject, new Vector3(1, 0, 0), this.faction, group, amount/50),
                 start, end);
         }
         for (var i = 0; i < atkForce.y; i++)
         {
             PathWalker.walk(
-                spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), Faction.FRIENDLY, group, amount/50),
+                spawn(legUnit2, startVillage.gameObject, new Vector3(0, 1, 0), this.faction, group, amount/50),
                 start, end);
         }
         for (var i = 0; i < atkForce.z; i++)
         {
             PathWalker.walk(
-                spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), Faction.FRIENDLY, group, amount/50),
+                spawn(legUnit3, startVillage.gameObject, new Vector3(0, 0, 1), this.faction, group, amount/50),
                 start, end);
         }
     }
@@ -246,8 +263,6 @@ public class Village : TileObject
     }
 
     float delta;
-    
-    int unitType = Random.Range(0,3);
     float productionFactor = 20;
 
     void FixedUpdate()
@@ -294,14 +309,17 @@ public class Village : TileObject
     {
         if (faction == Faction.NEUTRAL)
         {
+            villageUIOverlay.GetComponent<Image>().sprite = villageUiOverlayNeutral;
             villageUIBackground.GetComponent<Image>().sprite = villageUiNeutral;
         }
         else if (faction == Faction.ENEMY)
         {
+            villageUIOverlay.GetComponent<Image>().sprite = villageUiOverlayAlien;
             villageUIBackground.GetComponent<Image>().sprite = villageUiAlien;
         }
         else
         {
+            villageUIOverlay.GetComponent<Image>().sprite = villageUiOverlayLegionnaire;
             villageUIBackground.GetComponent<Image>().sprite = villageUiLegionnaire;
         }
     }
