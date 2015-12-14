@@ -103,58 +103,61 @@ public class Village : TileObject
             float defMagnitude = defForce.x + defForce.y + defForce.z;
             float atkMagnitude = atkForce.x + atkForce.y + atkForce.z;
 
-            var defLoss = new Vector3(defForce.x / defMagnitude, defForce.y / defMagnitude, defForce.z / defMagnitude);
-            var atkLoss = new Vector3(atkForce.x / atkMagnitude, atkForce.y / atkMagnitude, atkForce.z / atkMagnitude);
-
-            // potential Attacker Damage 
-            var atkDmg = new Vector3(atkForce.x + atkForce.y * bonus + atkForce.z,
-                                     atkForce.x + atkForce.y + atkForce.z * bonus,
-                                     atkForce.x * bonus + atkForce.y + atkForce.z);
-
-            // potential Defender Damage 
-            var defDmg = new Vector3(defForce.x + defForce.y * bonus + defForce.z, 
-                                     defForce.x + defForce.y + defForce.z * bonus,
-                                     defForce.x * bonus + defForce.y + defForce.z);
-
-            atkDmg.Scale(defLoss);
-            defDmg.Scale(atkLoss);
-
-
-            //Debug.Log("ATK("+ atkForce + ":" + atkMagnitude + ") " + atkDmg + " : DEF(" + defForce +":" + defMagnitude + ") " + defDmg);
-            defForce -= atkDmg;
-            atkForce -= defDmg;
-
-            if (defForce.x < 0)
+            if (defMagnitude != 0)
             {
-                defForce.x = 0;
-            }
-            if (defForce.y < 0)
-            {
-                defForce.y = 0;
-            }
-            if (defForce.z < 0)
-            {
-                defForce.z = 0;
-            }
+                var defLoss = new Vector3(defForce.x / defMagnitude, defForce.y / defMagnitude, defForce.z / defMagnitude);
+                var atkLoss = new Vector3(atkForce.x / atkMagnitude, atkForce.y / atkMagnitude, atkForce.z / atkMagnitude);
 
-            if (atkForce.x < 0)
-            {
-                atkForce.x = 0;
-            }
-            if (atkForce.y < 0)
-            {
-                atkForce.y = 0;
-            }
-            if (atkForce.z < 0)
-            {
-                atkForce.z = 0;
-            }
+                // potential Attacker Damage 
+                var atkDmg = new Vector3(atkForce.x + atkForce.y * bonus + atkForce.z,
+                                         atkForce.x + atkForce.y + atkForce.z * bonus,
+                                         atkForce.x * bonus + atkForce.y + atkForce.z);
 
-            if (defForce.sqrMagnitude == 0 && atkForce.sqrMagnitude != 0)
-            {
-                Debug.Log("Attacker won: " + faction);
-                this.setFaction(faction);
-                defForce = atkForce;
+                // potential Defender Damage 
+                var defDmg = new Vector3(defForce.x + defForce.y * bonus + defForce.z,
+                                         defForce.x + defForce.y + defForce.z * bonus,
+                                         defForce.x * bonus + defForce.y + defForce.z);
+
+                atkDmg.Scale(defLoss);
+                defDmg.Scale(atkLoss);
+
+
+//                Debug.Log("ATK(" + atkForce + ":" + atkMagnitude + ") " + atkDmg + " : DEF(" + defForce + ":" + defMagnitude + ") " + defDmg);
+                defForce -= atkDmg;
+                atkForce -= defDmg;
+
+                if (defForce.x < 0)
+                {
+                    defForce.x = 0;
+                }
+                if (defForce.y < 0)
+                {
+                    defForce.y = 0;
+                }
+                if (defForce.z < 0)
+                {
+                    defForce.z = 0;
+                }
+
+                if (atkForce.x < 0)
+                {
+                    atkForce.x = 0;
+                }
+                if (atkForce.y < 0)
+                {
+                    atkForce.y = 0;
+                }
+                if (atkForce.z < 0)
+                {
+                    atkForce.z = 0;
+                }
+
+                if (defForce.sqrMagnitude == 0 && atkForce.sqrMagnitude != 0)
+                {
+                    Debug.Log("Attacker won: " + faction);
+                    this.setFaction(faction);
+                    defForce = atkForce;
+                }
             }
         }
         updateText();
