@@ -39,6 +39,7 @@ public class Village : TileObject
     public GameObject alienUnit2;
     public GameObject alienUnit3;
 
+
     public Vector3 defForce = new Vector3(10, 0, 0);
     private readonly int unitType = Random.Range(0, 3);
 
