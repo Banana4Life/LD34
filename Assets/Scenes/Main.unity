@@ -146,45 +146,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
---- !u!1 &584397262
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 584397263}
-  - 114: {fileID: 584397264}
-  m_Layer: 0
-  m_Name: Computer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &584397263
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 584397262}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9366875, y: -0.012920804, z: -2.890625}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
---- !u!114 &584397264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 584397262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548bee6d346068148a5819c782378643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1045791028
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1811316474}
+  minScroll: 5
+  maxScroll: 15
 --- !u!1 &1899473106
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +370,7 @@ GameObject:
   - 223: {fileID: 1956102858}
   - 114: {fileID: 1956102854}
   - 114: {fileID: 1956102860}
+  - 114: {fileID: 1956102861}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -430,6 +394,10 @@ MonoBehaviour:
   gridHeight: 16
   hexWidth: 0
   hexHeight: 0
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 0
   populators:
   - {fileID: 1956102860}
   - {fileID: 1956102856}
@@ -547,3 +515,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   borderPrefab: {fileID: 153754, guid: 23515293bd9b07948a72c91e10c59b60, type: 2}
   borderStrength: 2
+--- !u!114 &1956102861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1956102852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548bee6d346068148a5819c782378643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 1
+  stepDelay: 1
+  actionsPerStep: 1
