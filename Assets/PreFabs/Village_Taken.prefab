@@ -44,7 +44,7 @@ MonoBehaviour:
   campAlien: {fileID: 21300000, guid: a72dbb61d39f7464c994e3335ef66673, type: 3}
   campLegionnaire: {fileID: 21300000, guid: 18585bbc96e7165408d1202c2918536a, type: 3}
   villageAlien: {fileID: 21300000, guid: 08aba3d6486d925418834df540b0c1e0, type: 3}
-  villageLegionnaire: {fileID: 0}
+  villageLegionnaire: {fileID: 21300000, guid: f5ea8708a0e7d7a49b487c2700e6b1c0, type: 3}
   castleAlien: {fileID: 21300000, guid: c0e135b2e5e04544d95df6d171528026, type: 3}
   castleLegionnaire: {fileID: 21300000, guid: 417e25bb05dbc8a4eadffb67baedb44e, type: 3}
 --- !u!212 &21284500
@@ -132,6 +132,11 @@ Prefab:
       propertyPath: villageAlien
       value: 
       objectReference: {fileID: 21300000, guid: 08aba3d6486d925418834df540b0c1e0,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: villageLegionnaire
+      value: 
+      objectReference: {fileID: 21300000, guid: f5ea8708a0e7d7a49b487c2700e6b1c0,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
