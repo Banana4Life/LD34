@@ -78,6 +78,41 @@ public class VillagePopulator : GridPopulator
                 blocked.Add(t);
             }
         }
+
+        populateFactions(gameObjects);
+    }
+
+    private void populateFactions(GameObject[,] gameObjects)
+    {
+        bool found = false;
+        for (var x = 0; !found && x < gameObjects.GetLength(0); ++x)
+        {
+            for (var y = 0; y < gameObjects.GetLength(1); ++y)
+            {
+                var village = gameObjects[x, y].GetComponentInChildren<Village>();
+                if (village && village.size == Size.CASTLE)
+                {
+                    found = true;
+                    village.setFaction(Faction.FRIENDLY);
+                    break;
+                }
+            }
+        }
+
+        found = false;
+        for (var x = gameObjects.GetLength(0) - 1; !found && x >= 0; --x)
+        {
+            for (var y = 0; y < gameObjects.GetLength(1); ++y)
+            {
+                var village = gameObjects[x, y].GetComponentInChildren<Village>();
+                if (village && village.size == Size.CASTLE)
+                {
+                    found = true;
+                    village.setFaction(Faction.ENEMY);
+                    break;
+                }
+            }
+        }
     }
 
     public bool isValidSpace(Tile t, HashSet<Tile> blocked)
