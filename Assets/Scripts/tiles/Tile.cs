@@ -75,5 +75,15 @@ public class Tile : GridObject, IHasNeighbours<Tile>
     {
         return GameObject.GetComponentInChildren<T>();
     }
+
+    public Village getVillage()
+    {
+        return this.GameObject.GetComponentInChildren<Village>();
+    }
+
+    public bool hasVillage()
+    {
+        return this.GameObject.GetComponentInChildren<Village>() != null;
+    }
 }
 

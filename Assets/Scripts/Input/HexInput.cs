@@ -3,8 +3,6 @@ using System.Collections;
 
 public class HexInput : MonoBehaviour {
 
-    public GameObject trianglePrefab;
-
     private static Tile startTile;
     private static Tile endTile;
 
@@ -22,7 +20,7 @@ public class HexInput : MonoBehaviour {
         {
             if (endTile != null)
             {
-                if (endTile.GameObject.GetComponentInChildren<Village>())
+                if (endTile.hasVillage())
                 {
                     releaseLegion(new Vector3(force, force, force), startTile, endTile);
                 }
@@ -82,8 +80,8 @@ public class HexInput : MonoBehaviour {
     private void releaseLegion(Vector3 force, Tile start, Tile end)
     {
         Debug.Log("Release the Legion! Force:" + force + " " + start.GameObject.transform.position + "->" + end.GameObject.transform.position);
-        var startVillage = start.GameObject.GetComponentInChildren<Village>();
-        var endVillage = end.GameObject.GetComponentInChildren<Village>();
+        var startVillage = start.getVillage();
+        var endVillage = end.getVillage();
 
         Debug.Log(start.GameObject.transform.childCount + " " + end.GameObject.transform.childCount);
         var group = new GameObject("Legion Group");
