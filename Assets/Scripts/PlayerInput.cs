@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour {
 
-    public Camera camera;
     public GameObject trianglePrefab;
 
     private static Tile startTile;
@@ -50,6 +49,7 @@ public class PlayerInput : MonoBehaviour {
                 startTile = null;
             }
         }
+
     }
 
     void OnMouseEnter()
