@@ -117,9 +117,12 @@ public class HexGrid : MonoBehaviour
             }
         }
         markedPath = path;
-        foreach (var tile in path)
+        if (path != null)
         {
-            tile.GameObject.GetComponent<MeshRenderer>().material = coloring;
+            foreach (var tile in path)
+            {
+                tile.GameObject.GetComponent<MeshRenderer>().material = coloring;
+            }
         }
     }
 
