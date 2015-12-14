@@ -13,6 +13,7 @@ GameObject:
   - 58: {fileID: 5860308}
   - 114: {fileID: 11400796}
   - 50: {fileID: 5010002}
+  - 114: {fileID: 11455978}
   m_Layer: 0
   m_Name: Village
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 0
 --- !u!58 &5860308
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -62,6 +63,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e6f7aa5f85fa14b96fc30cc144fed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11455978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949f5bfc11c15b240865f161a66871b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11489540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,6 +89,7 @@ MonoBehaviour:
   passable: 0
   speedFactor: 1
   villageTakenPrefab: {fileID: 147236, guid: 90c6419794f39ad40930c7ec5df69988, type: 2}
+  villageTextPrefab: {fileID: 119932, guid: 836330e83006cdb409a3bbd75c50cef0, type: 2}
   flipX: 0
   flipY: 0
   angle: 0
@@ -257,10 +270,6 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: passable
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Constraints
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
