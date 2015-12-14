@@ -13,6 +13,7 @@ public class AI : MonoBehaviour
 
     private static readonly string STEP_METHOD = "AIStep";
     private static readonly string DEFEATED_MESSAGE = "FactionDefeated";
+    public static double maxDistance;
 
     void Start()
     {
@@ -30,6 +31,18 @@ public class AI : MonoBehaviour
                 villages.Add(v);
             }
         }
+
+        var distances = new List<double>();
+        foreach (var a in villages)
+        {
+            foreach (var b in villages)
+            {
+                distances.Add(distance(a, b));
+            }
+        }
+        maxDistance = distances.OrderByDescending(x => x).First();
+        
+
         InvokeRepeating(STEP_METHOD, initialDelay, stepDelay);
     }
 
@@ -60,18 +73,32 @@ public class AI : MonoBehaviour
         return partition(this.villages, v => v.faction);
     }
 
-    private List<AttackScenario> possibleScenarios(IEnumerable<Village> sources, IEnumerable<Village> targets)
+    private List<Action> possibleOffensive(IEnumerable<Village> sources, IEnumerable<Village> targets)
     {
-        var scenarios = new List<AttackScenario>();
+        var actions = new List<Action>();
         foreach (var source in sources)
         {
             foreach (var target in targets)
             {
-                scenarios.Add(new AttackScenario(source, target));
+                actions.Add(new OffensiveAction(source, target));
             }
         }
 
-        return scenarios;
+        return actions;
+    }
+
+    private List<Action>  possibleDefensive(IEnumerable<Village> mine)
+    {
+        var actions = new List<Action>();
+        foreach (var source in mine)
+        {
+            foreach (var target in mine)
+            {
+                actions.Add(new OffensiveAction(source, target));
+            }
+        }
+
+        return actions;
     }
 
     void finished(Faction defeated)
@@ -111,68 +138,109 @@ public class AI : MonoBehaviour
         var openVillages = villagesByFaction.GetOrElse(Faction.NEUTRAL, new List<Village>());
         var targets = hisVillages.Union(openVillages).ToList();
 
-        var scenarios = possibleScenarios(myVillages, targets);
+        var actions = possibleOffensive(myVillages, targets).Union(possibleDefensive(myVillages));
 
-        var leastRisky = scenarios.Select(s => new ScoredScenario(s, risk(s.source, s.target)))
-            .Where(s => s.score >= 0)
-            .OrderBy(s => s.score);
+        var scored = actions.Select(s => new ScoredAction(s, s.score(s.source, s.target)))
+            .Where(s => s.score > 0)
+            .OrderByDescending(s => s.score);
 
-        if (leastRisky.Any())
+        var best = scored.Take(this.actionsPerStep);
+        if (best.Any())
         {
-            executeScenario(leastRisky.First().scenario);
+            foreach (var action in best)
+            {
+                executeScenario(action.action);
+            }
         }
     }
 
-    void executeScenario(AttackScenario scenario)
+    void executeScenario(Action scenario)
     {
         scenario.source.releaseLegion(Vector3.one, scenario.target);
     }
 
-    double distance(Village a, Village b)
+    static double distance(Village a, Village b)
     {
         var ta = Tile.of(a.gameObject.transform.parent.gameObject);
         var tb = Tile.of(b.gameObject.transform.parent.gameObject);
         return PathFinder.defaultEstimation(ta)(tb);
     }
 
-    double force(Vector3 v)
+    static double force(Vector3 v)
     {
         return v.x + v.y + v.z;
     }
 
-    double risk(Village source, Village target)
+    protected class OffensiveAction : Action
     {
-        var att = source.defForce;
-        var def = target.defForce;
-        var attForce = force(att);
-        if (attForce < 15)
+
+        public OffensiveAction(Village source, Village target) : base(source, target)
+        {}
+
+        public override double risk(Village origin, Village target)
         {
-            return -1;
+            var att = source.defForce;
+            var def = target.defForce;
+            var attForce = force(att);
+            if (attForce < 15)
+            {
+                return 0;
+            }
+            return distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
         }
-        return distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
+
+        public override double profit(Village origin, Village target)
+        {
+            return target.size.unitCap + Math.Max(0, maxDistance - distance(origin, target));
+        }
     }
 
-    protected class AttackScenario
+    protected class ScoredAction
+    {
+        public readonly Action action;
+        public readonly double score;
+
+        public ScoredAction(Action action, double score)
+        {
+            this.action = action;
+            this.score = score;
+        }
+    }
+
+    protected class DefensiveAction : Action
+    {
+        public DefensiveAction(Village source, Village target) : base(source, target)
+        {
+        }
+
+        public override double risk(Village origin, Village target)
+        {
+            return 1;
+        }
+
+        public override double profit(Village origin, Village target)
+        {
+            return 1;
+        }
+    }
+
+    protected abstract class Action
     {
         public readonly Village source;
         public readonly Village target;
 
-        public AttackScenario(Village source, Village target)
+        protected Action(Village source, Village target)
         {
             this.source = source;
             this.target = target;
         }
-    }
 
-    protected class ScoredScenario
-    {
-        public readonly AttackScenario scenario;
-        public readonly double score;
+        public abstract double risk(Village origin, Village target);
+        public abstract double profit(Village origin, Village target);
 
-        public ScoredScenario(AttackScenario scenario, double score)
+        public double score(Village origin, Village target)
         {
-            this.scenario = scenario;
-            this.score = score;
+            return profit(origin, target) / risk(origin, target);
         }
     }
 }
