@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: {x: 0, y: 0, z: 0}
   arrivalSound: {fileID: 8300000, guid: 8525a503768080547a34494c065105b9, type: 3}
-  arrivalSoundVol: 0.2
+  arrivalSoundVol: 0.3
   deathSound: {fileID: 8300000, guid: 0f24aeaed467bd544b685c48281709a5, type: 3}
   deathSoundVol: 0.7
 --- !u!212 &21283270
@@ -153,7 +153,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: arrivalSoundVol
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: arrivalSound

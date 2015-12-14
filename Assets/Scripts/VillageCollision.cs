@@ -29,20 +29,23 @@ public class VillageCollision : MonoBehaviour {
                 Destroy(coll.collider.gameObject);
                 var village = gameObject.GetComponent<Village>();
                 village.fight(force.force, force.faction);
+
+                var soundSpot = new Vector3(force.transform.position.x, force.transform.position.y, Camera.main.transform.position.z + 5.0f);
+
                 if (village.faction != force.faction)
                 {
                     if (!smoker.isPlaying) smoker.Play();
                     if ((force.faction == Faction.ENEMY && village.faction == Faction.FRIENDLY) ||
                         force.faction == Faction.FRIENDLY)
                     {
-                        AudioSource.PlayClipAtPoint(force.deathSound, force.transform.position, force.deathSoundVol);
+                        AudioSource.PlayClipAtPoint(force.deathSound, soundSpot, force.deathSoundVol);
                     }
                 }
                 else
                 {
                     if (force.faction == Faction.FRIENDLY)
                     {
-                        AudioSource.PlayClipAtPoint(force.arrivalSound, force.transform.position, force.arrivalSoundVol);
+                        AudioSource.PlayClipAtPoint(force.arrivalSound, soundSpot, force.arrivalSoundVol);
                     }
                 }
             }

@@ -6,6 +6,9 @@ public class HexInput : MonoBehaviour {
 
     public GameObject trianglePrefab;
 
+    public AudioClip clickSound;
+    public float clickSoundVol;
+
     public static List<Tile> startTiles = new List<Tile>();
     public static Tile endTile;
     public Material tileNormal;
@@ -24,6 +27,7 @@ public class HexInput : MonoBehaviour {
 
     public void OnMouseDown()
     {
+        AudioSource.PlayClipAtPoint(clickSound, Camera.main.transform.position, clickSoundVol);
         UIOverlay.scrollUi.SetActive(false);
         if (startTiles.Count > 0)
         {
