@@ -98,6 +98,12 @@ MonoBehaviour:
   villageUiAlien: {fileID: 21300000, guid: 7502cfb447276f4418d6d4f81a5199d6, type: 3}
   villageUiLegionnaire: {fileID: 21300000, guid: e9b2ac6d7906970449dae6df2f73d647,
     type: 3}
+  villageUiOverlayNeutral: {fileID: 21300000, guid: df5c66e06d9b1414cb75aae71ca50bc8,
+    type: 3}
+  villageUiOverlayAlien: {fileID: 21300000, guid: 0bc3b1d4c6b1cfc4dae5f439bd5e8e1d,
+    type: 3}
+  villageUiOverlayLegionnaire: {fileID: 21300000, guid: 6ce05bf4081cb7c4ab2b66e3d7aacb2d,
+    type: 3}
   flipX: 0
   flipY: 0
   angle: 0
@@ -318,6 +324,21 @@ Prefab:
       propertyPath: villageUiOverlayPrefab
       value: 
       objectReference: {fileID: 106648, guid: 4d2960a8a25d29843bb21b7f9a63d5cc, type: 2}
+    - target: {fileID: 0}
+      propertyPath: villageUiOverlayNeutral
+      value: 
+      objectReference: {fileID: 21300000, guid: df5c66e06d9b1414cb75aae71ca50bc8,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: villageUiOverlayAlien
+      value: 
+      objectReference: {fileID: 21300000, guid: 0bc3b1d4c6b1cfc4dae5f439bd5e8e1d,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: villageUiOverlayLegionnaire
+      value: 
+      objectReference: {fileID: 21300000, guid: 6ce05bf4081cb7c4ab2b66e3d7aacb2d,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152360}
