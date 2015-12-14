@@ -273,7 +273,7 @@ public class Village : TileObject
     {
         for (int i = 0; i < 3; i++)
         {
-            //villageTexts[i].GetComponent<Text>().text = (int) defForce[i] + "";
+            villageTexts[i].GetComponent<Text>().text = (int) defForce[i] + "";
         }
     }
 }
