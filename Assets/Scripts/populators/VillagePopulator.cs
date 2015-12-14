@@ -150,7 +150,6 @@ public class VillagePopulator : TilePopulator
         var smoker = Instantiate(smokePrefab);
         smoker.transform.SetParent(village.transform);
         smoker.transform.localPosition = village.transform.localPosition;
-        smoker.GetComponent<ParticleSystem>().playbackSpeed = 2;
     }
 
     protected bool isBigVillage(Tile t)

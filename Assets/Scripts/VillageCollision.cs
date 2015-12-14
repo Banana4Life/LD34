@@ -31,7 +31,7 @@ public class VillageCollision : MonoBehaviour {
                 village.fight(force.force, force.faction);
                 if (village.faction != Faction.FRIENDLY)
                 {
-                    if (!smoker.isPlaying) smoker.Play();
+                    smoker.Play();
                     AudioSource.PlayClipAtPoint(force.deathSound, force.transform.position, force.deathSoundVol);
                 }
                 else
