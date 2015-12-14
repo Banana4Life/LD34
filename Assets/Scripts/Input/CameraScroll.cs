@@ -12,17 +12,20 @@ public class CameraScroll : MonoBehaviour {
         scroll();
     }
 
+    public float minScroll = 5;
+    public float maxScroll = 15;
+
     private void scroll()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         camera.orthographicSize -= scroll * 4;
-        if (camera.orthographicSize < 3)
+        if (camera.orthographicSize < minScroll)
         {
-            camera.orthographicSize = 3;
+            camera.orthographicSize = minScroll;
         }
-        else if (camera.orthographicSize > 30)
+        else if (camera.orthographicSize > maxScroll)
         {
-            camera.orthographicSize = 30;
+            camera.orthographicSize = maxScroll;
         }
     }
 

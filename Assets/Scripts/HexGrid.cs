@@ -12,8 +12,13 @@ public class HexGrid : MonoBehaviour
     public int gridWidth = 10;
     public int gridHeight = 20;
 
-    private float hexWidth;
-    private float hexHeight;
+    public float hexWidth;
+    public float hexHeight;
+
+    public float minX;
+    public float maxX;
+    public float minY;
+    public float maxY;
 
     public List<TilePopulator> populators = new List<TilePopulator>();
 
@@ -87,11 +92,28 @@ public class HexGrid : MonoBehaviour
     {
         setSizes();
         var grid = createGrid();
+        setupForCamera();
 
         foreach (var populator in populators)
         {
             populator.populate(grid);
         }
+    }
+
+    private void setupForCamera()
+    {
+        var calcHeight = hexWidth / 2;
+        calcHeight = (float) Math.Sqrt(hexHeight * hexHeight - calcHeight * calcHeight);
+
+        var vertExtent = hexWidth * gridHeight;
+        var horzExtent = calcHeight * gridWidth;
+
+        Debug.Log(vertExtent + "x" + horzExtent);
+        // Calculations assume map is position at the origin
+        minX = - horzExtent / 2;
+        maxX = horzExtent / 2;
+        minY = -vertExtent / 2;
+        maxY = vertExtent / 2;
     }
 
     public static GameObject drawPath<T>(IEnumerable<T> path, Color color, Func<T, Vector3> pos)

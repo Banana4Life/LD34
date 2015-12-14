@@ -273,7 +273,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.057061
+  orthographic size: 17.96016
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1811316474}
+  grid: {fileID: 1956102852}
   speed: 25
 --- !u!4 &1899473108
 Transform:
@@ -388,6 +389,8 @@ MonoBehaviour:
   hexPrefab: {fileID: 121562, guid: 6d7e5479e76959d419db0d3d70ac4f1a, type: 2}
   gridWidth: 31
   gridHeight: 16
+  hexWidth: 0
+  hexHeight: 0
   populators:
   - {fileID: 1956102860}
   - {fileID: 1956102856}
@@ -489,8 +492,8 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00549924, y: 0.028575048}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0.3, y: 0.3}
+  m_SizeDelta: {x: 143.3, y: 82.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1956102860
 MonoBehaviour:
