@@ -243,6 +243,8 @@ public class Village : TileObject
         attackingLegion.destination = endVillage;
         attackingLegion.faction = faction;
         attackingLegion.force = atkForce;
+        var firefighters = group.AddComponent<FireDepartment>();
+        firefighters.smokingHouse = endVillage.GetComponent<ParticleSystem>();
 
         if (attackingLegion.faction == Faction.FRIENDLY && attackingLegion.destination.faction != Faction.FRIENDLY)
         {
