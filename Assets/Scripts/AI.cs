@@ -10,6 +10,7 @@ public class AI : MonoBehaviour
     public float stepDelay = 1f;
     public int actionsPerStep = 1;
     public int concurrency = 3;
+    public bool easyMode = false;
     private List<Village> villages = new List<Village>();
 
     private static readonly string STEP_METHOD = "AIStep";
@@ -84,7 +85,7 @@ public class AI : MonoBehaviour
         {
             foreach (var target in targets)
             {
-                actions.Add(new OffensiveAction(source, target));
+                actions.Add(new OffensiveAction(source, target, this.easyMode));
             }
         }
 
@@ -182,20 +183,23 @@ public class AI : MonoBehaviour
 
     protected class OffensiveAction : Action
     {
+        private readonly bool easyMode;
 
-        public OffensiveAction(Village source, Village target) : base(source, target)
-        {}
+        public OffensiveAction(Village source, Village target, bool easyMode) : base(source, target)
+        {
+            this.easyMode = easyMode;
+        }
 
         public override double risk(Village origin, Village target)
         {
-            var unitMalus = 1d;
+            var malus = this.easyMode ? 2d : 1d;
             if (target.unitType == origin.unitType)
             {
-                unitMalus = 2d;
+                malus = 2d;
             }
             else if (origin.unitType != ((target.unitType + 1) % 3))
             {
-                unitMalus = 16d;
+                malus = this.easyMode ? 4d : 16d;
             }
             var att = source.defForce;
             var def = target.defForce;
@@ -206,10 +210,10 @@ public class AI : MonoBehaviour
             }
             if (target.faction == Faction.NEUTRAL)
             {
-                unitMalus *= .5;
+                malus *= .5;
             }
             var r = distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
-            return r * unitMalus;
+            return r * malus;
         }
 
         public override double profit(Village origin, Village target)
