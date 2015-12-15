@@ -177,4 +177,31 @@ public class HexGrid : MonoBehaviour
         Debug.Log(f);
     }
 
+    public static IDictionary<K, IList<V>> partition<K, V>(IEnumerable<V> input, Func<V, K> key)
+    {
+        IDictionary<K, IList<V>> partitions = new Dictionary<K, IList<V>>();
+        foreach (var v in input)
+        {
+            IList<V> partition;
+            var k = key(v);
+            if (!partitions.ContainsKey(k))
+            {
+                partition = new List<V>();
+                partitions.Add(k, partition);
+            }
+            else
+            {
+                partition = partitions[k];
+            }
+            partition.Add(v);
+        }
+
+        return partitions;
+    }
+
+    public static IDictionary<Faction, IList<Village>> villagesByFaction()
+    {
+        return HexGrid.partition(villages.Select(g => g.GetComponentInChildren<Village>()), v => v.faction);
+    }
+
 }

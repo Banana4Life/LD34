@@ -51,33 +51,6 @@ public class AI : MonoBehaviour
         InvokeRepeating(STEP_METHOD, initialDelay, stepDelay);
     }
 
-    private static IDictionary<K, IList<V>> partition<K, V>(IEnumerable<V> input, Func<V, K> key)
-    {
-        IDictionary<K, IList<V>> partitions = new Dictionary<K, IList<V>>();
-        foreach (var v in input)
-        {
-            IList<V> partition;
-            var k = key(v);
-            if (!partitions.ContainsKey(k))
-            {
-                partition = new List<V>();
-                partitions.Add(k, partition);
-            }
-            else
-            {
-                partition = partitions[k];
-            }
-            partition.Add(v);
-        }
-
-        return partitions;
-    }
-
-    private IDictionary<Faction, IList<Village>> partitionedVillages()
-    {
-        return partition(this.villages, v => v.faction);
-    }
-
     private List<Action> possibleOffensive(IEnumerable<Village> sources, IEnumerable<Village> targets)
     {
         var actions = new List<Action>();
@@ -118,7 +91,7 @@ public class AI : MonoBehaviour
 
     void AIStep()
     {
-        var legionsByFaction = partition(GameObject.FindGameObjectsWithTag(AttackingLegion.TAG).Select(g => g.GetComponent<AttackingLegion>()), a => a.faction);
+        var legionsByFaction = HexGrid.partition(GameObject.FindGameObjectsWithTag(AttackingLegion.TAG).Select(g => g.GetComponent<AttackingLegion>()), a => a.faction);
         var incomingAttacks = legionsByFaction.GetOrElse(Faction.FRIENDLY, new List<AttackingLegion>());
         var outgoingAttacks = legionsByFaction.GetOrElse(Faction.ENEMY, new List<AttackingLegion>());
 
@@ -127,7 +100,7 @@ public class AI : MonoBehaviour
             return;
         }
 
-        var villagesByFaction = partitionedVillages();
+        var villagesByFaction = HexGrid.villagesByFaction();
 
         var myVillages = villagesByFaction.GetOrElse(Faction.ENEMY, new List<Village>());
         if (myVillages.Count == 0)
