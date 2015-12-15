@@ -15,7 +15,7 @@ public class FireDepartment : MonoBehaviour
 	void Update () {
 	    if (gameObject.transform.childCount == 0)
 	    {
-            if (smokingHouse.isPlaying) smokingHouse.Stop();
+            /*if (smokingHouse.isPlaying) */smokingHouse.Stop();
             Destroy(gameObject);
 	    }
 	}

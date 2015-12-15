@@ -94,14 +94,14 @@ public class AI : MonoBehaviour
         var villagesByFaction = HexGrid.villagesByFaction();
 
         var myVillages = villagesByFaction.GetOrElse(Faction.ENEMY, new List<Village>());
-        if (myVillages.Count == 0)
+        if (myVillages.Count == 0 && outgoingAttacks.Count == 0)
         {
             finished(Faction.ENEMY);
             return;
         }
 
         var hisVillages = villagesByFaction.GetOrElse(Faction.FRIENDLY, new List<Village>());
-        if (hisVillages.Count == 0)
+        if (hisVillages.Count == 0 && incomingAttacks.Count == 0)
         {
             finished(Faction.FRIENDLY);
             return;
@@ -174,7 +174,7 @@ public class AI : MonoBehaviour
             }
             if (target.faction == Faction.NEUTRAL)
             {
-                malus *= .5;
+                malus *= .65;
             }
             var r = distance(source, target) + (source.size.unitCap - attForce) + (force(def) - attForce) + source.size.unitCap;
             return r * malus;
