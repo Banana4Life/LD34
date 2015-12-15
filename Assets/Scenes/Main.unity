@@ -1953,7 +1953,7 @@ MonoBehaviour:
   smokePrefab: {fileID: 194002, guid: d96e4817781103542a5d77d6c9dc8526, type: 2}
   smallToMedium: 2
   mediumToLarge: 1.25
-  tries: 100
+  tries: 130
 --- !u!114 &1956102856
 MonoBehaviour:
   m_ObjectHideFlags: 0
