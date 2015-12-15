@@ -49,11 +49,14 @@ public class UIOverlay : MonoBehaviour
     {
         IDictionary<Faction, IList<Village>> villages = HexGrid.villagesByFaction();
 
-        float villageCount = villages[Faction.FRIENDLY].Count + villages[Faction.NEUTRAL].Count +
-                           villages[Faction.ENEMY].Count;
-        float friendlyCount = villages[Faction.FRIENDLY].Count/villageCount*500;
-        float neutralCount = villages[Faction.NEUTRAL].Count/villageCount*500;
-        float enemyCount = villages[Faction.ENEMY].Count/villageCount*500;
+        var friendlyPartition = villages.GetOrElse(Faction.FRIENDLY, new List<Village>());
+        var neutralPartition = villages.GetOrElse(Faction.NEUTRAL, new List<Village>());
+        var enemyPartition = villages.GetOrElse(Faction.ENEMY, new List<Village>());
+        float villageCount = friendlyPartition.Count + neutralPartition.Count +
+                           enemyPartition.Count;
+        float friendlyCount = friendlyPartition.Count/villageCount*500;
+        float neutralCount = neutralPartition.Count/villageCount*500;
+        float enemyCount = enemyPartition.Count/villageCount*500;
 
         Transform transform = uiOverlay.transform.GetChild(6);
 
