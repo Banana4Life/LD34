@@ -11,7 +11,7 @@ public class UIOverlay : MonoBehaviour
     {
         uiOverlay = gameObject;
         scrollUi = uiOverlay.transform.GetChild(0).gameObject;
-        for (int i = 0; i < uiOverlay.transform.childCount; i++)
+        for (int i = 0; i < uiOverlay.transform.childCount - 1; i++)
         {
             uiOverlay.transform.GetChild(i).gameObject.SetActive(false);
         }
@@ -22,12 +22,16 @@ public class UIOverlay : MonoBehaviour
         if (f == Faction.ENEMY)
         {
             uiOverlay.transform.GetChild(1).gameObject.SetActive(true);
+            uiOverlay.transform.GetChild(2).gameObject.SetActive(true);
         }
         else if (f == Faction.FRIENDLY)
         {
             var youwon = uiOverlay.transform.GetChild(2).gameObject;
             youwon.SetActive(true);
             youwon.GetComponent<AudioSource>().Play();
+
+            uiOverlay.transform.GetChild(3).gameObject.SetActive(true);
+            uiOverlay.transform.GetChild(4).gameObject.SetActive(true);
         }
     }
 
@@ -35,6 +39,11 @@ public class UIOverlay : MonoBehaviour
     {
         paused = !paused;
         Time.timeScale = paused ? 0 : 1;
-        uiOverlay.transform.GetChild(3).gameObject.SetActive(paused);
+        uiOverlay.transform.GetChild(5).gameObject.SetActive(paused);
+    }
+
+    void Update()
+    {
+        
     }
 }
