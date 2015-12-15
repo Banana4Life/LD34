@@ -25,7 +25,9 @@ public class UIOverlay : MonoBehaviour
         }
         else if (f == Faction.FRIENDLY)
         {
-            uiOverlay.transform.GetChild(2).gameObject.SetActive(true);
+            var youwon = uiOverlay.transform.GetChild(2).gameObject;
+            youwon.SetActive(true);
+            youwon.GetComponent<AudioSource>().Play();
         }
     }
 
