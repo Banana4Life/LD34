@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trianglePrefab: {fileID: 194002, guid: a5fa9a8c11cca8743afe401e31e27f5d, type: 2}
+  clickSound: {fileID: 8300000, guid: 1a3419a78da041547aab599fbb843889, type: 3}
+  clickSoundVol: 0.3
   tileNormal: {fileID: 2100000, guid: 8d73297b018cbf646aeb78c9a06479b7, type: 2}
   tileHighlighted: {fileID: 2100000, guid: 8973734327429994f9c85d8ab29bb6dd, type: 2}
   tileBlocked: {fileID: 2100000, guid: 6971a12f174b04744b389d61ef17946b, type: 2}
@@ -255,6 +257,14 @@ Prefab:
       propertyPath: m_SleepingMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clickSoundVol
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a3419a78da041547aab599fbb843889, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121562}
