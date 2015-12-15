@@ -530,6 +530,7 @@ MonoBehaviour:
   stepDelay: 1
   actionsPerStep: 1
   concurrency: 3
+  easyMode: 0
 --- !u!1 &601361327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,6 +1719,7 @@ MonoBehaviour:
   maxX: 0
   minY: 0
   maxY: 0
+  cameraBorderBlock: 5
   populators:
   - {fileID: 1956102860}
   - {fileID: 1956102856}
@@ -1834,7 +1836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderPrefab: {fileID: 153754, guid: 23515293bd9b07948a72c91e10c59b60, type: 2}
-  borderStrength: 2
+  borderStrength: 4
 --- !u!114 &1956102861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,6 +1852,7 @@ MonoBehaviour:
   stepDelay: 1
   actionsPerStep: 1
   concurrency: 3
+  easyMode: 0
 --- !u!1 &2055299245
 GameObject:
   m_ObjectHideFlags: 0

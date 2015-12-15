@@ -19,6 +19,7 @@ public class HexGrid : MonoBehaviour
     public float maxX;
     public float minY;
     public float maxY;
+    public float cameraBorderBlock = 4.0f;
 
     public List<TilePopulator> populators = new List<TilePopulator>();
 
@@ -123,8 +124,8 @@ public class HexGrid : MonoBehaviour
         var calcHeight = hexWidth / 2;
         calcHeight = (float) Math.Sqrt(hexHeight * hexHeight - calcHeight * calcHeight);
 
-        var vertExtent = hexWidth * (gridHeight - 3);
-        var horzExtent = calcHeight * (gridWidth - 3);
+        var vertExtent = hexWidth * (gridHeight - cameraBorderBlock);
+        var horzExtent = calcHeight * (gridWidth - cameraBorderBlock);
 
         Debug.Log(vertExtent + "x" + horzExtent);
         // Calculations assume map is position at the origin
