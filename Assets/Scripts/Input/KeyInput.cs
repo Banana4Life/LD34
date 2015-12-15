@@ -14,7 +14,14 @@ public class KeyInput : MonoBehaviour
 	            esc = true;
 	        }
 	    }
-	    else
+	    else if (Input.GetKey(KeyCode.E))
+	    {
+	        if (UIOverlay.paused)
+	        {
+                Application.Quit();
+            }
+	    }
+        else
 	    {
 	        esc = false;
 	    }
