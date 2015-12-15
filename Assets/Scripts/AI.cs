@@ -49,7 +49,7 @@ public class AI : MonoBehaviour
         {
             foreach (var target in targets)
             {
-                actions.Add(new OffensiveAction(source, target, this.easyMode));
+                actions.Add(new OffensiveAction(source, target, easyMode));
             }
         }
 
