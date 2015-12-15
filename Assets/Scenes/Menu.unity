@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Text: 'Press left mouse button to continue
 
 
-    Press ESC to exit'
+    Press E to exit'
 --- !u!222 &489337475
 CanvasRenderer:
   m_ObjectHideFlags: 0
