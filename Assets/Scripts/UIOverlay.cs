@@ -5,7 +5,7 @@ public class UIOverlay : MonoBehaviour
     public static GameObject uiOverlay;
     public static GameObject scrollUi;
 
-    private static bool paused = false;
+    public static bool paused = false;
 
     void Start ()
     {
