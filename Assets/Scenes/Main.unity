@@ -554,7 +554,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 524657856}
-  easyMode: 0
 --- !u!1 &601361327
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,7 +2028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderPrefab: {fileID: 153754, guid: 23515293bd9b07948a72c91e10c59b60, type: 2}
-  borderStrength: 4
+  borderStrength: 3
 --- !u!114 &1956102861
 MonoBehaviour:
   m_ObjectHideFlags: 0
