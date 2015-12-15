@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class UIOverlay : MonoBehaviour
 {
@@ -44,6 +45,25 @@ public class UIOverlay : MonoBehaviour
 
     void Update()
     {
-        
+        IDictionary<Faction, IList<Village>> villages = HexGrid.villagesByFaction();
+
+        float villageCount = villages[Faction.FRIENDLY].Count + villages[Faction.NEUTRAL].Count +
+                           villages[Faction.ENEMY].Count;
+        float friendlyCount = villages[Faction.FRIENDLY].Count/villageCount*500;
+        float neutralCount = villages[Faction.NEUTRAL].Count/villageCount*500;
+        float enemyCount = villages[Faction.ENEMY].Count/villageCount*500;
+
+        Transform transform = uiOverlay.transform.GetChild(6);
+
+        RectTransform barPart = transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        barPart.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, friendlyCount);
+
+        barPart = transform.GetChild(1).gameObject.GetComponent<RectTransform>();
+        barPart.anchoredPosition = new Vector3(friendlyCount, 0, 0);
+        barPart.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, neutralCount);
+
+        barPart = transform.GetChild(2).gameObject.GetComponent<RectTransform>();
+        barPart.anchoredPosition = new Vector3(friendlyCount + neutralCount, 0, 0);
+        barPart.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, enemyCount);
     }
 }
