@@ -29,10 +29,12 @@ public class MainMenu : MonoBehaviour
         } 
         else if (Input.GetKey(KeyCode.Alpha1) && difficulty)
         {
+            AI.easyMode = true;
             SceneManager.LoadScene("Main");
         }
         else if (Input.GetKey(KeyCode.Alpha2) && difficulty)
         {
+            AI.easyMode = false;
             SceneManager.LoadScene("Main");
         }
 

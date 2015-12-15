@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
     public float stepDelay = 1f;
     public int actionsPerStep = 1;
     public int concurrency = 3;
-    public bool easyMode = false;
+    public static bool easyMode = false;
 
     private static readonly string STEP_METHOD = "AIStep";
     private static readonly string DEFEATED_MESSAGE = "FactionDefeated";
