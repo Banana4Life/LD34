@@ -11,7 +11,6 @@ public class AI : MonoBehaviour
     public int actionsPerStep = 1;
     public int concurrency = 3;
     public bool easyMode = false;
-    private List<Village> villages = new List<Village>();
 
     private static readonly string STEP_METHOD = "AIStep";
     private static readonly string DEFEATED_MESSAGE = "FactionDefeated";
@@ -25,16 +24,8 @@ public class AI : MonoBehaviour
     // Use this for initialization
     void GridReady(GameObject[,] grid)
     {
-        foreach (var hex in grid)
-        {
-            var v = hex.GetComponentInChildren<Village>();
-            if (v)
-            {
-                villages.Add(v);
-            }
-        }
-
         var distances = new List<double>();
+        var villages = HexGrid.villages.Select(g => g.GetComponentInChildren<Village>());
         foreach (var a in villages)
         {
             foreach (var b in villages)
