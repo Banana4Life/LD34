@@ -120,7 +120,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1245d90dd4408f14ebc8031ee758cc76, type: 3}
   - {fileID: 8300000, guid: dab80518a5dde4f489a43cc22d4a227c, type: 3}
   - {fileID: 8300000, guid: 0f05a4672072bde47ad5e9368691311a, type: 3}
-  releaseSoundsVol: 1
+  releaseSoundsVol: 0.5
   bonus: 4
 --- !u!212 &21201770
 SpriteRenderer:
@@ -355,7 +355,7 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: releaseSoundsVol
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: alienUnit1
