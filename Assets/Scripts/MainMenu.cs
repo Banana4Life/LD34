@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     {
         gameObject.transform.GetChild(6).gameObject.SetActive(false);
         gameObject.transform.GetChild(7).gameObject.SetActive(false);
+        gameObject.transform.GetChild(8).gameObject.SetActive(false);
+        gameObject.transform.GetChild(9).gameObject.SetActive(false);
     }
 
     void Update()
@@ -31,11 +33,19 @@ public class MainMenu : MonoBehaviour
         {
             AI.easyMode = true;
             SceneManager.LoadScene("Main");
+            gameObject.transform.GetChild(6).gameObject.SetActive(false);
+            gameObject.transform.GetChild(7).gameObject.SetActive(false);
+            gameObject.transform.GetChild(8).gameObject.SetActive(true);
+            gameObject.transform.GetChild(9).gameObject.SetActive(true);
         }
         else if (Input.GetKey(KeyCode.Alpha2) && difficulty)
         {
             AI.easyMode = false;
             SceneManager.LoadScene("Main");
+            gameObject.transform.GetChild(6).gameObject.SetActive(false);
+            gameObject.transform.GetChild(7).gameObject.SetActive(false);
+            gameObject.transform.GetChild(8).gameObject.SetActive(true);
+            gameObject.transform.GetChild(9).gameObject.SetActive(true);
         }
 
         if (Input.GetKey(KeyCode.Escape))
