@@ -210,12 +210,17 @@ public class Village : TileObject
         updateText();
     }
 
-    public void releaseLegion(Vector3 force, Village target)
+    public void releaseLegion(Vector3 force, Village target, float percent)
     {
-        releaseLegion(force, Tile.of(gameObject.transform.parent.gameObject), Tile.of(target.gameObject.transform.parent.gameObject));
+        releaseLegion(force, Tile.of(gameObject.transform.parent.gameObject), Tile.of(target.gameObject.transform.parent.gameObject), percent);
     }
 
     public void releaseLegion(Vector3 force, Tile start, Tile end)
+    {
+        releaseLegion(force, start, end, percent);
+    }
+
+    public void releaseLegion(Vector3 force, Tile start, Tile end, float percent)
     {
         if (start == end)
         {
