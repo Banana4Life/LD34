@@ -95,6 +95,11 @@ public class VillagePopulator : TilePopulator
                 {
                     found = true;
                     village.setFaction(Faction.FRIENDLY);
+
+                    Camera.main.orthographicSize = 7.5f;
+                    var camTransform = Camera.main.transform;
+                    var vilPos = village.transform.position;
+                    camTransform.position = new Vector3(vilPos.x, vilPos.y, camTransform.position.z);
                     break;
                 }
             }
