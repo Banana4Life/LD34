@@ -75,6 +75,7 @@ public class AI : MonoBehaviour
 
     void finished(Faction defeated)
     {
+        GameObject.Find("UIOverlay").SendMessage(DEFEATED_MESSAGE, defeated);
         SendMessage(DEFEATED_MESSAGE, defeated);
         CancelInvoke(STEP_METHOD);
         Destroy(this);

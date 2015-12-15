@@ -17,17 +17,19 @@ public class UIOverlay : MonoBehaviour
         }
     }
 
-    public void factionDefeated(Faction f)
+    public void FactionDefeated(Faction f)
     {
         if (f == Faction.ENEMY)
         {
-            uiOverlay.transform.GetChild(1).gameObject.SetActive(true);
+            var youwon = uiOverlay.transform.GetChild(1).gameObject;
+            youwon.SetActive(true);
+            Camera.main.GetComponent<AudioSource>().mute = true;
+            youwon.GetComponent<AudioSource>().Play();
         }
         else if (f == Faction.FRIENDLY)
         {
-            var youwon = uiOverlay.transform.GetChild(2).gameObject;
-            youwon.SetActive(true);
-            youwon.GetComponent<AudioSource>().Play();
+            var youlose = uiOverlay.transform.GetChild(2).gameObject;
+            youlose.SetActive(true);
         }
     }
 
