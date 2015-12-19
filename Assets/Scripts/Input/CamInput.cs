@@ -28,14 +28,11 @@ public class CamInput : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("left D");
-
                 boxDrag = true;
                 boxDragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
             }
             if (boxDrag && !Input.GetMouseButton(0))
             {
-                Debug.Log("left U");
                 HexInput.startTiles.Clear();
                 foreach (var village in HexGrid.villages)
                 {

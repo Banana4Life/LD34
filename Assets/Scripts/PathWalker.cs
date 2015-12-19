@@ -38,26 +38,32 @@ public class PathWalker : MonoBehaviour
 
     void FixedUpdate()
 	{
-	    var transform = gameObject.transform;
-        var here = transform.position;
+        foreach (Transform child in gameObject.transform)
+        {
+            doMove(child.gameObject);
+        }
+    }
+
+    void doMove(GameObject unit)
+    {
         var target = this.enumerator.Current.GameObject.transform.position;
+
+        var transform = unit.transform;
+        var here = transform.position;
 
         var direction = (target - here);
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
         var rot = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed);
 
-	    var tileSpeed = this.speed * this.speedModifier;
+        var tileSpeed = this.speed * this.speedModifier;
 
-	    direction.z = here.z;
+        direction.z = here.z;
         transform.position += transform.up * -1 * tileSpeed;
-	    if (closeEnough(gameObject.transform.position, target))
-	    {
-	        if (!this.enumerator.MoveNext())
-	        {
-	            Destroy(this);
-	        }
-	    }
+        if (closeEnough(unit.transform.position, target))
+        {
+            this.enumerator.MoveNext(); // Destroy happens anyway when group is removed
+        }
 
 
         if (avoidRecover > 0)

@@ -2,11 +2,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Village : TileObject
 {
     public static float percent = 70;
-    private static readonly System.Random random = new System.Random();
 
     public override bool canBePassed()
     {
@@ -230,66 +230,90 @@ public class Village : TileObject
             return;
         }
 
-        var startVillage = start.getVillage();
-        var endVillage = end.getVillage();
-
         var atkForce = new Vector3((int) defForce.x, (int) defForce.y, (int) defForce.z);
         atkForce = atkForce*percent/100;
         atkForce = new Vector3(Mathf.CeilToInt(atkForce.x), Mathf.CeilToInt(atkForce.y), Mathf.CeilToInt(atkForce.z));
-        var amount = atkForce.x + atkForce.y + atkForce.z;
 
-        Debug.Log("Release the Legion! Force:" + atkForce + "/" + defForce + " " + start.GameObject.transform.position +
-                  "->" + end.GameObject.transform.position);
+        Debug.Log("Release the Legion! Force:" + atkForce + " " + start + "->" + end);
 
         defForce -= atkForce;
 
-        var group = new GameObject("Legion Group");
-        group.tag = AttackingLegion.TAG;
-        var attackingLegion = group.AddComponent<AttackingLegion>();
-        attackingLegion.origin = startVillage;
-        attackingLegion.destination = endVillage;
-        attackingLegion.faction = faction;
-        attackingLegion.force = atkForce;
-        var firefighters = group.AddComponent<FireDepartment>();
-        firefighters.smokingHouse = endVillage.GetComponentInChildren<ParticleSystem>();
+        float totalAmount;
 
-        if (attackingLegion.faction == Faction.FRIENDLY && attackingLegion.destination.faction != Faction.FRIENDLY)
+        int groupNr = 0;
+        do
         {
-            AudioSource.PlayClipAtPoint(releaseSounds[random.Next(0, releaseSounds.Length)], Camera.main.transform.position, releaseSoundsVol);
+            totalAmount = atkForce.x + atkForce.y + atkForce.z;
+            var atkPart = atkForce;
+            if (totalAmount > MAX_PER_GROUP)
+            {
+                atkPart = new Vector3((int)(atkForce.x / totalAmount * MAX_PER_GROUP), (int)(atkForce.y / totalAmount * MAX_PER_GROUP), (int)(atkForce.z / totalAmount * MAX_PER_GROUP));
+            }
+
+            StartCoroutine(spawnGroup(faction, start, end, atkPart, groupNr));
+
+            atkForce -= atkPart;
+            groupNr++;
         }
+        while (totalAmount > MAX_PER_GROUP);
+    }
+
+    private static readonly int MAX_PER_GROUP = 25;
+
+    private IEnumerator spawnGroup(Faction faction, Tile start, Tile end, Vector3 atkForce, int groupNr)
+    {
+        yield return new WaitForSeconds(0.2f * groupNr);
+
+
+        var amount = atkForce.x + atkForce.y + atkForce.z;
 
         var unit1 = legUnit1;
         var unit2 = legUnit2;
         var unit3 = legUnit3;
-        if (attackingLegion.faction == Faction.ENEMY)
+        if (faction == Faction.ENEMY)
         {
             unit1 = alienUnit1;
             unit2 = alienUnit2;
             unit3 = alienUnit3;
         }
 
+        var startVillage = start.getVillage();
+        var endVillage = end.getVillage();
+
+        var group = new GameObject("Legion Group");
+        group.tag = AttackingLegion.TAG;
+
+        var firefighters = group.AddComponent<FireDepartment>();
+        firefighters.smokingHouse = endVillage.GetComponentInChildren<ParticleSystem>();
+
+        var attackingLegion = group.AddComponent<AttackingLegion>();
+        attackingLegion.origin = startVillage;
+        attackingLegion.destination = endVillage;
+        attackingLegion.faction = faction;
+        attackingLegion.force = atkForce;
+
+        if (groupNr == 0 && attackingLegion.faction == Faction.FRIENDLY && attackingLegion.destination.faction != Faction.FRIENDLY)
+        {
+            AudioSource.PlayClipAtPoint(releaseSounds[Random.Range(0, releaseSounds.Length)], Camera.main.transform.position, releaseSoundsVol);
+        }
+
         for (var i = 0; i < atkForce.x; i++)
         {
-            PathWalker.walk(
-                spawn(unit1, startVillage.gameObject, new Vector3(1, 0, 0), this.faction, group, amount/50),
-                start, end);
+            spawn(unit1, startVillage.gameObject, new Vector3(1, 0, 0), this.faction, group, amount / 50);
         }
         for (var i = 0; i < atkForce.y; i++)
         {
-            PathWalker.walk(
-                spawn(unit2, startVillage.gameObject, new Vector3(0, 1, 0), this.faction, group, amount/50),
-                start, end);
+            spawn(unit2, startVillage.gameObject, new Vector3(0, 1, 0), this.faction, group, amount / 50);
         }
         for (var i = 0; i < atkForce.z; i++)
         {
-            PathWalker.walk(
-                spawn(unit3, startVillage.gameObject, new Vector3(0, 0, 1), this.faction, group, amount/50),
-                start, end);
+            spawn(unit3, startVillage.gameObject, new Vector3(0, 0, 1), this.faction, group, amount / 50);
         }
+
+        PathWalker.walk(group, start, end);
     }
 
-    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere,
-        float spread)
+    public GameObject spawn(GameObject type, GameObject at, Vector3 force, Faction faction, GameObject inHere, float spread)
     {
         var unit = Instantiate(type);
         Physics2D.IgnoreCollision(unit.GetComponent<Collider2D>(), at.GetComponent<Collider2D>(), true);
