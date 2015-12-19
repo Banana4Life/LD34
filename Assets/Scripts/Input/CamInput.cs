@@ -31,7 +31,7 @@ public class CamInput : MonoBehaviour {
                 Debug.Log("left D");
 
                 boxDrag = true;
-                boxDragOrigin = Input.mousePosition;
+                boxDragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
             }
             if (boxDrag && !Input.GetMouseButton(0))
             {
@@ -92,7 +92,9 @@ public class CamInput : MonoBehaviour {
     {
         if (boxDrag)
         {
-            var v1 = new Vector2(boxDragOrigin.x, Screen.height - boxDragOrigin.y);
+            var boxScreenDragOrigin = camera.WorldToScreenPoint(boxDragOrigin);
+
+            var v1 = new Vector2(boxScreenDragOrigin.x, Screen.height - boxScreenDragOrigin.y);
             var boxDragTarget = Input.mousePosition;
             var v2 = new Vector2(boxDragTarget.x, Screen.height - boxDragTarget.y);
 
@@ -113,7 +115,7 @@ public class CamInput : MonoBehaviour {
 
         var camera = Camera.main;
         var viewportBounds =
-            Utils.GetViewportBounds(camera, boxDragOrigin, Input.mousePosition);
+            Utils.GetViewportBounds(camera, camera.WorldToScreenPoint(boxDragOrigin), Input.mousePosition);
 
         return viewportBounds.Contains(
             camera.WorldToViewportPoint(gameObject.transform.position));
