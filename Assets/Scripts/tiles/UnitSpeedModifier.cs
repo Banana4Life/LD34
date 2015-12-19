@@ -5,7 +5,12 @@ public class UnitSpeedModifier : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        var walker = collider.gameObject.GetComponent<PathWalker>();
+        var parent = collider.gameObject.transform.parent;
+        if (!parent)
+        {
+            return;
+        }
+        var walker = parent.gameObject.GetComponent<PathWalker>();
         if (!walker)
         {
             return;

@@ -12,8 +12,6 @@ public class PathWalker : MonoBehaviour
     private float speedModifier = 1f;
     private float rotationSpeed = 0.11f;
 
-    private float avoidRecover = 0;
-
     public void followPath(IEnumerable<Tile> path, bool invert = true)
     {
         this.path = invert ? path.Reverse() : path;
@@ -63,38 +61,6 @@ public class PathWalker : MonoBehaviour
         if (closeEnough(unit.transform.position, target))
         {
             this.enumerator.MoveNext(); // Destroy happens anyway when group is removed
-        }
-
-
-        if (avoidRecover > 0)
-        {
-            avoidRecover -= Time.fixedDeltaTime;
-        }
-        else
-        {
-            foreach (Transform child in transform.parent)
-            {
-                if (transform != child)
-                {
-                    if ((transform.position - child.position).sqrMagnitude < 1)
-                    {
-                        var childWalker = child.GetComponent<PathWalker>();
-                        if (childWalker && childWalker.avoidRecover <= 0)
-                        {
-                            var randRot = transform.rotation;
-                            randRot.z += (Random.value - 0.5f) / 7;
-                            transform.rotation = randRot;
-
-                            if (avoidRecover <= 0)
-                            {
-                                avoidRecover = (Random.value);
-                                tileSpeed = 0.08f - Random.value / 500;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
         }
     }
 

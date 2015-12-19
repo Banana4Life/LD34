@@ -11,7 +11,7 @@ public class VillageCollision : MonoBehaviour {
         {
             return;
         }
-        var walker = coll.collider.gameObject.transform.parent.gameObject.GetComponent<PathWalker>();
+        var walker = parent.gameObject.GetComponent<PathWalker>();
         if (!walker)
         {
             return;
