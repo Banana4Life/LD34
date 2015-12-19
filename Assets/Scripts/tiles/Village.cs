@@ -204,6 +204,8 @@ public class Village : TileObject
                     this.setFaction(faction);
                     updateUI(); // Update Background of UI to new faction
                     this.defForce = atkForce;
+
+                    HexInput.startTiles.Remove(Tile.of(gameObject.transform.parent.gameObject));
                 }
             }
         }
