@@ -35,9 +35,10 @@ public class HexInput : MonoBehaviour {
             {
                 if (endTile.hasVillage())
                 {
+                    int legions = 1;
                     foreach (var startTile in startTiles)
                     {
-                        startTile.getVillage().releaseLegion(new Vector3(force, force, force), startTile, endTile);
+                        startTile.getVillage().releaseLegion(legions++, new Vector3(force, force, force), startTile, endTile);
                     }
                 }
             }

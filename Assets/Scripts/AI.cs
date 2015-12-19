@@ -131,7 +131,7 @@ public class AI : MonoBehaviour
 
     void executeScenario(Action scenario)
     {
-        scenario.source.releaseLegion(Vector3.one, scenario.target, 50f);
+        scenario.source.releaseLegion(1, Vector3.one, scenario.target, 50f);
     }
 
     static double distance(Village a, Village b)

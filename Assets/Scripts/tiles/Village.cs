@@ -212,17 +212,17 @@ public class Village : TileObject
         updateText();
     }
 
-    public void releaseLegion(Vector3 force, Village target, float percent)
+    public void releaseLegion(int legions, Vector3 force, Village target, float percent)
     {
-        releaseLegion(force, Tile.of(gameObject.transform.parent.gameObject), Tile.of(target.gameObject.transform.parent.gameObject), percent);
+        releaseLegion(legions, force, Tile.of(gameObject.transform.parent.gameObject), Tile.of(target.gameObject.transform.parent.gameObject), percent);
     }
 
-    public void releaseLegion(Vector3 force, Tile start, Tile end)
+    public void releaseLegion(int legions, Vector3 force, Tile start, Tile end)
     {
-        releaseLegion(force, start, end, percent);
+        releaseLegion(legions, force, start, end, percent);
     }
 
-    public void releaseLegion(Vector3 force, Tile start, Tile end, float percent)
+    public void releaseLegion(int legions, Vector3 force, Tile start, Tile end, float percent)
     {
         if (start == end)
         {
@@ -250,7 +250,7 @@ public class Village : TileObject
                 atkPart = new Vector3((int)(atkForce.x / totalAmount * MAX_PER_GROUP), (int)(atkForce.y / totalAmount * MAX_PER_GROUP), (int)(atkForce.z / totalAmount * MAX_PER_GROUP));
             }
 
-            StartCoroutine(spawnGroup(faction, start, end, atkPart, groupNr));
+            StartCoroutine(spawnGroup(legions, faction, start, end, atkPart, groupNr));
 
             atkForce -= atkPart;
             groupNr++;
@@ -260,10 +260,9 @@ public class Village : TileObject
 
     private static readonly int MAX_PER_GROUP = 25;
 
-    private IEnumerator spawnGroup(Faction faction, Tile start, Tile end, Vector3 atkForce, int groupNr)
+    private IEnumerator spawnGroup(int legions, Faction faction, Tile start, Tile end, Vector3 atkForce, int groupNr)
     {
         yield return new WaitForSeconds(0.2f * groupNr);
-
 
         var amount = atkForce.x + atkForce.y + atkForce.z;
 
@@ -292,7 +291,7 @@ public class Village : TileObject
         attackingLegion.faction = faction;
         attackingLegion.force = atkForce;
 
-        if (groupNr == 0 && attackingLegion.faction == Faction.FRIENDLY && attackingLegion.destination.faction != Faction.FRIENDLY)
+        if (groupNr == 0 && legions == 1 && attackingLegion.faction == Faction.FRIENDLY && attackingLegion.destination.faction != Faction.FRIENDLY)
         {
             AudioSource.PlayClipAtPoint(releaseSounds[Random.Range(0, releaseSounds.Length)], Camera.main.transform.position, releaseSoundsVol);
         }
